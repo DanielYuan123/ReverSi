@@ -1,1 +1,1 @@
-撒旦发射点啊啊啊啊
+Reversi project by Daniel and DYH from Sustech in 2021.
