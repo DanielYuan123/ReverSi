@@ -1,1 +1,1 @@
-D:Swing; JavaFX
+D: Swing; JavaFX (两者兼容性不太好， 用Swing写)
