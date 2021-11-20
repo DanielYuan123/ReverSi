@@ -15,5 +15,5 @@ public abstract class BasicComponent extends JComponent {
         });
     }
 
-    public abstract void onMouseClicked();
+    public abstract void onMouseClicked();      //要求BasicComponent的所有子类中都得有这个方法
 }
