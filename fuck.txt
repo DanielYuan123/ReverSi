@@ -1,2 +1,3 @@
 D: Swing; JavaFX (两者兼容性不太好， 用Swing写)
 D: JFrame; JPanel; JComponent(JLabel; JButton; ...)
+你坐到前面来啊
