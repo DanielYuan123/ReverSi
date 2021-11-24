@@ -31,7 +31,7 @@ public class StatusPanel extends JPanel {
     }
 
     public void setScoreText(int black, int white) {
-        this.scoreLabel.setText(String.format("BLACK: %d\tWHITE: %d", black, white));
+        this.scoreLabel.setText(String.format("BLACK: %d   WHITE: %d", black, white));
     }
 
     public void setPlayerText(String playerText) {

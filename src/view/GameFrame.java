@@ -13,7 +13,7 @@ public class GameFrame extends JFrame {
 
     public GameFrame(int frameSize) {
         
-        //setVisible(true);
+        //this.setVisible(true);
 
         this.setTitle("2021F CS102A Project Reversi");
         this.setLayout(null);
@@ -65,6 +65,7 @@ public class GameFrame extends JFrame {
             String filePath = JOptionPane.showInputDialog(this, "input the path here");
             controller.writeDataToFile(filePath);
         });
+        
         JButton nightModeBtn= new JButton("Nightmode");
         nightModeBtn.setSize(120,50);
         nightModeBtn.setLocation(saveGameBtn.getX()+saveGameBtn.getWidth()+30, restartBtn.getY());
