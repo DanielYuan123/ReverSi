@@ -12,6 +12,8 @@ public class GameFrame extends JFrame {
     private StatusPanel statusPanel;
 
     public GameFrame(int frameSize) {
+        
+        //setVisible(true);
 
         this.setTitle("2021F CS102A Project Reversi");
         this.setLayout(null);
@@ -28,6 +30,7 @@ public class GameFrame extends JFrame {
 
         statusPanel = new StatusPanel((int) (this.getWidth() * 0.8), (int) (this.getHeight() * 0.1));
         statusPanel.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 2, 0);
+        
         controller = new GameController(chessBoardPanel, statusPanel);
         controller.setGamePanel(chessBoardPanel);
 
