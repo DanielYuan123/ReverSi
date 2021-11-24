@@ -72,7 +72,7 @@ public class GameFrame extends JFrame {
         add(nightModeBtn);
         nightModeBtn.addActionListener(e -> {
             System.out.println("click NightMode Btn");
-
+            //todo: compete the night mode
 
         });
 
