@@ -18,8 +18,6 @@ public class GameFrame extends JFrame {
 
         //获取窗口边框的长度，将这些值加到主窗口大小上，这能使窗口大小和预期相符
         Insets inset = this.getInsets();
-      
-    
         this.setSize(frameSize + inset.left + inset.right, frameSize + inset.top + inset.bottom);
         this.setLocationRelativeTo(null);
 
