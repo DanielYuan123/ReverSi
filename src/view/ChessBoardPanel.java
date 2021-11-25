@@ -17,7 +17,7 @@ public class ChessBoardPanel extends JPanel {
         this.setBackground(Color.BLACK);
         int length = Math.min(width, height);
         this.setSize(length, length);
-        ChessGridComponent.gridSize = length / CHESS_COUNT ;
+        ChessGridComponent.gridSize = length / CHESS_COUNT;
         ChessGridComponent.chessSize = (int) (ChessGridComponent.gridSize * 0.8);
         System.out.printf("width = %d height = %d gridSize = %d chessSize = %d\n",
                 width, height, ChessGridComponent.gridSize, ChessGridComponent.chessSize);
@@ -64,7 +64,7 @@ public class ChessBoardPanel extends JPanel {
     }
 
     public boolean canClickGrid(int row, int col, ChessPiece currentPlayer) {
-        //todo: complete this method
+        //todo: complete this method(DYH)
         if(true)
             return true;
         else

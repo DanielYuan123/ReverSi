@@ -1,9 +1,7 @@
 package components;
 
-import controller.GameController;
 import model.*;
 import view.GameFrame;
-
 import java.awt.*;
 
 public class ChessGridComponent extends BasicComponent {
@@ -34,24 +32,13 @@ public class ChessGridComponent extends BasicComponent {
             repaint();
         }
     }
-
-
-    public ChessPiece getChessPiece() {
-        return chessPiece;
-    }
-
+    
+    
     public void setChessPiece(ChessPiece chessPiece) {
         this.chessPiece = chessPiece;
     }
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getCol() {
-        return col;
-    }
-
+    
+    
     public void drawPiece(Graphics g) {
         g.setColor(gridColor);
         g.fillRect(1, 1, this.getWidth() - 2, this.getHeight() - 2);
@@ -67,6 +54,4 @@ public class ChessGridComponent extends BasicComponent {
         super.printComponents(g);
         drawPiece(g);
     }
-
-
 }

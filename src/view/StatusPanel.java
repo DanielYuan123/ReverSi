@@ -14,6 +14,7 @@ public class StatusPanel extends JPanel {
         this.setLayout(null);
         this.setVisible(true);
 
+        
         this.playerLabel = new JLabel();
         this.playerLabel.setLocation(0, 10);
         this.playerLabel.setSize((int) (width * 0.4), height);
@@ -21,13 +22,15 @@ public class StatusPanel extends JPanel {
         this.setPlayerText(ChessPiece.BLACK.name());
         this.add(playerLabel);
 
+        
         this.scoreLabel = new JLabel();
         this.scoreLabel.setLocation((int) (width * 0.4), 10);
         this.scoreLabel.setSize((int) (width * 0.5), height);
         this.scoreLabel.setFont(new Font("Calibri", Font.ITALIC, 25));
         this.setScoreText(2,2);
         this.add(scoreLabel);
-
+        
+        
     }
 
     public void setScoreText(int black, int white) {
