@@ -31,7 +31,7 @@ public class RuleFrame extends Frame{
         label.setFont(new Font("ds",Font.PLAIN,15));
 
         //添加标签;
-        
+
         this.add(label);
 
         //编写窗口监听：若关闭，并非结束进程，而是隐藏；
