@@ -64,7 +64,7 @@ public class ChessBoardPanel extends JPanel {
     }
 
     public boolean canClickGrid(int row, int col, ChessPiece currentPlayer) {
-        //todo: complete this method
+        //todo: complete this method(DYH)
         if(true)
             return true;
         else
