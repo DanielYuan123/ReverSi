@@ -98,10 +98,10 @@ public class GameFrame extends JFrame {
                 new GameFrame(800);
             }else if(e.getActionCommand().equals("Load")){
                 System.out.println("clicked Load Btn");
-                String filePath = JOptionPane.showInputDialog(this, "input the path here");
+                String filePath = JOptionPane.showInputDialog("Load the game:", "input the path here");
                 controller.readFileData(filePath);
             }else if(e.getActionCommand().equals("Save")){System.out.println("clicked Save Btn");
-                String filePath = JOptionPane.showInputDialog(this, "input the path here");
+                String filePath = JOptionPane.showInputDialog("Save the game:", "input the path here");
                 controller.writeDataToFile(filePath);
             }
         }
