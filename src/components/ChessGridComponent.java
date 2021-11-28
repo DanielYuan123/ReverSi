@@ -38,6 +38,10 @@ public class ChessGridComponent extends BasicComponent {
         this.chessPiece = chessPiece;
     }
     
+    public ChessPiece getChessPiece() {
+        return chessPiece;
+    }
+    
     
     public void drawPiece(Graphics g) {
         g.setColor(gridColor);

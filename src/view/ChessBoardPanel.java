@@ -64,10 +64,110 @@ public class ChessBoardPanel extends JPanel {
     }
 
     public boolean canClickGrid(int row, int col, ChessPiece currentPlayer) {
-        //todo: complete this method(DYH)
-        if(true)
-            return true;
-        else
-            return false;
+    
+        ChessPiece otherPlayer = (currentPlayer == ChessPiece.BLACK) ? (ChessPiece.WHITE) : (ChessPiece.BLACK);
+    
+        if (chessGrids[row][col].getChessPiece() != currentPlayer && chessGrids[row][col].getChessPiece() != otherPlayer) {
+    
+            //向上判断
+            if (row >= 2) {
+                for (int k = row - 1; k >= 0; k--) {
+                    if (chessGrids[row - 1][col].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (chessGrids[k][col].getChessPiece() == currentPlayer) {
+                        return true;
+                    }
+                }
+            }
+    
+    
+            //向下判断
+            if (row <= 5) {
+                for (int k = row + 1; k <= 7; k++) {
+                    if (chessGrids[row + 1][col].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (chessGrids[k][col].getChessPiece() == currentPlayer) {
+                        return true;
+                    }
+                }
+            }
+    
+            //向左判断
+            if (col >= 2) {
+                for (int k = col - 1; k >= 0; k--) {
+                    if (chessGrids[row][col - 1].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (chessGrids[row][k].getChessPiece() == currentPlayer) {
+                        return true;
+                    }
+                }
+            }
+    
+            //向右判断
+            if (col <= 5) {
+                for (int k = col + 1; k <= 7; k++) {
+                    if (chessGrids[row][col + 1].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (chessGrids[row][k].getChessPiece() == currentPlayer) {
+                        return true;
+                    }
+                }
+            }
+    
+            //向左上判断
+            if (row >= 2 && col >= 2) {
+                for (int k = row - 1, l = col - 1; k >= 0 && l >= 0; k--, l--) {
+                    if (chessGrids[row - 1][col - 1].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (chessGrids[k][l].getChessPiece() == currentPlayer) {
+                        return true;
+                    }
+                }
+            }
+    
+            //向左下判断
+            if (row <= 5 && col >= 2) {
+                for (int k = row + 1, l = col - 1; k <= 7 && l >= 0; k++, l--) {
+                    if (chessGrids[row + 1][col - 1].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (chessGrids[k][l].getChessPiece() == currentPlayer) {
+                        return true;
+                    }
+                }
+            }
+    
+            //向右上判断
+            if (row >= 2 && col <= 5) {
+                for (int k = row - 1, l = col + 1; k >= 0 && l <= 7; k--, l++) {
+                    if (chessGrids[row - 1][col + 1].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (chessGrids[k][l].getChessPiece() == currentPlayer) {
+                        return true;
+                    }
+                }
+            }
+    
+            //向右下判断
+            if (row <= 5 && col <= 5) {
+                for (int k = row + 1, l = col + 1; k <= 7 && l <= 7; k++, l++) {
+                    if (chessGrids[row + 1][col + 1].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (chessGrids[k][l].getChessPiece() == currentPlayer) {
+                        return true;
+                    }
+                }
+            }
+        }
+        
+        return false;
+    
     }
 }
