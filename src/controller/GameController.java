@@ -69,13 +69,14 @@ public class GameController {
                 fileData.add(line);
             }
             fileData.forEach(System.out::println);
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void writeDataToFile(String fileName) {
-        //todo: write data into file
+        
         try {
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
             ChessGridComponent[][] chessGridComponents = getGamePanel().getChessGrids();
