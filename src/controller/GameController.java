@@ -1,5 +1,6 @@
 package controller;
 
+import components.ChessGridComponent;
 import model.ChessPiece;
 import view.*;
 
@@ -75,6 +76,34 @@ public class GameController {
 
     public void writeDataToFile(String fileName) {
         //todo: write data into file
+        try {
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
+            ChessGridComponent[][] chessGridComponents = getGamePanel().getChessGrids();
+            
+            bufferedWriter.write("CurrentPlayer: ");
+            bufferedWriter.write(currentPlayer.name());
+            bufferedWriter.newLine();
+            
+            bufferedWriter.write(String.format("GameScore: Black: %d  White: %d\n\n", blackScore, whiteScore));
+            
+            bufferedWriter.write("ChessBoardPanel: \n");
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    if (chessGridComponents[i][j].getChessPiece() == null) {
+                        bufferedWriter.write("NULL   ");
+                    } else {
+                        bufferedWriter.write(chessGridComponents[i][j].getChessPiece().name());
+                        bufferedWriter.write(" ");
+                    }
+                }
+                bufferedWriter.newLine();
+            }
+            
+            System.out.println("Save successfully.");
+            bufferedWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public boolean canClick(int row, int col) {

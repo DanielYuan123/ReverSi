@@ -27,7 +27,11 @@ public class ChessBoardPanel extends JPanel {
 
         repaint();
     }
-
+    
+    public ChessGridComponent[][] getChessGrids() {
+        return chessGrids;
+    }
+    
     /**
      * set an empty chessboard
      */
