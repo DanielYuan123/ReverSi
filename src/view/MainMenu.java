@@ -109,8 +109,8 @@ public class MainMenu extends JFrame {
         //设置两个按钮范围，添加按钮；
         Btn1.setBounds(50,140,100,40);
         Btn2.setBounds(50,230,100,40);
-        Btn1.setBackground(Color.gray);
-        Btn2.setBackground(Color.gray);
+        Btn1.setBackground(Color.white);
+        Btn2.setBackground(Color.white);
         this.add(Btn1);
         this.add(Btn2);
 
