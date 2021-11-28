@@ -10,15 +10,18 @@ import java.awt.image.BufferedImage;
 import java.net.URL;
 
 public class MainMenu extends JFrame {
+
+    //获取容器；
+    private Container container = this.getContentPane();
+
+    //构造器，设置标题和关闭窗口；
     public MainMenu(){
         this.setTitle("GameMenu");
+        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     }
 
     //初始化方法；
     public void init(){
-
-        //获取容器；
-        Container container=getContentPane();
 
         //设置背景颜色,边界和绝对布局
         container.setBackground( new Color(227, 192, 40, 255));
@@ -36,6 +39,7 @@ public class MainMenu extends JFrame {
                 System.exit(0);
             }
         });
+
 
         //从图片源获取图片，并将其导入至Icon类中；
         URL url=MainMenu.class.getResource("Icon.jpeg");
@@ -64,8 +68,7 @@ public class MainMenu extends JFrame {
         TitlePanel.setVisible(true);
 
 
-        //获取JFrame容器，将Icon面板放入；
-        container=getContentPane();
+        //将Icon面板放入；
         container.add(IconPanel);
         container.add(TitlePanel);
 
@@ -73,15 +76,45 @@ public class MainMenu extends JFrame {
         JButton Btn1 = new JButton("Start Game");
         JButton Btn2 = new JButton("Rule");
 
+        //new两个单选框，用于调整游戏模式；
+        JRadioButton pvp = new JRadioButton("PVP");
+        JRadioButton pvc = new JRadioButton("PVC");
+
+        //new 一个自制监听器；
+        Mylistener mylistener = new Mylistener();
+
+        //完成单选框的事件监听；
+        pvp.addActionListener(mylistener);
+        pvc.addActionListener(mylistener);
+
+        //new 一个提示框，用于提醒用户进行模式选取；
+        JLabel Hint = new JLabel("*请选择游戏模式！");
+        Hint.setVisible(false);
+        Hint.setBounds(45,210,120,20);
+        container.add(Hint);
+
+        //设置单选框大小；
+        pvp.setBounds(40,190,60,20);
+        pvc.setBounds(100,190,60,20);
+
+        //设置按钮组；
+        ButtonGroup buttonGroup=new ButtonGroup();
+        buttonGroup.add(pvp);
+        buttonGroup.add(pvc);
+
+        //container添加单选框；
+        container.add(pvp);
+        container.add(pvc);
+
         //设置两个按钮范围，添加按钮；
         Btn1.setBounds(50,140,100,40);
-        Btn2.setBounds(50,190,100,40);
+        Btn2.setBounds(50,230,100,40);
         Btn1.setBackground(Color.gray);
         Btn2.setBackground(Color.gray);
         this.add(Btn1);
         this.add(Btn2);
 
-        //
+        //设置提示框；
         Btn1.setToolTipText("Start the game whose mode is what you choose.");
         Btn2.setToolTipText("To know how to play.");
 
@@ -92,8 +125,14 @@ public class MainMenu extends JFrame {
         Btn1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GameFrame mainFrame = new GameFrame(800);
-                mainFrame.setVisible(true);
+                if(mylistener.Gamemode==1){
+                    GameFrame mainFrame = new GameFrame(800);
+                    mainFrame.setVisible(true);
+                } else if(mylistener.Gamemode==-1){
+                } else {
+                    System.out.println("Please choose your gamemode.");
+                    Hint.setVisible(true);
+                }
             }
         });
 
@@ -110,8 +149,20 @@ public class MainMenu extends JFrame {
         //设置MainMenu的可见性为true；
         this.setVisible(true);
     }
-    //维修类；
+    //维修函数；
     public static void main(String[] args) {
         new MainMenu().init();
+    }
+
+    //新建一个自制监听器的内部类；
+    private class Mylistener implements ActionListener{
+        private int Gamemode=0;
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(e.getActionCommand().equals("PVP")){
+                this.Gamemode=1;
+            } else if(e.getActionCommand().equals("PVC"))
+                this.Gamemode=-1;
+        }
     }
 }
