@@ -79,7 +79,7 @@ public class GameFrame extends JFrame {
 
         
         this.setVisible(true);
-        this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
         
     }
 }
