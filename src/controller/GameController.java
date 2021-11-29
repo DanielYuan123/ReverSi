@@ -64,11 +64,14 @@ public class GameController {
         try {
             FileReader fileReader = new FileReader(fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
+            
+            currentPlayer = (bufferedReader.readLine().contains("BLACK")) ? (ChessPiece.BLACK) : (ChessPiece.WHITE);
+            statusPanel.setPlayerText(currentPlayer.name());
+            
             String line;
-            while ((line = bufferedReader.readLine()) != null) {
+            if ((line = bufferedReader.readLine()) != null) {
                 fileData.add(line);
             }
-            fileData.forEach(System.out::println);
             
         } catch (IOException e) {
             e.printStackTrace();

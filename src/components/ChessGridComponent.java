@@ -27,7 +27,6 @@ public class ChessGridComponent extends BasicComponent {
     @Override
     public void onMouseClicked() {
         System.out.printf("%s clicked (%d, %d)\n", GameFrame.controller.getCurrentPlayer(), row, col);
-        //todo: complete mouse click method
         if (GameFrame.controller.canClick(row, col)) {
             if (this.chessPiece == null) {
                 this.chessPiece = GameFrame.controller.getCurrentPlayer();
@@ -87,7 +86,7 @@ public class ChessGridComponent extends BasicComponent {
                 }
     
                 //向右修改
-                if (col <= 7) {
+                if (col <= 5) {
                     for (int k = col + 1; k <= 7; k++) {
                         if (chessGirds[row][col + 1].getChessPiece() != otherPlayer) {
                             break;
@@ -104,7 +103,7 @@ public class ChessGridComponent extends BasicComponent {
                 }
     
                 //向左上修改
-                if (row >= 2 && col <= 5) {
+                if (row >= 2 && col >= 2) {
                     for (int k = row - 1, l = col - 1; k >= 0 && l >= 0; k--, l--) {
                         if (chessGirds[row - 1][col - 1].getChessPiece() != otherPlayer) {
                             break;
@@ -121,7 +120,7 @@ public class ChessGridComponent extends BasicComponent {
                 }
     
                 //向左下修改
-                if (row <= 5 && col >= 0) {
+                if (row <= 5 && col >= 2) {
                     for (int k = row + 1, l = col - 1; k <= 7 && l >= 0; k++, l--) {
                         if (chessGirds[row + 1][col - 1].getChessPiece() != otherPlayer) {
                             break;
