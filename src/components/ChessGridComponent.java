@@ -1,7 +1,6 @@
 package components;
 
 import model.*;
-import view.ChessBoardPanel;
 import view.GameFrame;
 import java.awt.*;
 
@@ -11,7 +10,6 @@ public class ChessGridComponent extends BasicComponent {
     public static Color gridColor = new Color(255, 150, 50);
 
     private ChessPiece chessPiece;
-    private ChessBoardPanel chessGird = null;
     private int row;
     private int col;
 
@@ -30,7 +28,6 @@ public class ChessGridComponent extends BasicComponent {
         if (GameFrame.controller.canClick(row, col)) {
             if (this.chessPiece == null) {
                 this.chessPiece = GameFrame.controller.getCurrentPlayer();
-                ChessPiece currentPlayer = GameFrame.controller.getCurrentPlayer();
                 ChessPiece otherPlayer = (GameFrame.controller.getCurrentPlayer() == ChessPiece.BLACK) ? (ChessPiece.WHITE) : (ChessPiece.BLACK);
                 ChessGridComponent[][] chessGirds = GameFrame.controller.getGamePanel().getChessGrids();
     
@@ -42,9 +39,9 @@ public class ChessGridComponent extends BasicComponent {
                             break;
                         }
                         if (chessGirds[k][col].getChessPiece() != otherPlayer) {
-                            if (chessGirds[k][col].getChessPiece() == currentPlayer) {
+                            if (chessGirds[k][col].getChessPiece() == chessPiece) {
                                 for (int x = row; x > k; x--) {
-                                    chessGirds[x][col].setChessPiece(currentPlayer);
+                                    chessGirds[x][col].setChessPiece(chessPiece);
                                 }
                             }
                             break;
@@ -170,6 +167,7 @@ public class ChessGridComponent extends BasicComponent {
                         }
                     }
                 }
+                
                 for (int i = 0; i < 8; i++) {
                     for (int j = 0; j < 8; j++) {
                         chessGirds[i][j].repaint();

@@ -57,16 +57,10 @@ public class GameController {
     public ChessBoardPanel getGamePanel() {
         return gamePanel;
     }
-
-
-    public void setGamePanel(ChessBoardPanel gamePanel) {
-        this.gamePanel = gamePanel;
-    }
-
+    
 
     public void readFileData(String fileName) {
-        //todo: read date from file
-        List<Integer> fileData = new ArrayList<>();
+        
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
             

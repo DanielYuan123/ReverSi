@@ -9,8 +9,8 @@ import java.awt.*;
 public class ChessBoardPanel extends JPanel {
     private final int CHESS_COUNT = 8;
     private ChessGridComponent[][] chessGrids;
-
-    public ChessBoardPanel(){
+    
+    public ChessBoardPanel() {
         this.setVisible(true);
         this.setFocusable(true);
         this.setLayout(null);
@@ -20,7 +20,7 @@ public class ChessBoardPanel extends JPanel {
         ChessGridComponent.chessSize = (int) (ChessGridComponent.gridSize * 0.8);
         initialChessGrids();
     }
-
+    
     public ChessBoardPanel(int width, int height) {
         this.setVisible(true);
         this.setFocusable(true);
@@ -32,10 +32,10 @@ public class ChessBoardPanel extends JPanel {
         ChessGridComponent.chessSize = (int) (ChessGridComponent.gridSize * 0.8);
         System.out.printf("width = %d height = %d gridSize = %d chessSize = %d\n",
                 width, height, ChessGridComponent.gridSize, ChessGridComponent.chessSize);
-
+        
         initialChessGrids();//return empty chessboard
         initialGame();//add initial four chess
-
+        
         repaint();
     }
     
@@ -44,13 +44,12 @@ public class ChessBoardPanel extends JPanel {
     }
     
     
-    
     /**
      * set an empty chessboard
      */
     public void initialChessGrids() {
         chessGrids = new ChessGridComponent[CHESS_COUNT][CHESS_COUNT];
-
+    
         //draw all chess grids
         for (int i = 0; i < CHESS_COUNT; i++) {
             for (int j = 0; j < CHESS_COUNT; j++) {
@@ -61,7 +60,7 @@ public class ChessBoardPanel extends JPanel {
             }
         }
     }
-
+    
     /**
      * initial origin four chess
      */
@@ -79,13 +78,13 @@ public class ChessBoardPanel extends JPanel {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
-
+    
     public boolean canClickGrid(int row, int col, ChessPiece currentPlayer) {
-    
+        
         ChessPiece otherPlayer = (currentPlayer == ChessPiece.BLACK) ? (ChessPiece.WHITE) : (ChessPiece.BLACK);
-    
+        
         if (chessGrids[row][col].getChessPiece() != currentPlayer && chessGrids[row][col].getChessPiece() != otherPlayer) {
-    
+            
             //向上判断
             if (row >= 2) {
                 for (int k = row - 1; k >= 0; k--) {
@@ -97,8 +96,8 @@ public class ChessBoardPanel extends JPanel {
                     }
                 }
             }
-    
-    
+            
+            
             //向下判断
             if (row <= 5) {
                 for (int k = row + 1; k <= 7; k++) {
@@ -110,7 +109,7 @@ public class ChessBoardPanel extends JPanel {
                     }
                 }
             }
-    
+            
             //向左判断
             if (col >= 2) {
                 for (int k = col - 1; k >= 0; k--) {
@@ -122,7 +121,7 @@ public class ChessBoardPanel extends JPanel {
                     }
                 }
             }
-    
+            
             //向右判断
             if (col <= 5) {
                 for (int k = col + 1; k <= 7; k++) {
@@ -134,7 +133,7 @@ public class ChessBoardPanel extends JPanel {
                     }
                 }
             }
-    
+            
             //向左上判断
             if (row >= 2 && col >= 2) {
                 for (int k = row - 1, l = col - 1; k >= 0 && l >= 0; k--, l--) {
@@ -146,7 +145,7 @@ public class ChessBoardPanel extends JPanel {
                     }
                 }
             }
-    
+            
             //向左下判断
             if (row <= 5 && col >= 2) {
                 for (int k = row + 1, l = col - 1; k <= 7 && l >= 0; k++, l--) {
@@ -158,7 +157,7 @@ public class ChessBoardPanel extends JPanel {
                     }
                 }
             }
-    
+            
             //向右上判断
             if (row >= 2 && col <= 5) {
                 for (int k = row - 1, l = col + 1; k >= 0 && l <= 7; k--, l++) {
@@ -170,7 +169,7 @@ public class ChessBoardPanel extends JPanel {
                     }
                 }
             }
-    
+            
             //向右下判断
             if (row <= 5 && col <= 5) {
                 for (int k = row + 1, l = col + 1; k <= 7 && l <= 7; k++, l++) {
@@ -185,7 +184,7 @@ public class ChessBoardPanel extends JPanel {
         }
         
         return false;
-    
+        
     }
     
 }
