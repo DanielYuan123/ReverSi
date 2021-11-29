@@ -43,6 +43,8 @@ public class ChessBoardPanel extends JPanel {
         return chessGrids;
     }
     
+    
+    
     /**
      * set an empty chessboard
      */
@@ -69,8 +71,8 @@ public class ChessBoardPanel extends JPanel {
         chessGrids[4][3].setChessPiece(ChessPiece.WHITE);
         chessGrids[4][4].setChessPiece(ChessPiece.BLACK);
     }
-
-
+    
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

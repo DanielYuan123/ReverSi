@@ -3,7 +3,6 @@ package view;
 import controller.GameController;
 
 import javax.swing.*;
-import javax.xml.soap.SOAPPart;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -107,5 +106,9 @@ public class GameFrame extends JFrame {
                 controller.writeDataToFile(filePath);
             }
         }
+    }
+    
+    public static void main(String[] args) {
+        new GameFrame(800);
     }
 }
