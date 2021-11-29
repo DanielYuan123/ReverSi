@@ -4,7 +4,6 @@ import model.*;
 import view.ChessBoardPanel;
 import view.GameFrame;
 import java.awt.*;
-import java.util.Locale;
 
 public class ChessGridComponent extends BasicComponent {
     public static int chessSize;
@@ -34,7 +33,7 @@ public class ChessGridComponent extends BasicComponent {
                 ChessPiece currentPlayer = GameFrame.controller.getCurrentPlayer();
                 ChessPiece otherPlayer = (GameFrame.controller.getCurrentPlayer() == ChessPiece.BLACK) ? (ChessPiece.WHITE) : (ChessPiece.BLACK);
                 ChessGridComponent[][] chessGirds = GameFrame.controller.getGamePanel().getChessGrids();
-
+    
                 //向8个方向修改
                 //向上修改
                 if (row >= 2) {
@@ -171,9 +170,11 @@ public class ChessGridComponent extends BasicComponent {
                         }
                     }
                 }
-                for(int i=0;i<8;i++)
-                    for(int j=0;j<8;j++)
+                for (int i = 0; i < 8; i++) {
+                    for (int j = 0; j < 8; j++) {
                         chessGirds[i][j].repaint();
+                    }
+                }
                 GameFrame.controller.swapPlayer();
             }
             repaint();

@@ -187,10 +187,5 @@ public class ChessBoardPanel extends JPanel {
         return false;
     
     }
-
-    public void setChessGrids(ChessGridComponent[][] chessGrids){
-        for(int i=0;i<8;i++)
-            for(int j=0;j<8;j++)
-                this.chessGrids[i][j]=chessGrids[i][j];
-    }
+    
 }
