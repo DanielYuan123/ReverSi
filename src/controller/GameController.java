@@ -35,11 +35,17 @@ public class GameController {
 
 
     public void countScore() {
-        //todo: modify the countScore method
-        if (currentPlayer == ChessPiece.BLACK) {
-            blackScore++;
-        } else {
-            whiteScore++;
+        blackScore=0;
+        whiteScore=0;
+        for(int i=0;i<8;i++) {
+            for (int j = 0; j < 8; j++) {
+                if(this.gamePanel.getChessGrids()[i][j].getChessPiece()==ChessPiece.BLACK){
+                    blackScore++;
+                }
+                if(this.gamePanel.getChessGrids()[i][j].getChessPiece()==ChessPiece.WHITE){
+                    whiteScore++;
+                }
+            }
         }
     }
 
