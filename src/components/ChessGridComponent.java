@@ -47,7 +47,6 @@ public class ChessGridComponent extends BasicComponent {
                             if (chessGirds[k][col].getChessPiece() == currentPlayer) {
                                 for (int x = row; x > k; x--) {
                                     chessGirds[x][col].setChessPiece(currentPlayer);
-                                    this.add(chessGirds[x][col]);
                                 }
                             }
                             break;
