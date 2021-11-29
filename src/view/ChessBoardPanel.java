@@ -10,6 +10,17 @@ public class ChessBoardPanel extends JPanel {
     private final int CHESS_COUNT = 8;
     private ChessGridComponent[][] chessGrids;
 
+    public ChessBoardPanel(){
+        this.setVisible(true);
+        this.setFocusable(true);
+        this.setLayout(null);
+        this.setBackground(Color.BLACK);
+        this.setSize(560, 560);
+        ChessGridComponent.gridSize = 560 / CHESS_COUNT;
+        ChessGridComponent.chessSize = (int) (ChessGridComponent.gridSize * 0.8);
+        initialChessGrids();
+    }
+
     public ChessBoardPanel(int width, int height) {
         this.setVisible(true);
         this.setFocusable(true);
@@ -173,5 +184,11 @@ public class ChessBoardPanel extends JPanel {
         
         return false;
     
+    }
+
+    public void setChessGrids(ChessGridComponent[][] chessGrids){
+        for(int i=0;i<8;i++)
+            for(int j=0;j<8;j++)
+                this.chessGrids[i][j]=chessGrids[i][j];
     }
 }

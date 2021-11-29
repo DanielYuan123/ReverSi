@@ -92,6 +92,8 @@ public class GameFrame extends JFrame {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
+
+            //使监听器能区分触发的不同button以触发不同效果；
             if(e.getActionCommand().equals("Restart")){
                 System.out.println("clicked Restart button.");
                 this.gameFrame.setVisible(false);
