@@ -1,12 +1,17 @@
 package view;
 
 import javax.swing.*;
+import java.applet.Applet;
+import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.net.MalformedURLException;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.net.URI;
 import java.net.URL;
 
 public class MainMenu extends JFrame {
@@ -144,8 +149,25 @@ public class MainMenu extends JFrame {
             }
         });
 
+        this.PlayMusic();
+
         //设置MainMenu的可见性为true；
         this.setVisible(true);
+    }
+
+    static void PlayMusic(){
+        try {
+            URL url;
+            URI uri;
+            File music = new File("Music/1-05 Un Jour De Juillet.wav");
+            uri=music.toURI();
+            url=uri.toURL();
+            AudioClip audioClip= Applet.newAudioClip(url);
+            audioClip.play();
+            audioClip.loop();
+        }catch (MalformedURLException e){
+            e.printStackTrace();
+        }
     }
     //维修函数；
     public static void main(String[] args) {
