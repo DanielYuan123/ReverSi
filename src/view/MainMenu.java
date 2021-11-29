@@ -42,10 +42,8 @@ public class MainMenu extends JFrame {
 
 
         //从图片源获取图片，并将其导入至Icon类中；
-        URL url=MainMenu.class.getResource("Icon.jpeg");
-        ImageIcon Icon = new ImageIcon(url);
-        URL url2=MainMenu.class.getResource("Titleimage.png");
-        ImageIcon TitleIcon = new ImageIcon(url2);
+        ImageIcon Icon = new ImageIcon("Image/Icon.jpeg");
+        ImageIcon TitleIcon = new ImageIcon("Image/Titleimage.png");
 
         //获取该Icon的图片类，进行缩小适应；
         Image image=Icon.getImage();

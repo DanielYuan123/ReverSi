@@ -45,5 +45,7 @@ public class StatusPanel extends JPanel {
         this.playerLabel.setForeground(c);
     }
 
-    public void setScoreLabelColor(Color c){this.scoreLabel.setForeground(c);}
+    public void setScoreLabelColor(Color c){
+        this.scoreLabel.setForeground(c);
+    }
 }
