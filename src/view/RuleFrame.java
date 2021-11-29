@@ -22,7 +22,7 @@ public class RuleFrame extends Frame{
 
         //创建标签用于存放文字介绍；
         JLabel label = new JLabel();
-        JLabel titleLabel = new JLabel();//2.15
+        JLabel titleLabel = new JLabel();
 
         //设置标签的大小、边界和位置；
         label.setBounds(10,0,780,890);
@@ -31,8 +31,7 @@ public class RuleFrame extends Frame{
         titleLabel.setSize(560,110);
 
         //添加imagIcon类；
-        URL Source = RuleFrame.class.getResource("ReveisiIntroduction.jpeg");
-        ImageIcon TitleIcon = new ImageIcon(Source);
+        ImageIcon TitleIcon = new ImageIcon("Image/ReveisiIntroduction.jpeg");
 
         //创建图片类,并且缩放其大小与JLabel相适应；
         Image TitleImage = TitleIcon.getImage();
@@ -66,7 +65,7 @@ public class RuleFrame extends Frame{
 
     }
 
-    //维修类
+    //维修函数；
     public static void main(String[] args) {
         new RuleFrame("RUle").init();
     }

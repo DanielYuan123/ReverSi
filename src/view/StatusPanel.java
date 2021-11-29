@@ -40,5 +40,12 @@ public class StatusPanel extends JPanel {
     public void setPlayerText(String playerText) {
         this.playerLabel.setText(playerText + "'s turn");
     }
-    
+
+    public void setPlayerLabelColor(Color c){
+        this.playerLabel.setForeground(c);
+    }
+
+    public void setScoreLabelColor(Color c){
+        this.scoreLabel.setForeground(c);
+    }
 }

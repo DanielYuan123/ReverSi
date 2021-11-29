@@ -3,6 +3,7 @@ package view;
 import controller.GameController;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,6 +11,8 @@ public class GameFrame extends JFrame {
     public static GameController controller;
     private ChessBoardPanel chessBoardPanel;
     private StatusPanel statusPanel;
+    private Container container=this.getContentPane();
+
 
     public GameFrame(int frameSize) {
         
@@ -24,7 +27,7 @@ public class GameFrame extends JFrame {
         chessBoardPanel.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 2, (this.getHeight() - chessBoardPanel.getHeight()) / 3);
         
 
-        statusPanel = new StatusPanel((int) (this.getWidth() * 0.8), (int) (this.getHeight() * 0.1));
+        statusPanel = new StatusPanel(560, (int) (this.getHeight() * 0.1));
         statusPanel.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 2, 0);
         
         
@@ -58,16 +61,14 @@ public class GameFrame extends JFrame {
         add(saveGameBtn);
         saveGameBtn.addActionListener(myBtnActionListener);
         
-        
+        //new一个自制夜间监听事件；
+        NightModeSetter nightModeSetter=new NightModeSetter(this);
+
         JButton nightModeBtn= new JButton("Nightmode");
         nightModeBtn.setSize(120,50);
         nightModeBtn.setLocation(saveGameBtn.getX()+saveGameBtn.getWidth()+30, restartBtn.getY());
         add(nightModeBtn);
-        nightModeBtn.addActionListener(e -> {
-            System.out.println("click NightMode Btn");
-            //todo: compete the night mode
-
-        });
+        nightModeBtn.addActionListener(nightModeSetter);
 
         
         this.setVisible(true);
@@ -107,7 +108,35 @@ public class GameFrame extends JFrame {
             }
         }
     }
-    
+
+    //创建夜间模式事件监听类；
+    private class NightModeSetter implements ActionListener{
+        private int nightModeInt=-1;
+        private GameFrame client;
+
+        //构造器重写，引入GameFrame变量；
+        public NightModeSetter(GameFrame gameFrame){
+            this.client=gameFrame;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(this.nightModeInt==1){
+                client.container.setBackground(Color.WHITE);
+                client.statusPanel.setBackground(Color.WHITE);
+                client.statusPanel.setPlayerLabelColor(Color.BLACK);
+                client.statusPanel.setScoreLabelColor(Color.BLACK);
+                this.nightModeInt=-1;
+            }else if(this.nightModeInt==-1){
+                client.container.setBackground(Color.BLACK);
+                client.statusPanel.setPlayerLabelColor(Color.white);
+                client.statusPanel.setScoreLabelColor(Color.WHITE);
+                client.statusPanel.setBackground(Color.BLACK);
+                this.nightModeInt=1;
+            }
+        }
+    }
+    //维修函数；
     public static void main(String[] args) {
         new GameFrame(800);
     }
