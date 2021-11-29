@@ -35,20 +35,29 @@ public class GameController {
 
 
     public void countScore() {
-        blackScore=0;
-        whiteScore=0;
-        for(int i=0;i<8;i++) {
+        blackScore = 0;
+        whiteScore = 0;
+        for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if(this.gamePanel.getChessGrids()[i][j].getChessPiece()==ChessPiece.BLACK){
+                if (this.gamePanel.getChessGrids()[i][j].getChessPiece() == ChessPiece.BLACK) {
                     blackScore++;
                 }
-                if(this.gamePanel.getChessGrids()[i][j].getChessPiece()==ChessPiece.WHITE){
+                if (this.gamePanel.getChessGrids()[i][j].getChessPiece() == ChessPiece.WHITE) {
                     whiteScore++;
                 }
             }
         }
     }
 
+    public void gameOver() {
+        if (blackScore > whiteScore) {
+            System.out.println("Black player is win!");
+        } else if (blackScore < whiteScore) {
+            System.out.println("White player is win!");
+        } else {
+            System.out.println("Both of you have the same lever!");
+        }
+    }
 
     public ChessPiece getCurrentPlayer() {
         return currentPlayer;

@@ -174,11 +174,26 @@ public class ChessGridComponent extends BasicComponent {
                     }
                 }
                 GameFrame.controller.swapPlayer();
+                if (!canContinueGame()) {
+                    GameFrame.controller.gameOver();
+                }
+                
             }
             repaint();
         }
+        
     }
     
+    public boolean canContinueGame() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (GameFrame.controller.canClick(i, j)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     
     public void setChessPiece(ChessPiece chessPiece) {
         this.chessPiece = chessPiece;
