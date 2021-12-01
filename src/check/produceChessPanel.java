@@ -25,17 +25,21 @@ public class produceChessPanel {
             bufferedWriter.newLine();
             bufferedWriter.newLine();
             bufferedWriter.write("ChessBoardPanel: ");
+            bufferedWriter.close();
+            /*
             for (int i = 0; i < 64; i++) {
-                if (input.nextInt() == -1) {
+                if (input.nextInt() == 1) {
                     bufferedWriter.write("BLACK\n");
-                } else if (input.nextInt() == 0) {
+                } else if (input.nextInt() == 2) {
                     bufferedWriter.write("WHITE\n");
-                } else if (input.nextInt() == 1) {
+                } else if (input.nextInt() == 0) {
                     bufferedWriter.write("NULL\n");
                 } else {
                     System.exit(404);
                 }
             }
+            */
+            
         } catch (IOException e) {
             System.out.println("error");
         }

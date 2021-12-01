@@ -16,6 +16,7 @@ public class GameFrame extends JFrame {
     private Container container=this.getContentPane();
     private static ArrayList<int[][]>boardPanelsList=new ArrayList<>(5);
     public static int stepNum=0;
+    public static boolean cheatModeIsOpen = false;
 
     public static ArrayList<int[][]> getBoardPanelsList(){
         return GameFrame.boardPanelsList;
@@ -50,7 +51,7 @@ public class GameFrame extends JFrame {
 
         JButton restartBtn = new JButton("Restart");
         restartBtn.setSize(120, 50);
-        restartBtn.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 2, (this.getHeight() + chessBoardPanel.getHeight()) / 2);
+        restartBtn.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 7, (this.getHeight() + chessBoardPanel.getHeight()) / 2);
         add(restartBtn);
         restartBtn.addActionListener(myBtnActionListener);
 
@@ -77,6 +78,14 @@ public class GameFrame extends JFrame {
         add(nightModeBtn);
         nightModeBtn.addActionListener(nightModeSetter);
 
+        
+        JButton cheatMode = new JButton("CheatMode");
+        cheatMode.setSize(120, 50);
+        cheatMode.setLocation(nightModeBtn.getX() + nightModeBtn.getWidth() + 30, restartBtn.getY());
+        add(cheatMode);
+        cheatMode.addActionListener(myBtnActionListener);
+        
+        
         
         this.setVisible(true);
         this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
@@ -111,9 +120,13 @@ public class GameFrame extends JFrame {
                 System.out.println("clicked Load Btn");
                 String filePath = JOptionPane.showInputDialog("Load the game:", "input the path here");
                 controller.readFileData(filePath);
-            }else if(e.getActionCommand().equals("Save")){System.out.println("clicked Save Btn");
+            }else if(e.getActionCommand().equals("Save")){
+                System.out.println("clicked Save Btn");
                 String filePath = JOptionPane.showInputDialog("Save the game:", "input the path here");
                 controller.writeDataToFile(filePath);
+            } else if(e.getActionCommand().equals("CheatMode")) {
+                System.out.println("Clicked CheatMode Button.");
+                cheatModeIsOpen = true;
             }
         }
     }

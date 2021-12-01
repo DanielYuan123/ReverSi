@@ -66,15 +66,15 @@ public class ChessGridComponent extends BasicComponent {
         soundClip.start();
 
     }
-
+    
     @Override
     public void onMouseClicked() {
         System.out.printf("%s clicked (%d, %d)\n", GameFrame.controller.getCurrentPlayer(), row, col);
-        if (GameFrame.controller.canClick(row, col)) {
+        if (GameFrame.controller.canClick(row, col) || GameFrame.cheatModeIsOpen) {
             if (this.chessPiece == null) {
                 this.chessPiece = GameFrame.controller.getCurrentPlayer();
                 ChessPiece currentPlayer = GameFrame.controller.getCurrentPlayer();
-                System.arraycopy(GameFrame.controller.getGamePanel().getChessGrids(),0,formerGridComponent,0,8);
+                System.arraycopy(GameFrame.controller.getGamePanel().getChessGrids(), 0, formerGridComponent, 0, 8);
                 ChessPiece otherPlayer = (GameFrame.controller.getCurrentPlayer() == ChessPiece.BLACK) ? (ChessPiece.WHITE) : (ChessPiece.BLACK);
                 ChessGridComponent[][] chessGirds = GameFrame.controller.getGamePanel().getChessGrids();
                 this.PlaySound();
@@ -214,37 +214,38 @@ public class ChessGridComponent extends BasicComponent {
                         }
                     }
                 }
-
-                System.out.println("Step number: "+GameFrame.stepNum);
-
-                System.out.println("BoardPanelsize: " +GameFrame.getBoardPanelsList().size());
-
-                int[][] Panel=new int[8][8];
-
+    
+                System.out.println("Step number: " + GameFrame.stepNum);
+    
+                System.out.println("BoardPanelsize: " + GameFrame.getBoardPanelsList().size());
+    
+                int[][] Panel = new int[8][8];
+    
                 for (int i = 0; i < 8; i++) {
-                    for(int j=0;j<8;j++){
-                        if(chessGirds[i][j].getChessPiece()==null){
-                            Panel[i][j]=0;
-                        }else if (chessGirds[i][j].getChessPiece().equals(ChessPiece.BLACK)){
-                            Panel[i][j]=1;
-                        }else{
-                            Panel[i][j]=-1;
+                    for (int j = 0; j < 8; j++) {
+                        if (chessGirds[i][j].getChessPiece() == null) {
+                            Panel[i][j] = 0;
+                        } else if (chessGirds[i][j].getChessPiece().equals(ChessPiece.BLACK)) {
+                            Panel[i][j] = 1;
+                        } else {
+                            Panel[i][j] = -1;
                         }
                     }
                 }
-
+    
+    
                 GameFrame.getBoardPanelsList().add(Panel);
-
-                for(int j=0;j<8;j++)
-                    for(int k=0;k<8;k++) {
+    
+                for (int j = 0; j < 8; j++)
+                    for (int k = 0; k < 8; k++) {
                         chessGirds[j][k].timer.start();
-                        }
                     }
-
-                GameFrame.controller.swapPlayer();
             }
-
+    
+            GameFrame.controller.swapPlayer();
         }
+    
+    }
     
     
     public void setChessPiece(ChessPiece chessPiece) {
@@ -344,15 +345,15 @@ public class ChessGridComponent extends BasicComponent {
         public void actionPerformed(ActionEvent e) {
             if(length>0){
 
-                length -= 1;
+                length -= 7;
 
             } else if(length==0){
 
-                length -= 1;
+                length -= 7;
 
             } else if(length<0) {
 
-                length -= 1;
+                length -= 7;
             }
 
             repaint();
