@@ -1,21 +1,28 @@
 package view;
 
+import components.ChessGridComponent;
 import controller.GameController;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class GameFrame extends JFrame {
     public static GameController controller;
     private ChessBoardPanel chessBoardPanel;
     private StatusPanel statusPanel;
     private Container container=this.getContentPane();
+    private static ArrayList<int[][]>boardPanelsList=new ArrayList<>(5);
+    public static int stepNum=0;
+
+    public static ArrayList<int[][]> getBoardPanelsList(){
+        return GameFrame.boardPanelsList;
+    }
 
 
     public GameFrame(int frameSize) {
-        
         
         this.setTitle("2021F CS102A Project Reversi");
         this.setLayout(null);
@@ -98,6 +105,8 @@ public class GameFrame extends JFrame {
                 System.out.println("clicked Restart button.");
                 this.gameFrame.setVisible(false);
                 new GameFrame(800);
+                GameFrame.stepNum=0;
+                GameFrame.getBoardPanelsList().clear();
             }else if(e.getActionCommand().equals("Load")){
                 System.out.println("clicked Load Btn");
                 String filePath = JOptionPane.showInputDialog("Load the game:", "input the path here");

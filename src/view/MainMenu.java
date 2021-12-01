@@ -1,6 +1,9 @@
 package view;
 
+import components.ChessGridComponent;
+
 import javax.swing.*;
+import javax.sound.sampled.*;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.*;
@@ -8,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -16,6 +20,18 @@ import java.net.URL;
 
 public class MainMenu extends JFrame {
 
+    private SettingFrame settingFrame =new SettingFrame();
+
+    public static AudioInputStream Mainstream;
+
+    public static Clip clip;
+
+    public static FloatControl gainControl;
+
+    public SettingFrame getSettingFrame(){
+        return this.settingFrame;
+    }
+
     //获取容器；
     private Container container = this.getContentPane();
 
@@ -23,6 +39,7 @@ public class MainMenu extends JFrame {
     public MainMenu(){
         this.setTitle("GameMenu");
         this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.settingFrame.init();
     }
 
     //初始化方法；
@@ -32,6 +49,13 @@ public class MainMenu extends JFrame {
         container.setBackground( new Color(227, 192, 40, 255));
         this.setBounds(600,210,200,350);
         this.setLayout(null);
+
+        //提前设置下子音效；
+        try{
+            ChessGridComponent.setSound();
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+            e.printStackTrace();
+        }
 
         //设置大小不可变；
         this.setResizable(false);
@@ -75,16 +99,17 @@ public class MainMenu extends JFrame {
         container.add(IconPanel);
         container.add(TitlePanel);
 
-        //new两个按钮，分别用来启动游戏和查看规则；
+        //new三个按钮，分别用来启动游戏和查看规则以及调整音量；
         JButton Btn1 = new JButton("Start Game");
         JButton Btn2 = new JButton("Rule");
+        JButton Btn3 = new JButton("Setting");
 
         //new两个单选框，用于调整游戏模式；
         JRadioButton pvp = new JRadioButton("PVP");
         JRadioButton pvc = new JRadioButton("PVC");
 
         //new 一个自制监听器；
-        Mylistener mylistener = new Mylistener();
+        Mylistener mylistener = new Mylistener(this);
 
         //完成单选框的事件监听；
         pvp.addActionListener(mylistener);
@@ -112,14 +137,18 @@ public class MainMenu extends JFrame {
         //设置两个按钮范围，添加按钮；
         Btn1.setBounds(50,140,100,40);
         Btn2.setBounds(50,230,100,40);
+        Btn3.setBounds(50,270,100,40);
         Btn1.setBackground(Color.white);
         Btn2.setBackground(Color.white);
+        Btn3.setBackground(Color.white);
         this.add(Btn1);
         this.add(Btn2);
+        this.add(Btn3);
 
         //设置提示框；
         Btn1.setToolTipText("Start the game whose mode is what you choose.");
         Btn2.setToolTipText("To know how to play.");
+        Btn3.setToolTipText("Set the volume of background music and sound.");
 
         /*
         按钮一（开始游戏）的事件监听器；运用匿名类实现ActionListen中的方法，使按钮
@@ -139,6 +168,8 @@ public class MainMenu extends JFrame {
             }
         });
 
+
+
         /*
         完成按钮二（帮助）的事件监听，新建JFrame名为Rule，执行其初始化操作；
         */
@@ -149,13 +180,40 @@ public class MainMenu extends JFrame {
             }
         });
 
+        //完成按钮三事件监听；
+        Btn3.addActionListener(mylistener);
+
+        try{
+        this.setMusic1();
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+            e.printStackTrace();
+        }
+
+        //播放音乐；（在playmusic函数中，输入参数为-1停止播放,为1开始播放）
         this.PlayMusic();
 
         //设置MainMenu的可见性为true；
         this.setVisible(true);
     }
 
-    static void PlayMusic(){
+    //设置音乐的方法；
+    void setMusic1() throws IOException,LineUnavailableException,UnsupportedAudioFileException {
+        this.Mainstream = AudioSystem.getAudioInputStream(new File("Music/1-05 Un Jour De Juillet.wav"));
+        this.clip = AudioSystem.getClip();
+        this.clip.open(this.Mainstream);
+        this.gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+
+        //clip.start();
+    }
+
+    //播放音乐的方法；
+    void PlayMusic(){
+        this.clip.start();
+        this.clip.loop(5000);
+    }
+
+    //完成playmusic的静态方法；可在其他类中更改；
+    static void PlayMusic(int num){
         try {
             URL url;
             URI uri;
@@ -163,8 +221,12 @@ public class MainMenu extends JFrame {
             uri=music.toURI();
             url=uri.toURL();
             AudioClip audioClip= Applet.newAudioClip(url);
+            if(num==1){
             audioClip.play();
-            audioClip.loop();
+            audioClip.loop();}
+            if(num==-1){
+                audioClip.stop();
+            }
         }catch (MalformedURLException e){
             e.printStackTrace();
         }
@@ -177,12 +239,22 @@ public class MainMenu extends JFrame {
     //新建一个自制监听器的内部类；
     private class Mylistener implements ActionListener{
         private int Gamemode=0;
+        private MainMenu mainMenu;
+
+        public Mylistener(MainMenu mainMenu) {
+            this.mainMenu=mainMenu;
+        }
+
+        //重写事件监听方法；
         @Override
         public void actionPerformed(ActionEvent e) {
             if(e.getActionCommand().equals("PVP")){
                 this.Gamemode=1;
-            } else if(e.getActionCommand().equals("PVC"))
+            } else if(e.getActionCommand().equals("PVC")){
                 this.Gamemode=-1;
+            } else if (e.getActionCommand().equals("Setting")){
+                this.mainMenu.settingFrame.setVisible(true);
+            }
         }
     }
 }
