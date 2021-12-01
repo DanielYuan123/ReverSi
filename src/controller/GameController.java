@@ -35,20 +35,29 @@ public class GameController {
 
 
     public void countScore() {
-        blackScore=0;
-        whiteScore=0;
-        for(int i=0;i<8;i++) {
+        blackScore = 0;
+        whiteScore = 0;
+        for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if(this.gamePanel.getChessGrids()[i][j].getChessPiece()==ChessPiece.BLACK){
+                if (this.gamePanel.getChessGrids()[i][j].getChessPiece() == ChessPiece.BLACK) {
                     blackScore++;
                 }
-                if(this.gamePanel.getChessGrids()[i][j].getChessPiece()==ChessPiece.WHITE){
+                if (this.gamePanel.getChessGrids()[i][j].getChessPiece() == ChessPiece.WHITE) {
                     whiteScore++;
                 }
             }
         }
     }
 
+    public void gameOver() {
+        if (blackScore > whiteScore) {
+            System.out.println("Black player is win!");
+        } else if (blackScore < whiteScore) {
+            System.out.println("White player is win!");
+        } else {
+            System.out.println("Both of you have the same lever!");
+        }
+    }
 
     public ChessPiece getCurrentPlayer() {
         return currentPlayer;
@@ -57,28 +66,54 @@ public class GameController {
     public ChessBoardPanel getGamePanel() {
         return gamePanel;
     }
-
-
-    public void setGamePanel(ChessBoardPanel gamePanel) {
-        this.gamePanel = gamePanel;
-    }
-
+    
 
     public void readFileData(String fileName) {
-        //todo: read date from file
-        List<String> fileData = new ArrayList<>();
+        
         try {
-            FileReader fileReader = new FileReader(fileName);
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
             
+            bufferedReader.readLine();
             currentPlayer = (bufferedReader.readLine().contains("BLACK")) ? (ChessPiece.BLACK) : (ChessPiece.WHITE);
             statusPanel.setPlayerText(currentPlayer.name());
-            
-            String line;
-            if ((line = bufferedReader.readLine()) != null) {
-                fileData.add(line);
+            bufferedReader.readLine();
+            bufferedReader.readLine();
+    
+            String black = bufferedReader.readLine();
+            blackScore = Integer.parseInt(black);
+            bufferedReader.readLine();
+            String white = bufferedReader.readLine();
+            whiteScore = Integer.parseInt(white);
+            statusPanel.setScoreText(blackScore, whiteScore);
+    
+            bufferedReader.readLine();
+            bufferedReader.readLine();
+    
+            ChessGridComponent[][] chessGridComponents = gamePanel.getChessGrids();
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    String chess = bufferedReader.readLine();
+                    switch (chess) {
+                        case "NULL":
+                            chessGridComponents[i][j].setChessPiece(null);
+                            break;
+                        case "BLACK":
+                            chessGridComponents[i][j].setChessPiece(ChessPiece.BLACK);
+                            break;
+                        case "WHITE":
+                            chessGridComponents[i][j].setChessPiece(ChessPiece.WHITE);
+                            break;
+                    }
+                }
             }
-            
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    chessGridComponents[i][j].repaint();
+                }
+            }
+    
+            System.out.println("Load successfully.");
+            bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,19 +129,18 @@ public class GameController {
             bufferedWriter.write(currentPlayer.name());
             bufferedWriter.newLine();
             
-            bufferedWriter.write(String.format("GameScore: Black: %d  White: %d\n\n", blackScore, whiteScore));
+            bufferedWriter.write(String.format("\nGameScore: \nBlack: \n%d\nWhite: \n%d\n\n", blackScore, whiteScore));
             
             bufferedWriter.write("ChessBoardPanel: \n");
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
                     if (chessGridComponents[i][j].getChessPiece() == null) {
-                        bufferedWriter.write("NULL   ");
+                        bufferedWriter.write("NULL\n");
                     } else {
                         bufferedWriter.write(chessGridComponents[i][j].getChessPiece().name());
-                        bufferedWriter.write(" ");
+                        bufferedWriter.write("\n");
                     }
                 }
-                bufferedWriter.newLine();
             }
             
             System.out.println("Save successfully.");
