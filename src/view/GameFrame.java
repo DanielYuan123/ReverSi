@@ -8,10 +8,11 @@ import java.awt.event.*;
 import java.util.ArrayList;
 
 public class GameFrame extends JFrame {
-    public static GameController controller;
     private ChessBoardPanel chessBoardPanel;
     private StatusPanel statusPanel;
     private Container container=this.getContentPane();
+    public static GameController controller;
+    public static GameOverPanel gameOverPanel;
     private static ArrayList<int[][]>boardPanelsList=new ArrayList<>(5);
     public static int stepNum=0;
     public int cheatMode = 1;
@@ -40,15 +41,13 @@ public class GameFrame extends JFrame {
         statusPanel = new StatusPanel(560, (int) (this.getHeight() * 0.1));
         statusPanel.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 2, 0);
         
-        
+        gameOverPanel=new GameOverPanel(this);
         
         controller = new GameController(chessBoardPanel, statusPanel);
-        //controller.setGamePanel(chessBoardPanel);
 
-        
         this.add(chessBoardPanel);
         this.add(statusPanel);
-
+        this.add(gameOverPanel);
 
 
         //new一个自制的事件监听；

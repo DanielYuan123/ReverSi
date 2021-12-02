@@ -239,6 +239,9 @@ public class ChessGridComponent extends BasicComponent {
                 //判断游戏是否结束
                 if ((gameIsOver() && !GameFrame.cheatModeIsOpen) || !chessBoardPanelHasNull(chessGirds)) {
                     GameFrame.controller.gameOver();
+                    GameFrame.controller.getGamePanel().setVisible(false);
+                    GameFrame.controller.getStatusPanel().setVisible(false);
+                    GameFrame.gameOverPanel.init();
                 }
     
             }
@@ -384,15 +387,15 @@ public class ChessGridComponent extends BasicComponent {
         public void actionPerformed(ActionEvent e) {
             if(length>0){
 
-                length -= 7;
+                length -= 1;
 
             } else if(length==0){
 
-                length -= 7;
+                length -= 1;
 
             } else if(length<0) {
 
-                length -= 7;
+                length -= 1;
 
             }
 
