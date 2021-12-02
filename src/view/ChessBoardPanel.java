@@ -108,7 +108,6 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[k][col].getChessPiece() == currentPlayer) {
-                        GameFrame.stepNum++;
                         return true;
                     }
                 }
@@ -122,7 +121,6 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[k][col].getChessPiece() == currentPlayer) {
-                        GameFrame.stepNum++;
                         return true;
                     }
                 }
@@ -135,7 +133,6 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[row][k].getChessPiece() == currentPlayer) {
-                        GameFrame.stepNum++;
                         return true;
                     }
                 }
@@ -148,7 +145,6 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[row][k].getChessPiece() == currentPlayer) {
-                        GameFrame.stepNum++;
                         return true;
                     }
                 }
@@ -161,7 +157,6 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
-                        GameFrame.stepNum++;
                         return true;
                     }
                 }
@@ -174,7 +169,6 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
-                        GameFrame.stepNum++;
                         return true;
                     }
                 }
@@ -187,7 +181,6 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
-                        GameFrame.stepNum++;
                         return true;
                     }
                 }
@@ -200,7 +193,6 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
-                        GameFrame.stepNum++;
                         return true;
                     }
                 }

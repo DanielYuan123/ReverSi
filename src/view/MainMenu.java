@@ -22,6 +22,10 @@ public class MainMenu extends JFrame {
 
     private SettingFrame settingFrame =new SettingFrame();
 
+    private static JLabel HintChooseMode;
+
+    private static JLabel HintGmaeStarted;
+
     public static AudioInputStream Mainstream;
 
     public static Clip clip;
@@ -116,10 +120,16 @@ public class MainMenu extends JFrame {
         pvc.addActionListener(mylistener);
 
         //new 一个提示框，用于提醒用户进行模式选取；
-        JLabel Hint = new JLabel("*请选择游戏模式！");
-        Hint.setVisible(false);
-        Hint.setBounds(45,210,120,20);
-        container.add(Hint);
+        MainMenu.HintChooseMode = new JLabel("*请选择游戏模式！");
+        HintChooseMode.setVisible(false);
+        HintChooseMode.setBounds(45,210,120,20);
+        container.add(HintChooseMode);
+
+        //
+        MainMenu.HintGmaeStarted = new JLabel("*游戏已经开始了！");
+        HintGmaeStarted.setVisible(false);
+        HintGmaeStarted.setBounds(45,210,120,20);
+        container.add(HintGmaeStarted);
 
         //设置单选框大小；
         pvp.setBounds(40,190,60,20);
@@ -157,13 +167,18 @@ public class MainMenu extends JFrame {
         Btn1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                MainMenu.HintChooseMode.setVisible(false);
                 if(mylistener.Gamemode==1){
-                    GameFrame mainFrame = new GameFrame(800);
-                    mainFrame.setVisible(true);
+                    if(GameFrame.stepNum==0){
+                        GameFrame mainFrame = new GameFrame(800);
+                        mainFrame.setVisible(true);
+                    }else{
+                        MainMenu.HintGmaeStarted.setVisible(true);
+                    }
                 } else if(mylistener.Gamemode==-1){
                 } else {
                     System.out.println("Please choose your gamemode.");
-                    Hint.setVisible(true);
+                    HintChooseMode.setVisible(true);
                 }
             }
         });

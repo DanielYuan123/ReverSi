@@ -3,10 +3,10 @@ package view;
 import components.ChessGridComponent;
 import controller.GameController;
 
+import javax.sound.midi.SysexMessage;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.ArrayList;
 
 public class GameFrame extends JFrame {
@@ -17,6 +17,7 @@ public class GameFrame extends JFrame {
     private static ArrayList<int[][]>boardPanelsList=new ArrayList<>(5);
     public static int stepNum=0;
     public static boolean cheatModeIsOpen = false;
+    public static int NightModeChangeConstant=1;
 
     public static ArrayList<int[][]> getBoardPanelsList(){
         return GameFrame.boardPanelsList;
@@ -45,6 +46,8 @@ public class GameFrame extends JFrame {
         
         this.add(chessBoardPanel);
         this.add(statusPanel);
+
+
 
         //new一个自制的事件监听；
         MyBtnActionListener myBtnActionListener = new MyBtnActionListener(this);
@@ -84,11 +87,13 @@ public class GameFrame extends JFrame {
         cheatMode.setLocation(nightModeBtn.getX() + nightModeBtn.getWidth() + 30, restartBtn.getY());
         add(cheatMode);
         cheatMode.addActionListener(myBtnActionListener);
-        
-        
-        
+
+        myFrameWindowListener myFrameWindowListener=new myFrameWindowListener(this);
+        this.addWindowListener(myFrameWindowListener);
+
         this.setVisible(true);
-        this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+        //this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
+
         
     }
 
@@ -113,9 +118,10 @@ public class GameFrame extends JFrame {
             if(e.getActionCommand().equals("Restart")){
                 System.out.println("clicked Restart button.");
                 this.gameFrame.setVisible(false);
-                new GameFrame(800);
-                GameFrame.stepNum=0;
                 GameFrame.getBoardPanelsList().clear();
+                GameFrame.stepNum=0;
+                new GameFrame(800);
+
             }else if(e.getActionCommand().equals("Load")){
                 System.out.println("clicked Load Btn");
                 String filePath = JOptionPane.showInputDialog("Load the game:", "input the path here");
@@ -143,21 +149,42 @@ public class GameFrame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            System.out.println("NightMode button clicked.");
             if(this.nightModeInt==1){
                 client.container.setBackground(Color.WHITE);
                 client.statusPanel.setBackground(Color.WHITE);
                 client.statusPanel.setPlayerLabelColor(Color.BLACK);
                 client.statusPanel.setScoreLabelColor(Color.BLACK);
                 this.nightModeInt=-1;
+                client.NightModeChangeConstant=-1;
             }else if(this.nightModeInt==-1){
                 client.container.setBackground(Color.BLACK);
                 client.statusPanel.setPlayerLabelColor(Color.white);
                 client.statusPanel.setScoreLabelColor(Color.WHITE);
                 client.statusPanel.setBackground(Color.BLACK);
                 this.nightModeInt=1;
+                client.NightModeChangeConstant=-1;
             }
         }
     }
+
+    private class myFrameWindowListener extends WindowAdapter{
+
+        public GameFrame gameFrame;
+
+        public myFrameWindowListener(GameFrame gameFrame){
+            this.gameFrame=gameFrame;
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            GameFrame.boardPanelsList.clear();
+            GameFrame.stepNum=0;
+            gameFrame.setVisible(false);
+
+        }
+    }
+
     //维修函数；
     public static void main(String[] args) {
         new GameFrame(800);

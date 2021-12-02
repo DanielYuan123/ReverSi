@@ -1,5 +1,8 @@
 D: Swing; JavaFX (两者兼容性不太好， 用Swing写)
 D: JFrame; JPanel; JComponent(JLabel; JButton; ...)
-你坐到前面来啊
-别玩游戏了
-Mainmenu中还有单选框没写
+图形翻转bug：
+1.nightMode (got it!)
+2.load
+3.restart (got it!)
+4.currentPiece(got it!)
+5.CheatMode(got it!)

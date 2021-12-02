@@ -88,6 +88,7 @@ public class GameController {
     
             bufferedReader.readLine();
             bufferedReader.readLine();
+
     
             ChessGridComponent[][] chessGridComponents = gamePanel.getChessGrids();
             for (int i = 0; i < 8; i++) {
