@@ -226,30 +226,39 @@ public class ChessGridComponent extends BasicComponent {
 
                 System.out.println("BoardPanelsize: " + GameFrame.getBoardPanelsList().size());
 
-                for (int j = 0; j < 8; j++)
+                for (int j = 0; j < 8; j++) {
                     for (int k = 0; k < 8; k++) {
-
-                        chessGirds[j][k].judgeChanged(j,k,GameFrame.stepNum);
-                        chessGirds[this.row][this.col].ChangeConstant=false;
-                        chessGirds[j][k].timer.start();
-
-                    }
-
-            }
     
-            GameFrame.controller.swapPlayer();
-            
-            //判断游戏是否结束
-            if (gameIsOver()) {
-                GameFrame.controller.gameOver();
+                        chessGirds[j][k].judgeChanged(j, k, GameFrame.stepNum);
+                        chessGirds[this.row][this.col].ChangeConstant = false;
+                        chessGirds[j][k].timer.start();
+    
+                    }
+                }
+                GameFrame.controller.swapPlayer();
+                //判断游戏是否结束
+                if ((gameIsOver() && !GameFrame.cheatModeIsOpen) || !chessBoardPanelHasNull(chessGirds)) {
+                    GameFrame.controller.gameOver();
+                }
+    
             }
             
         }
     
     }
     
+    public boolean chessBoardPanelHasNull(ChessGridComponent[][] chessGirds) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (chessGirds[i][j].getChessPiece() == null) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     
-    //判断游戏是否结束
+    //判断在普通模式下游戏是否结束
     public boolean gameIsOver() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
