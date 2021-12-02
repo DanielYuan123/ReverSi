@@ -35,8 +35,6 @@ public class ChessBoardPanel extends JPanel {
 
         initialChessGrids();//return empty chessboard
         initialGame();//add initial four chess
-        //ChessGridComponent[][] chessGridComponents=new ChessGridComponent[8][8];
-        //System.arraycopy(this.chessGrids,0,chessGridComponents,0,8);
         int[][] chessGridComponents=new int[8][8];
         for(int i=0;i<8;i++) {
             for (int j = 0; j < 8; j++) {
@@ -90,7 +88,6 @@ public class ChessBoardPanel extends JPanel {
     
     @Override
     protected void paintComponent(Graphics g) {
-        //super.paintComponent(g);
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
@@ -227,9 +224,5 @@ public class ChessBoardPanel extends JPanel {
     
     }
 
-    public void setChessGrids(ChessGridComponent[][] chessGrids){
-        for(int i=0;i<8;i++)
-            for(int j=0;j<8;j++)
-                this.chessGrids[i][j]=chessGrids[i][j];
-    }
+    
 }

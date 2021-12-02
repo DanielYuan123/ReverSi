@@ -3,10 +3,7 @@ package controller;
 import components.ChessGridComponent;
 import model.ChessPiece;
 import view.*;
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class GameController {
