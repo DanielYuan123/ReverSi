@@ -73,9 +73,9 @@ public class GameController {
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
             
-            bufferedReader.readLine();
             currentPlayer = (bufferedReader.readLine().contains("BLACK")) ? (ChessPiece.BLACK) : (ChessPiece.WHITE);
             statusPanel.setPlayerText(currentPlayer.name());
+            bufferedReader.readLine();
             bufferedReader.readLine();
             bufferedReader.readLine();
     

@@ -107,6 +107,9 @@ public class ChessBoardPanel extends JPanel {
                     if (chessGrids[row - 1][col].getChessPiece() != otherPlayer) {
                         break;
                     }
+                    if (k != row - 1 && chessGrids[k][col].getChessPiece() == null) {
+                        break;
+                    }
                     if (chessGrids[k][col].getChessPiece() == currentPlayer) {
                         return true;
                     }
@@ -118,6 +121,9 @@ public class ChessBoardPanel extends JPanel {
             if (row <= 5) {
                 for (int k = row + 1; k <= 7; k++) {
                     if (chessGrids[row + 1][col].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (k != row + 1 && chessGrids[k][col].getChessPiece() == null) {
                         break;
                     }
                     if (chessGrids[k][col].getChessPiece() == currentPlayer) {
@@ -132,6 +138,9 @@ public class ChessBoardPanel extends JPanel {
                     if (chessGrids[row][col - 1].getChessPiece() != otherPlayer) {
                         break;
                     }
+                    if (k != col - 1 && chessGrids[row][k].getChessPiece() == null) {
+                        break;
+                    }
                     if (chessGrids[row][k].getChessPiece() == currentPlayer) {
                         return true;
                     }
@@ -142,6 +151,9 @@ public class ChessBoardPanel extends JPanel {
             if (col <= 5) {
                 for (int k = col + 1; k <= 7; k++) {
                     if (chessGrids[row][col + 1].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (k != col + 1 && chessGrids[row][k].getChessPiece() == null) {
                         break;
                     }
                     if (chessGrids[row][k].getChessPiece() == currentPlayer) {
@@ -156,6 +168,9 @@ public class ChessBoardPanel extends JPanel {
                     if (chessGrids[row - 1][col - 1].getChessPiece() != otherPlayer) {
                         break;
                     }
+                    if (k != row - 1 && l != col - 1 && chessGrids[k][l].getChessPiece() == null) {
+                        break;
+                    }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
                         return true;
                     }
@@ -166,6 +181,9 @@ public class ChessBoardPanel extends JPanel {
             if (row <= 5 && col >= 2) {
                 for (int k = row + 1, l = col - 1; k <= 7 && l >= 0; k++, l--) {
                     if (chessGrids[row + 1][col - 1].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (k != row + 1 && l != col - 1 && chessGrids[k][l].getChessPiece() == null) {
                         break;
                     }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
@@ -180,6 +198,9 @@ public class ChessBoardPanel extends JPanel {
                     if (chessGrids[row - 1][col + 1].getChessPiece() != otherPlayer) {
                         break;
                     }
+                    if (k != row - 1 && l != col + 1 && chessGrids[k][l].getChessPiece() == null) {
+                        break;
+                    }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
                         return true;
                     }
@@ -190,6 +211,9 @@ public class ChessBoardPanel extends JPanel {
             if (row <= 5 && col <= 5) {
                 for (int k = row + 1, l = col + 1; k <= 7 && l <= 7; k++, l++) {
                     if (chessGrids[row + 1][col + 1].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (k != row + 1 && l != col + 1 && chessGrids[k][l].getChessPiece() == null) {
                         break;
                     }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
