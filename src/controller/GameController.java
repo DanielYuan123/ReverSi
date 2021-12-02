@@ -114,11 +114,30 @@ public class GameController {
             }
     
             System.out.println("Load successfully.");
+
+            int[][] chessGridsNum=new int[8][8];
+
+            for(int i=0;i<8;i++)
+                for(int j=0;j<8;j++){
+                    if(chessGridComponents[i][j]==null){
+                        chessGridsNum[i][j]=0;
+                    }else if (chessGridComponents[i][j].getChessPiece()==ChessPiece.BLACK){
+                        chessGridsNum[i][j]=1;
+                    }else {
+                        chessGridsNum[i][j]=-1;
+                    }
+                }
+
+            GameFrame.getBoardPanelsList().clear();
+            GameFrame.getBoardPanelsList().add(chessGridsNum);
+            GameFrame.stepNum=1;
+
             bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     public void writeDataToFile(String fileName) {
         
