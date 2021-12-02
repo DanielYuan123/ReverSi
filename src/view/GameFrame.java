@@ -16,6 +16,7 @@ public class GameFrame extends JFrame {
     private Container container=this.getContentPane();
     private static ArrayList<int[][]>boardPanelsList=new ArrayList<>(5);
     public static int stepNum=0;
+    public int cheatMode = 1;
     public static boolean cheatModeIsOpen = false;
     public static int NightModeChangeConstant=1;
 
@@ -25,7 +26,9 @@ public class GameFrame extends JFrame {
 
 
     public GameFrame(int frameSize) {
-        
+        cheatModeIsOpen =false;
+        System.out.println("CheatMode is close!");
+    
         this.setTitle("2021F CS102A Project Reversi");
         this.setLayout(null);
         this.setSize(frameSize, frameSize);
@@ -38,6 +41,7 @@ public class GameFrame extends JFrame {
 
         statusPanel = new StatusPanel(560, (int) (this.getHeight() * 0.1));
         statusPanel.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 2, 0);
+        
         
         
         controller = new GameController(chessBoardPanel, statusPanel);
@@ -131,8 +135,15 @@ public class GameFrame extends JFrame {
                 String filePath = JOptionPane.showInputDialog("Save the game:", "input the path here");
                 controller.writeDataToFile(filePath);
             } else if(e.getActionCommand().equals("CheatMode")) {
-                System.out.println("Clicked CheatMode Button.");
-                cheatModeIsOpen = true;
+                if (cheatMode == 1) {
+                    cheatModeIsOpen = true;
+                    cheatMode = -1;
+                    System.out.println("CheatMode is open!");
+                } else if (cheatMode == -1) {
+                    cheatModeIsOpen = false;
+                    cheatMode = 1;
+                    System.out.println("CheatMode is close!");
+                }
             }
         }
     }
@@ -151,8 +162,8 @@ public class GameFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             System.out.println("NightMode button clicked.");
             if(this.nightModeInt==1){
-                client.container.setBackground(Color.WHITE);
-                client.statusPanel.setBackground(Color.WHITE);
+                client.container.setBackground(new Color(238,238,238));
+                client.statusPanel.setBackground(new Color(238,238,238));
                 client.statusPanel.setPlayerLabelColor(Color.BLACK);
                 client.statusPanel.setScoreLabelColor(Color.BLACK);
                 this.nightModeInt=-1;

@@ -33,17 +33,11 @@ public class ChessGridComponent extends BasicComponent {
     private int col;
 
     private MyDynamicListener myDynamicListener = new MyDynamicListener();
-
     public static AudioInputStream soundStream;
-
     public static Clip soundClip;
-
     public static FloatControl gainSoundControl;
-
     private ChessGridComponent[][] formerGridComponent=new ChessGridComponent[8][8];
-
     private Timer timer = new Timer(1, myDynamicListener);
-
     private boolean ChangeConstant;
 
 
@@ -251,8 +245,36 @@ public class ChessGridComponent extends BasicComponent {
             }
     
             GameFrame.controller.swapPlayer();
+            
+            //判断游戏是否结束
+            if (gameIsOver()) {
+                GameFrame.controller.gameOver();
+            }
+            
         }
     
+    }
+    
+    
+    //判断游戏是否结束
+    public boolean gameIsOver() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (GameFrame.controller.canClick(i, j)) {
+                    return false;
+                }
+            }
+        }
+        
+        GameFrame.controller.swapPlayer();
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (GameFrame.controller.canClick(i, j)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
     
     
@@ -311,14 +333,14 @@ public class ChessGridComponent extends BasicComponent {
                 //g.fillOval((gridSize - Math.abs(length)) / 2, (gridSize - chessSize) / 2, Math.abs(length), 56);
             }
             if(length==0) {
-                System.out.printf("row:%d,col:%d DY\n", this.row, this.col);
+                //System.out.printf("row:%d,col:%d DY\n", this.row, this.col);
             }
             if(length<0){
                 g.setColor(this.chessPiece.getColor());
                 g.fillOval((gridSize - Math.abs(length)) / 2, (gridSize - chessSize) / 2, Math.abs(length), 56);
             }
             if(length==-chessSize){
-                System.out.printf("row:%d,col:%d"+"Changed.\n",this.row,this.col);
+                //System.out.printf("row:%d,col:%d"+"Changed.\n",this.row,this.col);
                 g.setColor(this.chessPiece.getColor());
                 g.fillOval((gridSize - Math.abs(length)) / 2, (gridSize - chessSize) / 2, Math.abs(length), 56);
                 length=56;
@@ -331,7 +353,7 @@ public class ChessGridComponent extends BasicComponent {
                     g.fillOval((gridSize - chessSize) / 2, (gridSize - chessSize) / 2, 56, 56);
                     length=56;
                     this.ChangeConstant=false;
-                    System.out.println("RIght");
+                    //System.out.println("RIght");
                     timer.stop();
                 }
             } else  {
@@ -348,7 +370,7 @@ public class ChessGridComponent extends BasicComponent {
         if(GameFrame.getBoardPanelsList().get(i-1)[j][k]==GameFrame.getBoardPanelsList().get(i-2)[j][k]){
             this.ChangeConstant=false;
         }else{
-            System.out.printf("row:%d,col:%d judgechanged\n",j,k);
+            //System.out.printf("row:%d,col:%d judgechanged\n",j,k);
             this.ChangeConstant=true;
         }
     }
@@ -367,15 +389,15 @@ public class ChessGridComponent extends BasicComponent {
         public void actionPerformed(ActionEvent e) {
             if(length>0){
 
-                length -= 1;
+                length -= 7;
 
             } else if(length==0){
 
-                length -= 1;
+                length -= 7;
 
             } else if(length<0) {
 
-                length -= 1;
+                length -= 7;
 
             }
 
