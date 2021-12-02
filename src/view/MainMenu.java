@@ -13,7 +13,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URI;
 import java.net.URL;
@@ -21,20 +20,14 @@ import java.net.URL;
 public class MainMenu extends JFrame {
 
     private SettingFrame settingFrame =new SettingFrame();
-
+    
     private static JLabel HintChooseMode;
-
     private static JLabel HintGmaeStarted;
-
     public static AudioInputStream Mainstream;
-
     public static Clip clip;
-
     public static FloatControl gainControl;
 
-    public SettingFrame getSettingFrame(){
-        return this.settingFrame;
-    }
+    
 
     //获取容器；
     private Container container = this.getContentPane();

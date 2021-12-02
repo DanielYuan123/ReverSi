@@ -3,10 +3,7 @@ package controller;
 import components.ChessGridComponent;
 import model.ChessPiece;
 import view.*;
-
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class GameController {
@@ -73,9 +70,9 @@ public class GameController {
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
             
-            bufferedReader.readLine();
             currentPlayer = (bufferedReader.readLine().contains("BLACK")) ? (ChessPiece.BLACK) : (ChessPiece.WHITE);
             statusPanel.setPlayerText(currentPlayer.name());
+            bufferedReader.readLine();
             bufferedReader.readLine();
             bufferedReader.readLine();
     

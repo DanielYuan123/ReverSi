@@ -5,7 +5,6 @@ import view.ChessBoardPanel;
 import view.GameFrame;
 
 import javax.sound.sampled.*;
-import javax.swing.*;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.*;
@@ -16,8 +15,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
-import java.util.Locale;
-import java.util.TimerTask;
 import javax.swing.Timer;
 
 
@@ -28,7 +25,6 @@ public class ChessGridComponent extends BasicComponent {
     public static Color gridColor = new Color(255, 150, 50);
 
     private ChessPiece chessPiece;
-    private ChessBoardPanel chessGird = null;
     private int row;
     private int col;
 
@@ -57,10 +53,7 @@ public class ChessGridComponent extends BasicComponent {
             //clip.start();
     }
 
-    public static void PlaySound1(){
-        soundClip.start();
-
-    }
+    
     
     @Override
     public void onMouseClicked() {
@@ -233,30 +226,39 @@ public class ChessGridComponent extends BasicComponent {
 
                 System.out.println("BoardPanelsize: " + GameFrame.getBoardPanelsList().size());
 
-                for (int j = 0; j < 8; j++)
+                for (int j = 0; j < 8; j++) {
                     for (int k = 0; k < 8; k++) {
-
-                        chessGirds[j][k].judgeChanged(j,k,GameFrame.stepNum);
-                        chessGirds[this.row][this.col].ChangeConstant=false;
-                        chessGirds[j][k].timer.start();
-
-                    }
-
-            }
     
-            GameFrame.controller.swapPlayer();
-            
-            //判断游戏是否结束
-            if (gameIsOver()) {
-                GameFrame.controller.gameOver();
+                        chessGirds[j][k].judgeChanged(j, k, GameFrame.stepNum);
+                        chessGirds[this.row][this.col].ChangeConstant = false;
+                        chessGirds[j][k].timer.start();
+    
+                    }
+                }
+                GameFrame.controller.swapPlayer();
+                //判断游戏是否结束
+                if ((gameIsOver() && !GameFrame.cheatModeIsOpen) || !chessBoardPanelHasNull(chessGirds)) {
+                    GameFrame.controller.gameOver();
+                }
+    
             }
             
         }
     
     }
     
+    public boolean chessBoardPanelHasNull(ChessGridComponent[][] chessGirds) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (chessGirds[i][j].getChessPiece() == null) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     
-    //判断游戏是否结束
+    //判断在普通模式下游戏是否结束
     public boolean gameIsOver() {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -330,17 +332,13 @@ public class ChessGridComponent extends BasicComponent {
                     g.fillOval((gridSize - Math.abs(length)) / 2, (gridSize - chessSize) / 2, Math.abs(length), 56);
 
 
-                //g.fillOval((gridSize - Math.abs(length)) / 2, (gridSize - chessSize) / 2, Math.abs(length), 56);
             }
-            if(length==0) {
-                //System.out.printf("row:%d,col:%d DY\n", this.row, this.col);
-            }
+            
             if(length<0){
                 g.setColor(this.chessPiece.getColor());
                 g.fillOval((gridSize - Math.abs(length)) / 2, (gridSize - chessSize) / 2, Math.abs(length), 56);
             }
             if(length==-chessSize){
-                //System.out.printf("row:%d,col:%d"+"Changed.\n",this.row,this.col);
                 g.setColor(this.chessPiece.getColor());
                 g.fillOval((gridSize - Math.abs(length)) / 2, (gridSize - chessSize) / 2, Math.abs(length), 56);
                 length=56;
@@ -353,7 +351,6 @@ public class ChessGridComponent extends BasicComponent {
                     g.fillOval((gridSize - chessSize) / 2, (gridSize - chessSize) / 2, 56, 56);
                     length=56;
                     this.ChangeConstant=false;
-                    //System.out.println("RIght");
                     timer.stop();
                 }
             } else  {
@@ -370,7 +367,6 @@ public class ChessGridComponent extends BasicComponent {
         if(GameFrame.getBoardPanelsList().get(i-1)[j][k]==GameFrame.getBoardPanelsList().get(i-2)[j][k]){
             this.ChangeConstant=false;
         }else{
-            //System.out.printf("row:%d,col:%d judgechanged\n",j,k);
             this.ChangeConstant=true;
         }
     }
@@ -379,7 +375,6 @@ public class ChessGridComponent extends BasicComponent {
 
     @Override
     public void paintComponent(Graphics g) {
-        //super.printComponents(g);
         drawPiece(g);
     }
 

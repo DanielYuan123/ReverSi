@@ -2,14 +2,10 @@ package view;
 
 import components.ChessGridComponent;
 
-import javax.sound.midi.SysexMessage;
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.sql.SQLOutput;
 
 public class SettingFrame extends JFrame {
 

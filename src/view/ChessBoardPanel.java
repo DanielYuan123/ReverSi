@@ -35,8 +35,6 @@ public class ChessBoardPanel extends JPanel {
 
         initialChessGrids();//return empty chessboard
         initialGame();//add initial four chess
-        //ChessGridComponent[][] chessGridComponents=new ChessGridComponent[8][8];
-        //System.arraycopy(this.chessGrids,0,chessGridComponents,0,8);
         int[][] chessGridComponents=new int[8][8];
         for(int i=0;i<8;i++) {
             for (int j = 0; j < 8; j++) {
@@ -90,7 +88,6 @@ public class ChessBoardPanel extends JPanel {
     
     @Override
     protected void paintComponent(Graphics g) {
-        //super.paintComponent(g);
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
@@ -107,6 +104,9 @@ public class ChessBoardPanel extends JPanel {
                     if (chessGrids[row - 1][col].getChessPiece() != otherPlayer) {
                         break;
                     }
+                    if (k != row - 1 && chessGrids[k][col].getChessPiece() == null) {
+                        break;
+                    }
                     if (chessGrids[k][col].getChessPiece() == currentPlayer) {
                         return true;
                     }
@@ -118,6 +118,9 @@ public class ChessBoardPanel extends JPanel {
             if (row <= 5) {
                 for (int k = row + 1; k <= 7; k++) {
                     if (chessGrids[row + 1][col].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (k != row + 1 && chessGrids[k][col].getChessPiece() == null) {
                         break;
                     }
                     if (chessGrids[k][col].getChessPiece() == currentPlayer) {
@@ -132,6 +135,9 @@ public class ChessBoardPanel extends JPanel {
                     if (chessGrids[row][col - 1].getChessPiece() != otherPlayer) {
                         break;
                     }
+                    if (k != col - 1 && chessGrids[row][k].getChessPiece() == null) {
+                        break;
+                    }
                     if (chessGrids[row][k].getChessPiece() == currentPlayer) {
                         return true;
                     }
@@ -142,6 +148,9 @@ public class ChessBoardPanel extends JPanel {
             if (col <= 5) {
                 for (int k = col + 1; k <= 7; k++) {
                     if (chessGrids[row][col + 1].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (k != col + 1 && chessGrids[row][k].getChessPiece() == null) {
                         break;
                     }
                     if (chessGrids[row][k].getChessPiece() == currentPlayer) {
@@ -156,6 +165,9 @@ public class ChessBoardPanel extends JPanel {
                     if (chessGrids[row - 1][col - 1].getChessPiece() != otherPlayer) {
                         break;
                     }
+                    if (k != row - 1 && l != col - 1 && chessGrids[k][l].getChessPiece() == null) {
+                        break;
+                    }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
                         return true;
                     }
@@ -166,6 +178,9 @@ public class ChessBoardPanel extends JPanel {
             if (row <= 5 && col >= 2) {
                 for (int k = row + 1, l = col - 1; k <= 7 && l >= 0; k++, l--) {
                     if (chessGrids[row + 1][col - 1].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (k != row + 1 && l != col - 1 && chessGrids[k][l].getChessPiece() == null) {
                         break;
                     }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
@@ -180,6 +195,9 @@ public class ChessBoardPanel extends JPanel {
                     if (chessGrids[row - 1][col + 1].getChessPiece() != otherPlayer) {
                         break;
                     }
+                    if (k != row - 1 && l != col + 1 && chessGrids[k][l].getChessPiece() == null) {
+                        break;
+                    }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
                         return true;
                     }
@@ -190,6 +208,9 @@ public class ChessBoardPanel extends JPanel {
             if (row <= 5 && col <= 5) {
                 for (int k = row + 1, l = col + 1; k <= 7 && l <= 7; k++, l++) {
                     if (chessGrids[row + 1][col + 1].getChessPiece() != otherPlayer) {
+                        break;
+                    }
+                    if (k != row + 1 && l != col + 1 && chessGrids[k][l].getChessPiece() == null) {
                         break;
                     }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
@@ -203,9 +224,5 @@ public class ChessBoardPanel extends JPanel {
     
     }
 
-    public void setChessGrids(ChessGridComponent[][] chessGrids){
-        for(int i=0;i<8;i++)
-            for(int j=0;j<8;j++)
-                this.chessGrids[i][j]=chessGrids[i][j];
-    }
+    
 }
