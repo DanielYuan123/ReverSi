@@ -54,21 +54,21 @@ public class GameFrame extends JFrame {
         MyBtnActionListener myBtnActionListener = new MyBtnActionListener(this);
 
         JButton restartBtn = new JButton("Restart");
-        restartBtn.setSize(120, 50);
+        restartBtn.setSize(100, 50);
         restartBtn.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 7, (this.getHeight() + chessBoardPanel.getHeight()) / 2);
         add(restartBtn);
         restartBtn.addActionListener(myBtnActionListener);
 
         
         JButton loadGameBtn = new JButton("Load");
-        loadGameBtn.setSize(120, 50);
+        loadGameBtn.setSize(100, 50);
         loadGameBtn.setLocation(restartBtn.getX()+restartBtn.getWidth()+30, restartBtn.getY());
         add(loadGameBtn);
         loadGameBtn.addActionListener(myBtnActionListener);
         
         
         JButton saveGameBtn = new JButton("Save");
-        saveGameBtn.setSize(120, 50);
+        saveGameBtn.setSize(100, 50);
         saveGameBtn.setLocation(loadGameBtn.getX()+restartBtn.getWidth()+30, restartBtn.getY());
         add(saveGameBtn);
         saveGameBtn.addActionListener(myBtnActionListener);
@@ -77,17 +77,23 @@ public class GameFrame extends JFrame {
         NightModeSetter nightModeSetter=new NightModeSetter(this);
 
         JButton nightModeBtn= new JButton("Nightmode");
-        nightModeBtn.setSize(120,50);
+        nightModeBtn.setSize(100,50);
         nightModeBtn.setLocation(saveGameBtn.getX()+saveGameBtn.getWidth()+30, restartBtn.getY());
         add(nightModeBtn);
         nightModeBtn.addActionListener(nightModeSetter);
 
         
         JButton cheatMode = new JButton("CheatMode");
-        cheatMode.setSize(120, 50);
+        cheatMode.setSize(100, 50);
         cheatMode.setLocation(nightModeBtn.getX() + nightModeBtn.getWidth() + 30, restartBtn.getY());
         add(cheatMode);
         cheatMode.addActionListener(myBtnActionListener);
+        
+        JButton regretChess = new JButton("RegretChess");
+        regretChess.setSize(100, 50);
+        cheatMode.setLocation(cheatMode.getX() + cheatMode.getWidth() + 30, restartBtn.getY());
+        add(regretChess);
+        regretChess.addActionListener(myBtnActionListener);
 
         myFrameWindowListener myFrameWindowListener=new myFrameWindowListener(this);
         this.addWindowListener(myFrameWindowListener);
