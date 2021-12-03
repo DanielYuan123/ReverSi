@@ -314,11 +314,16 @@ public class ChessGridComponent extends BasicComponent {
         g.fillRect(1, 1, this.getWidth() - 2, this.getHeight() - 2);
 
         if(this.chessPiece == null){
+            if(!GameFrame.cheatModeIsOpen){
             if(GameFrame.controller.canClick(this.row,this.col)){
 
                 g.setColor(new Color(12, 82, 255));
                 g.drawRect(8,8,55,55);
 
+                }
+            }else{
+                g.setColor(new Color(12, 82, 255));
+                g.drawRect(8,8,55,55);
             }
             timer.stop();
             length=56;
