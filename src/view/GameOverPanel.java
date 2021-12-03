@@ -4,14 +4,25 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
-public class GameOverPanel extends Panel {
+public class GameOverPanel extends JPanel {
 
     private JLabel resultLabel;
 
     private GameFrame gameFrame;
 
-    public GameOverPanel(GameFrame gameFrame){
+    private ImageIcon blackImageIcon = new ImageIcon("Image/blackPiece.png");
+
+    private ImageIcon whiteImageIcon = new ImageIcon("Image/whitePiece.png");
+
+
+
+    public GameOverPanel(GameFrame gameFrame)  {
 
         this.setLayout(null);
         this.setBackground(Color.white);
@@ -22,12 +33,14 @@ public class GameOverPanel extends Panel {
         JButton restartButton = new JButton("Restart");
         JButton mainMenuButton = new JButton("Main menu");
 
-        JLabel titleLabel = new JLabel("The Winner is:");
+        JLabel titleLabel = new JLabel();
 
         restartButton.setBounds(100,600,250,100);
         mainMenuButton.setBounds(450,600,250,100);
         restartButton.setFont(new Font("nano",Font.ROMAN_BASELINE,20));
         mainMenuButton.setFont(new Font("yuku",Font.ROMAN_BASELINE,20));
+
+
         restartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,6 +50,18 @@ public class GameOverPanel extends Panel {
                 new GameFrame(800);
             }
         });
+
+        Image blackImage = blackImageIcon.getImage();
+
+        blackImage = blackImage.getScaledInstance(158,150,Image.SCALE_AREA_AVERAGING);
+
+        blackImageIcon = new ImageIcon(blackImage);
+
+        Image whiteImage = whiteImageIcon.getImage();
+
+        whiteImage = whiteImage.getScaledInstance(165,150,Image.SCALE_AREA_AVERAGING);
+
+        whiteImageIcon = new ImageIcon(whiteImage);
 
         mainMenuButton.addActionListener(new ActionListener() {
             @Override
@@ -48,12 +73,23 @@ public class GameOverPanel extends Panel {
                 gameFrame.setVisible(false);
             }
         });
-        titleLabel.setBounds(200,50,800,100);
-        titleLabel.setFont(new Font("Daniel",Font.ROMAN_BASELINE,40));
-        titleLabel.setForeground(new Color(246, 88, 88));
+
+        //4.8177
+
+        titleLabel.setBounds(160,0,482,100);
 
 
-        this.setBackground(Color.gray);
+        ImageIcon imageIcon=new ImageIcon("Image/img.png");
+
+        Image image = imageIcon.getImage();
+
+        image = image.getScaledInstance(482,100,Image.SCALE_AREA_AVERAGING);
+
+        imageIcon = new ImageIcon(image);
+
+        titleLabel.setIcon(imageIcon);
+
+        this.setBackground(new Color(201,233,202));
         this.add(titleLabel);
         this.add(restartButton);
         this.add(mainMenuButton);
@@ -63,17 +99,15 @@ public class GameOverPanel extends Panel {
 
     public void init(){
         JLabel resultLabel = new JLabel();
-        resultLabel.setBounds(365,150,100,100);
+
         if(GameFrame.controller.getBlackScore()>GameFrame.controller.getWhiteScore()){
-            resultLabel.setText("Black");
-            resultLabel.setFont(new Font("Black",Font.ITALIC,35));
-            resultLabel.setForeground(Color.BLACK);
+            resultLabel.setBounds(321,150,158,150);
+            resultLabel.setIcon(blackImageIcon);
 
         }
         else if (GameFrame.controller.getBlackScore()<GameFrame.controller.getWhiteScore()){
-            resultLabel.setText("White");
-            resultLabel.setFont(new Font("White",Font.ITALIC,35));
-            resultLabel.setForeground(Color.WHITE);
+            resultLabel.setBounds(318,150,165,150);
+            resultLabel.setIcon(whiteImageIcon);
         }
         else {
             resultLabel.setFont(new Font("Black",Font.ITALIC,35));
@@ -88,13 +122,11 @@ public class GameOverPanel extends Panel {
 //GameFrame.controller.getBlackScore()>GameFrame.controller.getWhiteScore()
     @Override
     public void print(Graphics g) {
-        super.print(g);
-        if(true){
 
             g.setColor(Color.WHITE);
+
             g.fillOval(365,150,50,50);
 
-        }
     }
 
     public static void main(String[] args) {

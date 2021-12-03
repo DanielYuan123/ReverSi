@@ -316,14 +316,35 @@ public class ChessGridComponent extends BasicComponent {
         if(this.chessPiece == null){
             if(!GameFrame.cheatModeIsOpen){
             if(GameFrame.controller.canClick(this.row,this.col)){
-
-                g.setColor(new Color(12, 82, 255));
-                g.drawRect(8,8,55,55);
+                Graphics2D g2=(Graphics2D)g;
+                g2.setStroke(new BasicStroke(4));
+                if(GameFrame.controller.getCurrentPlayer()==ChessPiece.BLACK)
+                    g2.setColor(new Color(12, 82, 255));
+                else{
+                    g2.setColor(new Color(255, 0, 0));
+                }
+                g2.drawRect(8,8,55,55);
+                g2.setColor(gridColor);
+                g2.drawLine(24,8,47,8);
+                g2.drawLine(63,24,63,47);
+                g2.drawLine(8,24,8,47);
+                g2.drawLine(25,63,47,63);
 
                 }
             }else{
-                g.setColor(new Color(12, 82, 255));
-                g.drawRect(8,8,55,55);
+                Graphics2D g2=(Graphics2D)g;
+                g2.setStroke(new BasicStroke(4));
+                if(GameFrame.controller.getCurrentPlayer()==ChessPiece.BLACK)
+                    g2.setColor(new Color(12, 82, 255));
+                else {
+                    g2.setColor(new Color(255, 0, 0));
+                }
+                g2.drawRect(8,8,55,55);
+                g2.setColor(gridColor);
+                g2.drawLine(24,8,47,8);
+                g2.drawLine(63,24,63,47);
+                g2.drawLine(8,24,8,47);
+                g2.drawLine(25,63,47,63);
             }
             timer.stop();
             length=56;
@@ -399,20 +420,9 @@ public class ChessGridComponent extends BasicComponent {
     private class MyDynamicListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            int frame=7;
-            if(length>0){
+            int frame=1;
 
-                length -= frame;
-
-            } else if(length==0){
-
-                length -= frame;
-
-            } else if(length<0) {
-
-                length -= frame;
-
-            }
+            length-=frame;
 
             repaint();
 
