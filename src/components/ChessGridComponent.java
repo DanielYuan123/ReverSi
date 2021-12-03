@@ -271,7 +271,10 @@ public class ChessGridComponent extends BasicComponent {
             }
         }
         
-        GameFrame.controller.swapPlayer();
+        if (!GameFrame.cheatModeIsOpen) {
+            GameFrame.controller.swapPlayer();
+        }
+        
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (GameFrame.controller.canClick(i, j)) {
@@ -391,17 +394,18 @@ public class ChessGridComponent extends BasicComponent {
     private class MyDynamicListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
+            int frame=7;
             if(length>0){
 
-                length -= 1;
+                length -= frame;
 
             } else if(length==0){
 
-                length -= 1;
+                length -= frame;
 
             } else if(length<0) {
 
-                length -= 1;
+                length -= frame;
 
             }
 
