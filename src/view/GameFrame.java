@@ -141,11 +141,13 @@ public class GameFrame extends JFrame {
                 if (cheatMode == 1) {
                     cheatModeIsOpen = true;
                     cheatMode = -1;
-                    System.out.println("CheatMode is open!");
+                    System.out.println("CheatMode is opened!");
+                    repaint();
                 } else if (cheatMode == -1) {
                     cheatModeIsOpen = false;
                     cheatMode = 1;
-                    System.out.println("CheatMode is close!");
+                    System.out.println("CheatMode is closed!");
+                    repaint();
                 }
             }
         }
