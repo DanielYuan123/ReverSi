@@ -3,6 +3,8 @@ package controller;
 import components.ChessGridComponent;
 import model.ChessPiece;
 import view.*;
+
+import javax.swing.*;
 import java.io.*;
 
 
@@ -121,8 +123,8 @@ public class GameController {
                     chessGridComponents[i][j].repaint();
                 }
             }
-    
-            System.out.println("Load successfully.");
+            bufferedReader.close();
+            JOptionPane.showMessageDialog(null, "Load successfully.");
 
             int[][] chessGridsNum=new int[8][8];
 
@@ -141,9 +143,9 @@ public class GameController {
             GameFrame.getBoardPanelsList().add(chessGridsNum);
             GameFrame.stepNum=1;
 
-            bufferedReader.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Please input right file name!");
         }
     }
 
@@ -171,8 +173,7 @@ public class GameController {
                     }
                 }
             }
-            
-            System.out.println("Save successfully.");
+            JOptionPane.showMessageDialog(null, "Save successfully.");
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
