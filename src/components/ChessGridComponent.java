@@ -1,7 +1,6 @@
 package components;
 
 import model.*;
-import view.ChessBoardPanel;
 import view.GameFrame;
 
 import javax.sound.sampled.*;

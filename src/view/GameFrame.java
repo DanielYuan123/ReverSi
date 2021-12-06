@@ -32,6 +32,8 @@ public class GameFrame extends JFrame {
         this.setLayout(null);
         this.setSize(frameSize, frameSize);
         this.setLocationRelativeTo(null);
+        ImageIcon FrameIcon = new ImageIcon("Image/棋盘图标.png");
+        this.setIconImage(FrameIcon.getImage());
         
 
         chessBoardPanel = new ChessBoardPanel((int) (this.getWidth() * 0.7), (int) (this.getHeight() * 0.7));
@@ -131,11 +133,11 @@ public class GameFrame extends JFrame {
 
             }else if(e.getActionCommand().equals("Load")){
                 System.out.println("clicked Load Btn");
-                String filePath = JOptionPane.showInputDialog("Load the game:", "input the path here");
+                String filePath = "./UserFiles/" + JOptionPane.showInputDialog("Load the game:", "input the path here");
                 controller.readFileData(filePath);
             }else if(e.getActionCommand().equals("Save")){
                 System.out.println("clicked Save Btn");
-                String filePath = JOptionPane.showInputDialog("Save the game:", "input the path here");
+                String filePath = "./UserFiles/" + JOptionPane.showInputDialog("Save the game:", "input the path here");
                 controller.writeDataToFile(filePath);
             } else if(e.getActionCommand().equals("CheatMode")) {
                 if (cheatMode == 1) {
