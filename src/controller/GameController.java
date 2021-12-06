@@ -145,7 +145,7 @@ public class GameController {
 
         } catch (IOException e) {
             //e.printStackTrace();
-            JOptionPane.showMessageDialog(null, "Please input right file name!");
+            JOptionPane.showMessageDialog(null, "File not be found!");
         }
     }
 
