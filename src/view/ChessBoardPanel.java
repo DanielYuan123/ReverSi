@@ -3,14 +3,17 @@ package view;
 import components.ChessGridComponent;
 import model.ChessPiece;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class ChessBoardPanel extends JPanel {
     private final int CHESS_COUNT = 8;
     private ChessGridComponent[][] chessGrids;
 
-    public ChessBoardPanel(){
+    public ChessBoardPanel() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         this.setVisible(true);
         this.setFocusable(true);
         this.setLayout(null);
@@ -21,7 +24,7 @@ public class ChessBoardPanel extends JPanel {
         initialChessGrids();
     }
 
-    public ChessBoardPanel(int width, int height) {
+    public ChessBoardPanel(int width, int height) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         this.setVisible(true);
         this.setFocusable(true);
         this.setLayout(null);
@@ -61,7 +64,7 @@ public class ChessBoardPanel extends JPanel {
     /**
      * set an empty chessboard
      */
-    public void initialChessGrids() {
+    public void initialChessGrids() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         chessGrids = new ChessGridComponent[CHESS_COUNT][CHESS_COUNT];
 
         //draw all chess grids

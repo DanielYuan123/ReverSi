@@ -166,7 +166,16 @@ public class MainMenu extends JFrame {
                 MainMenu.HintChooseMode.setVisible(false);
                 if(mylistener.Gamemode==1){
                     if(GameFrame.stepNum==0){
-                        GameFrame mainFrame = new GameFrame(800);
+                        GameFrame mainFrame = null;
+                        try {
+                            mainFrame = new GameFrame(800);
+                        } catch (UnsupportedAudioFileException ex) {
+                            ex.printStackTrace();
+                        } catch (LineUnavailableException ex) {
+                            ex.printStackTrace();
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
                         mainFrame.setVisible(true);
                     }else{
                         MainMenu.HintGmaeStarted.setVisible(true);
@@ -209,12 +218,12 @@ public class MainMenu extends JFrame {
 
     //设置音乐的方法；
     void setMusic1() throws IOException,LineUnavailableException,UnsupportedAudioFileException {
+
         this.Mainstream = AudioSystem.getAudioInputStream(new File("Music/1-05 Un Jour De Juillet.wav"));
         this.clip = AudioSystem.getClip();
         this.clip.open(this.Mainstream);
         this.gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 
-        //clip.start();
     }
 
     //播放音乐的方法；

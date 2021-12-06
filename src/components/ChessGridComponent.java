@@ -49,13 +49,13 @@ public class ChessGridComponent extends BasicComponent {
             soundClip = AudioSystem.getClip();
             soundClip.open(soundStream);
             gainSoundControl = (FloatControl) soundClip.getControl(FloatControl.Type.MASTER_GAIN);
-            //clip.start();
+            soundStream.mark(1);
     }
 
     
     
     @Override
-    public void onMouseClicked() {
+    public void onMouseClicked() throws IOException, LineUnavailableException {
         System.out.printf("%s clicked (%d, %d)\n", GameFrame.controller.getCurrentPlayer(), row, col);
         if (GameFrame.controller.canClick(row, col) || GameFrame.cheatModeIsOpen) {
             if (this.chessPiece == null) {
@@ -292,6 +292,15 @@ public class ChessGridComponent extends BasicComponent {
     public ChessPiece getChessPiece() {
         return chessPiece;
     }
+
+    public void PlayStream() throws IOException, LineUnavailableException {
+
+        soundStream.reset();
+        soundClip = AudioSystem.getClip();
+        soundClip.open(soundStream);
+        soundClip.start();
+
+    }
     
     public void PlaySound(){
         try {
@@ -320,7 +329,7 @@ public class ChessGridComponent extends BasicComponent {
                 if(GameFrame.controller.getCurrentPlayer()==ChessPiece.BLACK)
                     g2.setColor(new Color(12, 82, 255));
                 else{
-                    g2.setColor(new Color(255, 0, 0));
+                    g2.setColor(new Color(255, 252, 0));
                 }
                 g2.drawRect(8,8,55,55);
                 g2.setColor(gridColor);
@@ -336,7 +345,7 @@ public class ChessGridComponent extends BasicComponent {
                 if(GameFrame.controller.getCurrentPlayer()==ChessPiece.BLACK)
                     g2.setColor(new Color(12, 82, 255));
                 else {
-                    g2.setColor(new Color(255, 0, 0));
+                    g2.setColor(new Color(255, 252, 0));
                 }
                 g2.drawRect(8,8,55,55);
                 g2.setColor(gridColor);
@@ -419,12 +428,9 @@ public class ChessGridComponent extends BasicComponent {
     private class MyDynamicListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            int frame=7;
-
+            int frame=1;
             length-=frame;
-
             repaint();
-
         }
     }
 }

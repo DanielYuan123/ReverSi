@@ -2,9 +2,12 @@ package view;
 
 import controller.GameController;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameFrame extends JFrame {
@@ -24,7 +27,7 @@ public class GameFrame extends JFrame {
     }
 
 
-    public GameFrame(int frameSize) {
+    public GameFrame(int frameSize) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         cheatModeIsOpen =false;
         System.out.println("CheatMode is close!");
     
@@ -129,7 +132,15 @@ public class GameFrame extends JFrame {
                 this.gameFrame.setVisible(false);
                 GameFrame.getBoardPanelsList().clear();
                 GameFrame.stepNum=0;
-                new GameFrame(800);
+                try {
+                    new GameFrame(800);
+                } catch (UnsupportedAudioFileException ex) {
+                    ex.printStackTrace();
+                } catch (LineUnavailableException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
 
             }else if(e.getActionCommand().equals("Load")){
                 System.out.println("clicked Load Btn");
@@ -207,7 +218,7 @@ public class GameFrame extends JFrame {
     }
 
     //维修函数；
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         new GameFrame(800);
     }
 }
