@@ -43,8 +43,7 @@ public class MainMenu extends JFrame {
     public void init(){
 
         ImageIcon FrameIcon = new ImageIcon("Image/棋盘图标.png");
-        JLabel IconLabel = new JLabel(FrameIcon);
-        container.add(IconLabel);
+        this.setIconImage(FrameIcon.getImage());
 
         //设置背景颜色,边界和绝对布局
         container.setBackground( new Color(77,218,100));

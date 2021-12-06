@@ -32,6 +32,8 @@ public class GameFrame extends JFrame {
         this.setLayout(null);
         this.setSize(frameSize, frameSize);
         this.setLocationRelativeTo(null);
+        ImageIcon FrameIcon = new ImageIcon("Image/棋盘图标.png");
+        this.setIconImage(FrameIcon.getImage());
         
 
         chessBoardPanel = new ChessBoardPanel((int) (this.getWidth() * 0.7), (int) (this.getHeight() * 0.7));
