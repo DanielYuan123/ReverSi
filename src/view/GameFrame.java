@@ -35,11 +35,11 @@ public class GameFrame extends JFrame {
         
 
         chessBoardPanel = new ChessBoardPanel((int) (this.getWidth() * 0.7), (int) (this.getHeight() * 0.7));
-        chessBoardPanel.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 2, (this.getHeight() - chessBoardPanel.getHeight()) / 3);
+        chessBoardPanel.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 2 - 10, (this.getHeight() - chessBoardPanel.getHeight()) / 3);
         
 
         statusPanel = new StatusPanel(560, (int) (this.getHeight() * 0.1));
-        statusPanel.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 2, 0);
+        statusPanel.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 2 - 10, 0);
         
         gameOverPanel=new GameOverPanel(this);
         
@@ -55,7 +55,7 @@ public class GameFrame extends JFrame {
 
         JButton restartBtn = new JButton("Restart");
         restartBtn.setSize(100, 50);
-        restartBtn.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 7, (this.getHeight() + chessBoardPanel.getHeight()) / 2);
+        restartBtn.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 15, (this.getHeight() + chessBoardPanel.getHeight()) / 2);
         add(restartBtn);
         restartBtn.addActionListener(myBtnActionListener);
 
@@ -89,9 +89,9 @@ public class GameFrame extends JFrame {
         add(cheatMode);
         cheatMode.addActionListener(myBtnActionListener);
         
-        JButton regretChess = new JButton("RegretChess");
+        JButton regretChess = new JButton("Regret");
         regretChess.setSize(100, 50);
-        cheatMode.setLocation(cheatMode.getX() + cheatMode.getWidth() + 30, restartBtn.getY());
+        regretChess.setLocation(cheatMode.getX() + cheatMode.getWidth() + 30, restartBtn.getY());
         add(regretChess);
         regretChess.addActionListener(myBtnActionListener);
 
@@ -149,6 +149,9 @@ public class GameFrame extends JFrame {
                     System.out.println("CheatMode is closed!");
                     repaint();
                 }
+            } else if (e.getActionCommand().equals("Regret")) {
+                System.out.println("Regret is clicked.");
+                
             }
         }
     }
