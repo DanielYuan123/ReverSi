@@ -1,23 +1,22 @@
 package view;
 
+import components.ChessGridComponent;
 import controller.GameController;
+import model.ChessPiece;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameFrame extends JFrame {
     private ChessBoardPanel chessBoardPanel;
     private StatusPanel statusPanel;
-    private Container container=this.getContentPane();
+    private Container container = this.getContentPane();
     public static GameController controller;
     public static GameOverPanel gameOverPanel;
-    private static ArrayList<int[][]>boardPanelsList=new ArrayList<>(5);
-    public static int stepNum=0;
+    private static ArrayList<int[][]>boardPanelsList = new ArrayList<>(5);
+    public static int stepNum = 0;
     public int cheatMode = 1;
     public static boolean cheatModeIsOpen = false;
     public static int NightModeChangeConstant=1;
@@ -27,7 +26,7 @@ public class GameFrame extends JFrame {
     }
 
 
-    public GameFrame(int frameSize) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public GameFrame(int frameSize) {
         cheatModeIsOpen =false;
         System.out.println("CheatMode is close!");
     
@@ -131,16 +130,8 @@ public class GameFrame extends JFrame {
                 System.out.println("clicked Restart button.");
                 this.gameFrame.setVisible(false);
                 GameFrame.getBoardPanelsList().clear();
-                GameFrame.stepNum=0;
-                try {
-                    new GameFrame(800);
-                } catch (UnsupportedAudioFileException ex) {
-                    ex.printStackTrace();
-                } catch (LineUnavailableException ex) {
-                    ex.printStackTrace();
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
+                GameFrame.stepNum = 0;
+                new GameFrame(800);
 
             }else if(e.getActionCommand().equals("Load")){
                 System.out.println("clicked Load Btn");
@@ -163,8 +154,28 @@ public class GameFrame extends JFrame {
                     repaint();
                 }
             } else if (e.getActionCommand().equals("Regret")) {
-                System.out.println("Regret is clicked.");
-                
+                try {
+                    System.out.println("Regret is clicked.");
+                    ChessGridComponent[][] chessGridComponents = GameFrame.controller.getGamePanel().getChessGrids();
+                    int[][] tempBoardPanel = getBoardPanelsList().get(stepNum - 2);
+                    for (int i = 0; i < 8; i++) {
+                        for (int j = 0; j < 8; j++) {
+                            if (tempBoardPanel[i][j] == 0) {
+                                chessGridComponents[i][j].setChessPiece(null);
+                            } else if (tempBoardPanel[i][j] == 1) {
+                                chessGridComponents[i][j].setChessPiece(ChessPiece.BLACK);
+                            } else if (tempBoardPanel[i][j] == -1) {
+                                chessGridComponents[i][j].setChessPiece(ChessPiece.WHITE);
+                            }
+                        }
+                    }
+                    controller.swapPlayer();
+                    getBoardPanelsList().remove(stepNum - 1);
+                    chessBoardPanel.setChessGrids(chessGridComponents);
+                    stepNum--;
+                } catch (ArrayIndexOutOfBoundsException E) {
+                    JOptionPane.showMessageDialog(null, "This is the initial chess panel!");
+                }
             }
         }
     }
@@ -218,7 +229,7 @@ public class GameFrame extends JFrame {
     }
 
     //维修函数；
-    public static void main(String[] args) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public static void main(String[] args) {
         new GameFrame(800);
     }
 }

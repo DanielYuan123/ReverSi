@@ -202,8 +202,8 @@ public class ChessGridComponent extends BasicComponent {
                         }
                     }
                 }
-
-
+    
+                
                 GameFrame.stepNum++;
                 System.out.println("Step number: " + GameFrame.stepNum);
 
