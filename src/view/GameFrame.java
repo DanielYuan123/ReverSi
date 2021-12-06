@@ -170,7 +170,7 @@ public class GameFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             System.out.println("NightMode button clicked.");
             if(this.nightModeInt==1){
-                client.container.setBackground(new Color(238,238,238));
+                client.container.setBackground(new Color(238,238,238, 255));
                 client.statusPanel.setBackground(new Color(238,238,238));
                 client.statusPanel.setPlayerLabelColor(Color.BLACK);
                 client.statusPanel.setScoreLabelColor(Color.BLACK);

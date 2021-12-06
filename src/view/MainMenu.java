@@ -42,6 +42,10 @@ public class MainMenu extends JFrame {
     //初始化方法；
     public void init(){
 
+        ImageIcon FrameIcon = new ImageIcon("Image/棋盘图标.png");
+        JLabel IconLabel = new JLabel(FrameIcon);
+        container.add(IconLabel);
+
         //设置背景颜色,边界和绝对布局
         container.setBackground( new Color(77,218,100));
         this.setBounds(600,210,200,350);
@@ -80,7 +84,7 @@ public class MainMenu extends JFrame {
         //将图标设置为修改后的图像；
         Icon=new ImageIcon(image);
         TitleIcon.setImage(title);
-        
+
         //创建Icon承载体IconPanel，其类型为JLabel；
         JLabel IconPanel = new JLabel(Icon);
         JLabel TitlePanel = new JLabel(TitleIcon);
