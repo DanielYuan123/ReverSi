@@ -36,9 +36,9 @@ public class ChessBoardPanel extends JPanel {
         initialChessGrids();//return empty chessboard
         initialGame();//add initial four chess
         int[][] chessGridComponents=new int[8][8];
-        for(int i=0;i<8;i++) {
+        for(int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                if (chessGrids[i][j].getChessPiece()==null) {
+                if (chessGrids[i][j].getChessPiece() == null) {
                     chessGridComponents[i][j] = 0;
                 } else if (chessGrids[i][j].getChessPiece().equals(ChessPiece.BLACK)) {
                     chessGridComponents[i][j] = 1;
@@ -56,7 +56,10 @@ public class ChessBoardPanel extends JPanel {
         return chessGrids;
     }
     
-    
+    public void setChessGrids(ChessGridComponent[][] chessGrids) {
+        this.chessGrids = chessGrids;
+        repaint();
+    }
     
     /**
      * set an empty chessboard
@@ -83,6 +86,7 @@ public class ChessBoardPanel extends JPanel {
         chessGrids[3][4].setChessPiece(ChessPiece.WHITE);
         chessGrids[4][3].setChessPiece(ChessPiece.WHITE);
         chessGrids[4][4].setChessPiece(ChessPiece.BLACK);
+        
     }
     
     
