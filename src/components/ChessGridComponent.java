@@ -35,7 +35,6 @@ public class ChessGridComponent extends BasicComponent {
 
     public ChessGridComponent(int row, int col) {
         this.setSize(gridSize, gridSize);
-        this.setOpaque(false);
         this.row = row;
         this.col = col;
 
@@ -313,12 +312,15 @@ public class ChessGridComponent extends BasicComponent {
                 else{
                     g2.setColor(new Color(255, 252, 0));
                 }
-                g2.drawRect(8,8,55,55);
-                g2.setColor(gridColor);
-                g2.drawLine(24,8,47,8);
-                g2.drawLine(63,24,63,47);
-                g2.drawLine(8,24,8,47);
-                g2.drawLine(25,63,47,63);
+                g2.drawLine(8,8,16,8);
+                g2.drawLine(8,8,8,16);
+                g2.drawLine(62,8,54,8);
+                g2.drawLine(62,8,62,16);
+                g2.drawLine(62,62,62,54);
+                g2.drawLine(62,62,54,62);
+                g2.drawLine(8,62,8,54);
+                g2.drawLine(8,62,16,62);
+
 
                 }
             }else{
@@ -329,12 +331,14 @@ public class ChessGridComponent extends BasicComponent {
                 else {
                     g2.setColor(new Color(255, 252, 0));
                 }
-                g2.drawRect(8,8,55,55);
-                g2.setColor(gridColor);
-                g2.drawLine(24,8,47,8);
-                g2.drawLine(63,24,63,47);
-                g2.drawLine(8,24,8,47);
-                g2.drawLine(25,63,47,63);
+                g2.drawLine(8,8,16,8);
+                g2.drawLine(8,8,8,16);
+                g2.drawLine(62,8,54,8);
+                g2.drawLine(62,8,62,16);
+                g2.drawLine(62,62,62,54);
+                g2.drawLine(62,62,54,62);
+                g2.drawLine(8,62,8,54);
+                g2.drawLine(8,62,16,62);
             }
             timer.stop();
             length=56;

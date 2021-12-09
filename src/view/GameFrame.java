@@ -12,10 +12,10 @@ import java.awt.event.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameFrame extends Frame {
+public class GameFrame extends JFrame {
     private ChessBoardPanel chessBoardPanel;
     private StatusPanel statusPanel;
-    //private Container container = this.getContentPane();
+    private Container container = this.getContentPane();
     public static GameController controller;
     public static GameOverPanel gameOverPanel;
     private static ArrayList<int[][]>boardPanelsList = new ArrayList<>(5);
@@ -52,7 +52,7 @@ public class GameFrame extends Frame {
         
         controller = new GameController(chessBoardPanel, statusPanel);
 
-        //container.add(chessBoardPanel,BorderLayout.CENTER);
+        this.add(chessBoardPanel);
         this.add(statusPanel);
         this.add(gameOverPanel);
 
@@ -64,7 +64,7 @@ public class GameFrame extends Frame {
                 seaImage = seaImage.getScaledInstance(560,560,Image.SCALE_AREA_AVERAGING);
                 ImageIcon lastSeaIcon = new ImageIcon(seaImage);
                 JLabel jLabel = new JLabel(lastSeaIcon);
-                jLabel.setBounds(0,0,560,560);
+                jLabel.setBounds((this.getWidth() - chessBoardPanel.getWidth()) / 2 - 10, (this.getHeight() - chessBoardPanel.getHeight()) / 3,560,560);
                 this.add(jLabel);
                 break;
             case GREENGRASS:
@@ -73,7 +73,7 @@ public class GameFrame extends Frame {
                 grassImage=grassImage.getScaledInstance(560,560,Image.SCALE_AREA_AVERAGING);
                 ImageIcon lastGrassIcon = new ImageIcon(grassImage);
                 JLabel jLabel1 = new JLabel(lastGrassIcon);
-                jLabel1.setBounds(0,0,560,560);
+                jLabel1.setBounds((this.getWidth() - chessBoardPanel.getWidth()) / 2 - 10, (this.getHeight() - chessBoardPanel.getHeight()) / 3,560,560);
                 this.add(jLabel1);
                 break;
             case REDSCARED:
@@ -82,7 +82,7 @@ public class GameFrame extends Frame {
                 scareImage=scareImage.getScaledInstance(560,560,Image.SCALE_AREA_AVERAGING);
                 ImageIcon lastScareIcon = new ImageIcon(scareImage);
                 JLabel jLabel2 = new JLabel(lastScareIcon);
-                jLabel2.setBounds(0,0,560,560);
+                jLabel2.setBounds((this.getWidth() - chessBoardPanel.getWidth()) / 2 - 10, (this.getHeight() - chessBoardPanel.getHeight()) / 3,560,560);
                 this.add(jLabel2);
                 break;
             case FLOWERCLOTH:
@@ -91,7 +91,7 @@ public class GameFrame extends Frame {
                 clothImage=clothImage.getScaledInstance(560,560,Image.SCALE_AREA_AVERAGING);
                 ImageIcon lastClothIcon = new ImageIcon(clothImage);
                 JLabel jLabel0 = new JLabel(lastClothIcon);
-                jLabel0.setBounds(0,0,560,560);
+                jLabel0.setBounds((this.getWidth() - chessBoardPanel.getWidth()) / 2 - 10, (this.getHeight() - chessBoardPanel.getHeight()) / 3,560,560);
                 this.add(jLabel0);
                 break;
             case WHITESKETCH:
@@ -100,7 +100,7 @@ public class GameFrame extends Frame {
                 sketchImage=sketchImage.getScaledInstance(560,560,Image.SCALE_AREA_AVERAGING);
                 ImageIcon lastSketchIcon = new ImageIcon(sketchImage);
                 JLabel jLabel3 = new JLabel(lastSketchIcon);
-                jLabel3.setBounds(0,0,560,560);
+                jLabel3.setBounds((this.getWidth() - chessBoardPanel.getWidth()) / 2 - 10, (this.getHeight() - chessBoardPanel.getHeight()) / 3,560,560);
                 this.add(jLabel3);
                 break;
             case DEFAULT:
@@ -109,14 +109,11 @@ public class GameFrame extends Frame {
                 defaultImage = defaultImage.getScaledInstance(560,560,Image.SCALE_AREA_AVERAGING);
                 ImageIcon lastDefaultIcon = new ImageIcon(defaultImage);
                 JLabel jLabel4 = new JLabel(lastDefaultIcon);
-                jLabel4.setIcon(lastDefaultIcon);
-                jLabel4.setSize(560,560);
-                jLabel4.setLocation(240,240);
+                jLabel4.setBounds((this.getWidth() - chessBoardPanel.getWidth()) / 2 - 10, (this.getHeight() - chessBoardPanel.getHeight()) / 3,560,560);
                 System.out.println("HI");
                 this.add(jLabel4);
                 break;
         }
-
 
         //new一个自制的事件监听；
         MyBtnActionListener myBtnActionListener = new MyBtnActionListener(this);
