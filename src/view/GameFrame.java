@@ -77,7 +77,7 @@ public class GameFrame extends JFrame {
                 this.add(jLabel1);
                 break;
             case REDSCARED:
-                imageIcon = new ImageIcon("BoardImage/sjk23l''*&%0kdgfdkjh.png");
+                imageIcon = new ImageIcon("BoardImage/#sd@sd)$f_43akd+fh.png");
                 Image scareImage = imageIcon.getImage();
                 scareImage=scareImage.getScaledInstance(560,560,Image.SCALE_AREA_AVERAGING);
                 ImageIcon lastScareIcon = new ImageIcon(scareImage);
@@ -263,14 +263,14 @@ public class GameFrame extends JFrame {
         public void actionPerformed(ActionEvent e) {
             System.out.println("NightMode button clicked.");
             if(this.nightModeInt==1){
-                client.setBackground(new Color(238,238,238, 255));
+                client.container.setBackground(new Color(238,238,238, 255));
                 client.statusPanel.setBackground(new Color(238,238,238));
                 client.statusPanel.setPlayerLabelColor(Color.BLACK);
                 client.statusPanel.setScoreLabelColor(Color.BLACK);
                 this.nightModeInt=-1;
                 client.NightModeChangeConstant=-1;
             }else if(this.nightModeInt==-1){
-                client.setBackground(Color.BLACK);
+                client.container.setBackground(Color.BLACK);
                 client.statusPanel.setPlayerLabelColor(Color.white);
                 client.statusPanel.setScoreLabelColor(Color.WHITE);
                 client.statusPanel.setBackground(Color.BLACK);
