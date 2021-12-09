@@ -129,6 +129,8 @@ public class GameOverPanel extends JPanel {
         this.add(resultLabel);
         this.setVisible(true);
 
+        gameFrame.clearAllBtn();
+
     }
 //GameFrame.controller.getBlackScore()>GameFrame.controller.getWhiteScore()
     @Override

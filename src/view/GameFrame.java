@@ -24,10 +24,26 @@ public class GameFrame extends JFrame {
     public static boolean cheatModeIsOpen = false;
     public static int NightModeChangeConstant=1;
 
+    private JButton restartBtn;
+    private JButton loadGameBtn;
+    private JButton saveGameBtn;
+    private JButton nightModeBtn;
+    private JButton cheatModeBtn;
+    private JButton regretChessBtn;
+
+
+
     public static ArrayList<int[][]> getBoardPanelsList(){
         return GameFrame.boardPanelsList;
     }
 
+    public void clearAllBtn(){
+        this.cheatModeBtn.setVisible(false);
+        this.loadGameBtn.setVisible(false);
+        this.saveGameBtn.setVisible(false);
+        this.nightModeBtn.setVisible(false);
+        this.regretChessBtn.setVisible(false);
+    }
 
     public GameFrame(int frameSize) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         cheatModeIsOpen =false;
@@ -118,21 +134,21 @@ public class GameFrame extends JFrame {
         //new一个自制的事件监听；
         MyBtnActionListener myBtnActionListener = new MyBtnActionListener(this);
 
-        JButton restartBtn = new JButton("Restart");
+        restartBtn = new JButton("Restart");
         restartBtn.setSize(100, 50);
         restartBtn.setLocation((this.getWidth() - chessBoardPanel.getWidth()) / 15, (this.getHeight() + chessBoardPanel.getHeight()) / 2);
         add(restartBtn);
         restartBtn.addActionListener(myBtnActionListener);
 
         
-        JButton loadGameBtn = new JButton("Load");
+        loadGameBtn = new JButton("Load");
         loadGameBtn.setSize(100, 50);
         loadGameBtn.setLocation(restartBtn.getX()+restartBtn.getWidth()+30, restartBtn.getY());
         add(loadGameBtn);
         loadGameBtn.addActionListener(myBtnActionListener);
         
         
-        JButton saveGameBtn = new JButton("Save");
+        saveGameBtn = new JButton("Save");
         saveGameBtn.setSize(100, 50);
         saveGameBtn.setLocation(loadGameBtn.getX()+restartBtn.getWidth()+30, restartBtn.getY());
         add(saveGameBtn);
@@ -141,24 +157,24 @@ public class GameFrame extends JFrame {
         //new一个自制夜间监听事件；
         NightModeSetter nightModeSetter=new NightModeSetter(this);
 
-        JButton nightModeBtn= new JButton("Nightmode");
+        nightModeBtn= new JButton("Nightmode");
         nightModeBtn.setSize(100,50);
         nightModeBtn.setLocation(saveGameBtn.getX()+saveGameBtn.getWidth()+30, restartBtn.getY());
         add(nightModeBtn);
         nightModeBtn.addActionListener(nightModeSetter);
 
         
-        JButton cheatMode = new JButton("CheatMode");
-        cheatMode.setSize(100, 50);
-        cheatMode.setLocation(nightModeBtn.getX() + nightModeBtn.getWidth() + 30, restartBtn.getY());
-        add(cheatMode);
-        cheatMode.addActionListener(myBtnActionListener);
+        cheatModeBtn = new JButton("CheatMode");
+        cheatModeBtn.setSize(100, 50);
+        cheatModeBtn.setLocation(nightModeBtn.getX() + nightModeBtn.getWidth() + 30, restartBtn.getY());
+        add(cheatModeBtn);
+        cheatModeBtn.addActionListener(myBtnActionListener);
         
-        JButton regretChess = new JButton("Regret");
-        regretChess.setSize(100, 50);
-        regretChess.setLocation(cheatMode.getX() + cheatMode.getWidth() + 30, restartBtn.getY());
-        add(regretChess);
-        regretChess.addActionListener(myBtnActionListener);
+        regretChessBtn = new JButton("Regret");
+        regretChessBtn.setSize(100, 50);
+        regretChessBtn.setLocation(cheatModeBtn.getX() + cheatModeBtn.getWidth() + 30, restartBtn.getY());
+        add(regretChessBtn);
+        regretChessBtn.addActionListener(myBtnActionListener);
 
         myFrameWindowListener myFrameWindowListener=new myFrameWindowListener(this);
         this.addWindowListener(myFrameWindowListener);
