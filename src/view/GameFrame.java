@@ -43,6 +43,7 @@ public class GameFrame extends JFrame {
         this.saveGameBtn.setVisible(false);
         this.nightModeBtn.setVisible(false);
         this.regretChessBtn.setVisible(false);
+        this.restartBtn.setVisible(false);
     }
 
     public GameFrame(int frameSize) throws UnsupportedAudioFileException, LineUnavailableException, IOException {

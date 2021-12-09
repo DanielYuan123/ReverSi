@@ -132,7 +132,7 @@ public class GameOverPanel extends JPanel {
         gameFrame.clearAllBtn();
 
     }
-//GameFrame.controller.getBlackScore()>GameFrame.controller.getWhiteScore()
+
     @Override
     public void print(Graphics g) {
 
