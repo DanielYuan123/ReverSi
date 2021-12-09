@@ -28,9 +28,6 @@ public class ChessGridComponent extends BasicComponent {
     private int col;
 
     private MyDynamicListener myDynamicListener = new MyDynamicListener();
-    public static AudioInputStream soundStream;
-    public static Clip soundClip;
-    public static FloatControl gainSoundControl;
     private ChessGridComponent[][] formerGridComponent=new ChessGridComponent[8][8];
     private Timer timer = new Timer(1, myDynamicListener);
     private boolean ChangeConstant;
@@ -38,24 +35,16 @@ public class ChessGridComponent extends BasicComponent {
 
     public ChessGridComponent(int row, int col) {
         this.setSize(gridSize, gridSize);
-
         this.row = row;
         this.col = col;
 
     }
 
-    public static void setSound() throws IOException,LineUnavailableException,UnsupportedAudioFileException{
-            soundStream = AudioSystem.getAudioInputStream(new File("Music/chessDownSound.wav"));
-            soundClip = AudioSystem.getClip();
-            soundClip.open(soundStream);
-            gainSoundControl = (FloatControl) soundClip.getControl(FloatControl.Type.MASTER_GAIN);
-            //clip.start();
-    }
 
     
     
     @Override
-    public void onMouseClicked() {
+    public void onMouseClicked() throws IOException, LineUnavailableException {
         System.out.printf("%s clicked (%d, %d)\n", GameFrame.controller.getCurrentPlayer(), row, col);
         if (GameFrame.controller.canClick(row, col) || GameFrame.cheatModeIsOpen) {
             if (this.chessPiece == null) {
@@ -292,6 +281,7 @@ public class ChessGridComponent extends BasicComponent {
     public ChessPiece getChessPiece() {
         return chessPiece;
     }
+
     
     public void PlaySound(){
         try {
@@ -309,8 +299,8 @@ public class ChessGridComponent extends BasicComponent {
 
     public void drawPiece(Graphics g) {
         //无论如何，重画棋格；
-        g.setColor(gridColor);
-        g.fillRect(1, 1, this.getWidth() - 2, this.getHeight() - 2);
+        //g.setColor(gridColor);
+        //g.fillRect(1, 1, this.getWidth() - 2, this.getHeight() - 2);
 
         if(this.chessPiece == null){
             if(!GameFrame.cheatModeIsOpen){
@@ -320,14 +310,17 @@ public class ChessGridComponent extends BasicComponent {
                 if(GameFrame.controller.getCurrentPlayer()==ChessPiece.BLACK)
                     g2.setColor(new Color(12, 82, 255));
                 else{
-                    g2.setColor(new Color(255, 0, 0));
+                    g2.setColor(new Color(255, 252, 0));
                 }
-                g2.drawRect(8,8,55,55);
-                g2.setColor(gridColor);
-                g2.drawLine(24,8,47,8);
-                g2.drawLine(63,24,63,47);
-                g2.drawLine(8,24,8,47);
-                g2.drawLine(25,63,47,63);
+                g2.drawLine(8,8,16,8);
+                g2.drawLine(8,8,8,16);
+                g2.drawLine(62,8,54,8);
+                g2.drawLine(62,8,62,16);
+                g2.drawLine(62,62,62,54);
+                g2.drawLine(62,62,54,62);
+                g2.drawLine(8,62,8,54);
+                g2.drawLine(8,62,16,62);
+
 
                 }
             }else{
@@ -336,14 +329,16 @@ public class ChessGridComponent extends BasicComponent {
                 if(GameFrame.controller.getCurrentPlayer()==ChessPiece.BLACK)
                     g2.setColor(new Color(12, 82, 255));
                 else {
-                    g2.setColor(new Color(255, 0, 0));
+                    g2.setColor(new Color(255, 252, 0));
                 }
-                g2.drawRect(8,8,55,55);
-                g2.setColor(gridColor);
-                g2.drawLine(24,8,47,8);
-                g2.drawLine(63,24,63,47);
-                g2.drawLine(8,24,8,47);
-                g2.drawLine(25,63,47,63);
+                g2.drawLine(8,8,16,8);
+                g2.drawLine(8,8,8,16);
+                g2.drawLine(62,8,54,8);
+                g2.drawLine(62,8,62,16);
+                g2.drawLine(62,62,62,54);
+                g2.drawLine(62,62,54,62);
+                g2.drawLine(8,62,8,54);
+                g2.drawLine(8,62,16,62);
             }
             timer.stop();
             length=56;
@@ -419,12 +414,9 @@ public class ChessGridComponent extends BasicComponent {
     private class MyDynamicListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            int frame=7;
-
+            int frame=1;
             length-=frame;
-
             repaint();
-
         }
     }
 }

@@ -1,10 +1,13 @@
 package view;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -47,7 +50,15 @@ public class GameOverPanel extends JPanel {
                 gameFrame.setVisible(false);
                 GameFrame.getBoardPanelsList().clear();
                 GameFrame.stepNum=0;
-                new GameFrame(800);
+                try {
+                    new GameFrame(800);
+                } catch (UnsupportedAudioFileException ex) {
+                    ex.printStackTrace();
+                } catch (LineUnavailableException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 

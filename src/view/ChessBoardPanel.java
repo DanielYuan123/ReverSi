@@ -1,31 +1,32 @@
 package view;
 
+import com.sun.codemodel.internal.JCase;
 import components.ChessGridComponent;
 import model.ChessPiece;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class ChessBoardPanel extends JPanel {
     private final int CHESS_COUNT = 8;
     private ChessGridComponent[][] chessGrids;
+    public static BoardStyle boardStyle=BoardStyle.DEFAULT;
 
-    public ChessBoardPanel(){
-        this.setVisible(true);
-        this.setFocusable(true);
-        this.setLayout(null);
-        this.setBackground(Color.BLACK);
-        this.setSize(560, 560);
-        ChessGridComponent.gridSize = 560 / CHESS_COUNT;
-        ChessGridComponent.chessSize = (int) (ChessGridComponent.gridSize * 0.8);
-        initialChessGrids();
+
+    public void setBoardSytle(BoardStyle boardStyle){
+        ChessBoardPanel.boardStyle= ChessBoardPanel.boardStyle;
+        System.out.println("Style set successfully!");
     }
 
-    public ChessBoardPanel(int width, int height) {
-        this.setVisible(true);
+    public ChessBoardPanel(int width, int height) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+        //this.setVisible(true);
         this.setFocusable(true);
         this.setLayout(null);
-        this.setBackground(Color.BLACK);
+        this.setOpaque(false);
+        //this.setBackground(Color.BLACK);
         int length = Math.min(width, height);
         this.setSize(length, length);
         ChessGridComponent.gridSize = length / CHESS_COUNT;
@@ -33,8 +34,11 @@ public class ChessBoardPanel extends JPanel {
         System.out.printf("width = %d height = %d gridSize = %d chessSize = %d\n",
                 width, height, ChessGridComponent.gridSize, ChessGridComponent.chessSize);
 
+
         initialChessGrids();//return empty chessboard
         initialGame();//add initial four chess
+
+
         int[][] chessGridComponents=new int[8][8];
         for(int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -49,6 +53,7 @@ public class ChessBoardPanel extends JPanel {
         }
         GameFrame.getBoardPanelsList().add(chessGridComponents);
         GameFrame.stepNum++;
+        this.setVisible(true);
         repaint();
     }
     
@@ -64,7 +69,7 @@ public class ChessBoardPanel extends JPanel {
     /**
      * set an empty chessboard
      */
-    public void initialChessGrids() {
+    public void initialChessGrids() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         chessGrids = new ChessGridComponent[CHESS_COUNT][CHESS_COUNT];
 
         //draw all chess grids
@@ -92,8 +97,8 @@ public class ChessBoardPanel extends JPanel {
     
     @Override
     protected void paintComponent(Graphics g) {
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, this.getWidth(), this.getHeight());
+        //g.setColor(Color.BLACK);
+        //g.fillRect(0, 0, this.getWidth(), this.getHeight());
     }
 
     public boolean canClickGrid(int row, int col, ChessPiece currentPlayer) {

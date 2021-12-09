@@ -1,0 +1,5 @@
+package view;
+
+public enum BoardStyle {
+    BLUESEA,GREENGRASS,REDSCARED,FLOWERCLOTH,WHITESKETCH,DEFAULT
+}
