@@ -29,7 +29,6 @@ public class SettingFrame extends JFrame {
         JSlider jSlider2 = new JSlider(-60206,60206,0);
 
         myChangeListener myChangeListener = new myChangeListener();
-        mySoundChangeListener mySoundChangeListener = new mySoundChangeListener();
 
         jSlider1.setBounds(60,10,300,50);
         jSlider2.setBounds(60,50,300,50);
@@ -38,7 +37,6 @@ public class SettingFrame extends JFrame {
         jSlider1.setPaintLabels(true);
         jSlider2.setPaintLabels(true);
         jSlider1.addChangeListener(myChangeListener);
-        jSlider2.addChangeListener(mySoundChangeListener);
 
 
 
@@ -74,14 +72,6 @@ public class SettingFrame extends JFrame {
                 MainMenu.clip.start();
             MainMenu.gainControl.setValue(slider.getValue()*0.0001f);
             }
-        }
-    }
-
-    class mySoundChangeListener implements ChangeListener {
-        @Override
-        public void stateChanged(ChangeEvent e) {
-            JSlider jSlider1 =(JSlider)e.getSource();
-            ChessGridComponent.gainSoundControl.setValue(jSlider1.getValue()*0.0001f);
         }
     }
 }

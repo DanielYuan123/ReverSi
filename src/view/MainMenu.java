@@ -50,13 +50,6 @@ public class MainMenu extends JFrame {
         this.setBounds(600,210,200,350);
         this.setLayout(null);
 
-        //提前设置下子音效；
-        try{
-            ChessGridComponent.setSound();
-        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
-            e.printStackTrace();
-        }
-
         //设置大小不可变；
         this.setResizable(false);
 

@@ -28,9 +28,6 @@ public class ChessGridComponent extends BasicComponent {
     private int col;
 
     private MyDynamicListener myDynamicListener = new MyDynamicListener();
-    public static AudioInputStream soundStream;
-    public static Clip soundClip;
-    public static FloatControl gainSoundControl;
     private ChessGridComponent[][] formerGridComponent=new ChessGridComponent[8][8];
     private Timer timer = new Timer(1, myDynamicListener);
     private boolean ChangeConstant;
@@ -38,19 +35,12 @@ public class ChessGridComponent extends BasicComponent {
 
     public ChessGridComponent(int row, int col) {
         this.setSize(gridSize, gridSize);
-
+        this.setOpaque(false);
         this.row = row;
         this.col = col;
 
     }
 
-    public static void setSound() throws IOException,LineUnavailableException,UnsupportedAudioFileException{
-            soundStream = AudioSystem.getAudioInputStream(new File("Music/chessDownSound.wav"));
-            soundClip = AudioSystem.getClip();
-            soundClip.open(soundStream);
-            gainSoundControl = (FloatControl) soundClip.getControl(FloatControl.Type.MASTER_GAIN);
-            soundStream.mark(1);
-    }
 
     
     
@@ -293,14 +283,6 @@ public class ChessGridComponent extends BasicComponent {
         return chessPiece;
     }
 
-    public void PlayStream() throws IOException, LineUnavailableException {
-
-        soundStream.reset();
-        soundClip = AudioSystem.getClip();
-        soundClip.open(soundStream);
-        soundClip.start();
-
-    }
     
     public void PlaySound(){
         try {
@@ -318,8 +300,8 @@ public class ChessGridComponent extends BasicComponent {
 
     public void drawPiece(Graphics g) {
         //无论如何，重画棋格；
-        g.setColor(gridColor);
-        g.fillRect(1, 1, this.getWidth() - 2, this.getHeight() - 2);
+        //g.setColor(gridColor);
+        //g.fillRect(1, 1, this.getWidth() - 2, this.getHeight() - 2);
 
         if(this.chessPiece == null){
             if(!GameFrame.cheatModeIsOpen){
