@@ -1,6 +1,5 @@
 package view;
 
-import com.sun.codemodel.internal.JCase;
 import components.ChessGridComponent;
 import model.ChessPiece;
 

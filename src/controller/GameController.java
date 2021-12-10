@@ -6,6 +6,8 @@ import view.*;
 
 import javax.swing.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class GameController {
@@ -99,13 +101,13 @@ public class GameController {
     
             bufferedReader.readLine();
             bufferedReader.readLine();
-
-    
+            
+            
             ChessGridComponent[][] chessGridComponents = gamePanel.getChessGrids();
             for (int i = 0; i < 8; i++) {
+                String[] read = bufferedReader.readLine().split(" +");
                 for (int j = 0; j < 8; j++) {
-                    String chess = bufferedReader.readLine();
-                    switch (chess) {
+                    switch (read[j + 1]) {
                         case "NULL":
                             chessGridComponents[i][j].setChessPiece(null);
                             break;
@@ -126,16 +128,16 @@ public class GameController {
             bufferedReader.close();
             JOptionPane.showMessageDialog(null, "Load successfully.");
 
-            int[][] chessGridsNum=new int[8][8];
+            int[][] chessGridsNum = new int[8][8];
 
-            for(int i=0;i<8;i++)
-                for(int j=0;j<8;j++){
-                    if(chessGridComponents[i][j]==null){
-                        chessGridsNum[i][j]=0;
-                    }else if (chessGridComponents[i][j].getChessPiece()==ChessPiece.BLACK){
-                        chessGridsNum[i][j]=1;
+            for(int i = 0; i < 8; i++)
+                for(int j = 0; j < 8; j++){
+                    if(chessGridComponents[i][j] == null){
+                        chessGridsNum[i][j] = 0;
+                    }else if (chessGridComponents[i][j].getChessPiece() == ChessPiece.BLACK){
+                        chessGridsNum[i][j] = 1;
                     }else {
-                        chessGridsNum[i][j]=-1;
+                        chessGridsNum[i][j] = -1;
                     }
                 }
 
@@ -166,12 +168,13 @@ public class GameController {
             for (int i = 0; i < 8; i++) {
                 for (int j = 0; j < 8; j++) {
                     if (chessGridComponents[i][j].getChessPiece() == null) {
-                        bufferedWriter.write("NULL\n");
+                        bufferedWriter.write(String.format("%8s", "NULL"));
                     } else {
-                        bufferedWriter.write(chessGridComponents[i][j].getChessPiece().name());
-                        bufferedWriter.write("\n");
+                        bufferedWriter.write(String.format("%7s", chessGridComponents[i][j].getChessPiece().name()));
+                        //bufferedWriter.write("\n");
                     }
                 }
+                bufferedWriter.newLine();
             }
             JOptionPane.showMessageDialog(null, "Save successfully.");
             bufferedWriter.close();

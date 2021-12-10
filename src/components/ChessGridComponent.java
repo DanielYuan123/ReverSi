@@ -414,7 +414,7 @@ public class ChessGridComponent extends BasicComponent {
     private class MyDynamicListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            int frame=1;
+            int frame=7;
             length-=frame;
             repaint();
         }
