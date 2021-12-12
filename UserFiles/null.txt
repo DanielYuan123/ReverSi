@@ -1,0 +1,17 @@
+CurrentPlayer: WHITE
+
+GameScore: 
+Black: 
+4
+White: 
+1
+
+ChessBoardPanel: 
+    NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL
+    NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL
+    NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL
+    NULL    NULL    NULL  BLACK  WHITE    NULL    NULL    NULL
+    NULL    NULL    NULL  WHITE  BLACK    NULL    NULL    NULL
+    NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL
+    NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL
+    NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL

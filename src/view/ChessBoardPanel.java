@@ -1,6 +1,5 @@
 package view;
 
-import com.sun.codemodel.internal.JCase;
 import components.ChessGridComponent;
 import model.ChessPiece;
 
@@ -9,17 +8,16 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChessBoardPanel extends JPanel {
     private final int CHESS_COUNT = 8;
     private ChessGridComponent[][] chessGrids;
     public static BoardStyle boardStyle=BoardStyle.DEFAULT;
-
-
-    public void setBoardSytle(BoardStyle boardStyle){
-        ChessBoardPanel.boardStyle= ChessBoardPanel.boardStyle;
-        System.out.println("Style set successfully!");
-    }
+    private static List<Integer> rowCanClicked = new ArrayList<>(5);
+    private static List<Integer> colCanClicked = new ArrayList<>(5);
+    
 
     public ChessBoardPanel(int width, int height) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         //this.setVisible(true);
@@ -59,6 +57,14 @@ public class ChessBoardPanel extends JPanel {
     
     public ChessGridComponent[][] getChessGrids() {
         return chessGrids;
+    }
+    
+    public static List<Integer> getRowCanClicked() {
+        return rowCanClicked;
+    }
+    
+    public static List<Integer> getColCanClicked() {
+        return colCanClicked;
     }
     
     public void setChessGrids(ChessGridComponent[][] chessGrids) {
@@ -102,7 +108,7 @@ public class ChessBoardPanel extends JPanel {
     }
 
     public boolean canClickGrid(int row, int col, ChessPiece currentPlayer) {
-    
+        boolean canClicked = false;
         ChessPiece otherPlayer = (currentPlayer == ChessPiece.BLACK) ? (ChessPiece.WHITE) : (ChessPiece.BLACK);
     
         if (chessGrids[row][col].getChessPiece() != currentPlayer && chessGrids[row][col].getChessPiece() != otherPlayer) {
@@ -117,7 +123,9 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[k][col].getChessPiece() == currentPlayer) {
-                        return true;
+                        rowCanClicked.add(row);
+                        colCanClicked.add(col);
+                        canClicked = true;
                     }
                 }
             }
@@ -133,7 +141,9 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[k][col].getChessPiece() == currentPlayer) {
-                        return true;
+                        rowCanClicked.add(row);
+                        colCanClicked.add(col);
+                        canClicked = true;
                     }
                 }
             }
@@ -148,7 +158,9 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[row][k].getChessPiece() == currentPlayer) {
-                        return true;
+                        rowCanClicked.add(row);
+                        colCanClicked.add(col);
+                        canClicked = true;
                     }
                 }
             }
@@ -163,7 +175,9 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[row][k].getChessPiece() == currentPlayer) {
-                        return true;
+                        rowCanClicked.add(row);
+                        colCanClicked.add(col);
+                        canClicked = true;
                     }
                 }
             }
@@ -178,7 +192,9 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
-                        return true;
+                        rowCanClicked.add(row);
+                        colCanClicked.add(col);
+                        canClicked = true;
                     }
                 }
             }
@@ -193,7 +209,9 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
-                        return true;
+                        rowCanClicked.add(row);
+                        colCanClicked.add(col);
+                        canClicked = true;
                     }
                 }
             }
@@ -208,7 +226,9 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
-                        return true;
+                        rowCanClicked.add(row);
+                        colCanClicked.add(col);
+                        canClicked = true;
                     }
                 }
             }
@@ -223,13 +243,14 @@ public class ChessBoardPanel extends JPanel {
                         break;
                     }
                     if (chessGrids[k][l].getChessPiece() == currentPlayer) {
-                        return true;
+                        rowCanClicked.add(row);
+                        colCanClicked.add(col);
+                        canClicked = true;
                     }
                 }
             }
         }
-        
-        return false;
+        return canClicked;
     
     }
 
