@@ -1,5 +1,6 @@
 package view;
 
+import PlayerInfo.Player;
 import components.ChessGridComponent;
 import controller.GameController;
 import model.ChessPiece;
@@ -23,6 +24,8 @@ public class GameFrame extends JFrame {
     public int cheatMode = 1;
     public static boolean cheatModeIsOpen = false;
     public static int NightModeChangeConstant=1;
+    private Player whiteplayer;
+    private Player blackplayer;
 
     private JButton restartBtn;
     private JButton loadGameBtn;
@@ -32,6 +35,11 @@ public class GameFrame extends JFrame {
     private JButton regretChessBtn;
 
 
+
+    public void initializePlayers(Player whiteplayer, Player blackplayer){
+        this.blackplayer=blackplayer;
+        this.whiteplayer=whiteplayer;
+    }
 
     public static ArrayList<int[][]> getBoardPanelsList(){
         return GameFrame.boardPanelsList;
@@ -46,7 +54,7 @@ public class GameFrame extends JFrame {
         this.restartBtn.setVisible(false);
     }
 
-    public GameFrame(int frameSize) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
+    public GameFrame(int frameSize, Player blackplayer, Player whiteplayer) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         cheatModeIsOpen =false;
         System.out.println("CheatMode is close!");
     
@@ -67,7 +75,7 @@ public class GameFrame extends JFrame {
         
         gameOverPanel=new GameOverPanel(this);
         
-        controller = new GameController(chessBoardPanel, statusPanel);
+        controller = new GameController(chessBoardPanel, statusPanel,whiteplayer,blackplayer);
 
         this.add(chessBoardPanel);
         this.add(statusPanel);
@@ -210,7 +218,7 @@ public class GameFrame extends JFrame {
                 GameFrame.getBoardPanelsList().clear();
                 GameFrame.stepNum = 0;
                 try {
-                    new GameFrame(800);
+                    new GameFrame(800,gameFrame.blackplayer, gameFrame.whiteplayer).initializePlayers(gameFrame.whiteplayer, gameFrame.blackplayer);
                 } catch (UnsupportedAudioFileException ex) {
                     ex.printStackTrace();
                 } catch (LineUnavailableException ex) {
@@ -315,9 +323,9 @@ public class GameFrame extends JFrame {
     }
 
     //维修函数；
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         try {
-            new GameFrame(800);
+            //new GameFrame(800);
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (LineUnavailableException e) {
@@ -325,5 +333,5 @@ public class GameFrame extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

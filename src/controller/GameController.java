@@ -1,10 +1,12 @@
 package controller;
 
+import PlayerInfo.Player;
 import components.ChessGridComponent;
 import model.ChessPiece;
 import view.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 
 
@@ -16,14 +18,22 @@ public class GameController {
     private ChessPiece currentPlayer;
     private int blackScore;
     private int whiteScore;
+    private Player whitePlayer;
+    private Player blackPlayer;
 
-    public GameController(ChessBoardPanel gamePanel, StatusPanel statusPanel) {
+    public GameController(ChessBoardPanel gamePanel, StatusPanel statusPanel,Player whitePlayer,Player blackPlayer) {
         this.gamePanel = gamePanel;
         this.statusPanel = statusPanel;
         this.currentPlayer = ChessPiece.BLACK;
+        this.whitePlayer=whitePlayer;
+        this.blackPlayer=blackPlayer;
         blackScore = 2;
         whiteScore = 2;
     }
+
+    public Player getWhitePlayer(){return this.whitePlayer;}
+
+    public Player getBlackPlayer(){return this.blackPlayer;}
 
     public int getBlackScore(){
         return this.blackScore;

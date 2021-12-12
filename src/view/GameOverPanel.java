@@ -1,5 +1,8 @@
 package view;
 
+import Data.DataManage;
+import PlayerInfo.Player;
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -12,6 +15,9 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.sql.*;
+import java.util.Collections;
+import javax.sql.*;
 
 public class GameOverPanel extends JPanel {
 
@@ -51,7 +57,7 @@ public class GameOverPanel extends JPanel {
                 GameFrame.getBoardPanelsList().clear();
                 GameFrame.stepNum=0;
                 try {
-                    new GameFrame(800);
+                    new GameFrame(800,GameFrame.controller.getBlackPlayer(),GameFrame.controller.getWhitePlayer());
                 } catch (UnsupportedAudioFileException ex) {
                     ex.printStackTrace();
                 } catch (LineUnavailableException ex) {
@@ -77,6 +83,7 @@ public class GameOverPanel extends JPanel {
         mainMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
 
                 GameFrame.getBoardPanelsList().clear();
                 GameFrame.stepNum=0;
@@ -108,7 +115,7 @@ public class GameOverPanel extends JPanel {
         this.setVisible(false);
     }
 
-    public void init(){
+    public void init() throws SQLException {
         JLabel resultLabel = new JLabel();
 
         if(GameFrame.controller.getBlackScore()>GameFrame.controller.getWhiteScore()){
@@ -126,11 +133,91 @@ public class GameOverPanel extends JPanel {
             resultLabel.setForeground(Color.blue);
         }
 
+        Collections.sort(Player.getPlayerList());
+            Connection connection;
+            try {
+                Class.forName("org.sqlite.JDBC");
+
+                connection = DriverManager.getConnection("jdbc:sqlite:lib/player.db","Daniel","123qweasd");
+
+                String sql = "SELECT UserWinTime,UserGameTime FROM USER WHERE UserName = ?;";
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+                preparedStatement.setString(1,GameFrame.controller.getWhitePlayer().getName());
+                ResultSet resultSet1 = preparedStatement.executeQuery();
+                int whiteWinTime=0;
+                int whitePlayTime=0;
+
+                while(resultSet1.next()){
+                    whiteWinTime = resultSet1.getInt(1);
+                    whitePlayTime = resultSet1.getInt(2);
+                }
+
+                preparedStatement.close();
+                connection.close();
+
+
+                Connection connection1 = DriverManager.getConnection("jdbc:sqlite:lib/player.db","Daniel","123qweasd");
+
+                String sql3 = "UPDATE USER SET UserWinTime = ?,UserGameTime = ? WHERE UserName = ?;";
+                PreparedStatement preparedStatement3 = connection1.prepareStatement(sql3);
+                if(GameFrame.controller.getWhiteScore()>GameFrame.controller.getBlackScore()){
+                    preparedStatement3.setInt(1,whiteWinTime+1);
+                    preparedStatement3.setInt(2,whitePlayTime+1);
+                    preparedStatement3.setString(3, GameFrame.controller.getWhitePlayer().getName());
+                    preparedStatement3.executeUpdate();
+                    System.out.println("HOo");
+                }else{
+                    preparedStatement3.setInt(1,whiteWinTime);
+                    preparedStatement3.setInt(2,whitePlayTime);
+                    preparedStatement3.setString(3, GameFrame.controller.getWhitePlayer().getName());
+                    preparedStatement3.executeUpdate();
+                }
+                connection1.close();
+
+                Connection connection2 = DriverManager.getConnection("jdbc:sqlite:lib/player.db","Daniel","123qweasd");
+
+                String sql2 = "SELECT UserWinTime,UserGameTime FROM USER WHERE UserName = ?;";
+                PreparedStatement preparedStatement5 = connection2.prepareStatement(sql2);
+                preparedStatement5.setString(1,GameFrame.controller.getBlackPlayer().getName());
+                ResultSet resultSet2 = preparedStatement5.executeQuery();
+                int blackWinTime=0;
+                int blackPlayTime=0;
+
+                while(resultSet2.next()){
+                    blackWinTime = resultSet2.getInt(1);
+                    blackPlayTime = resultSet2.getInt(2);
+                }
+
+                String sql4 = "UPDATE USER SET UserWinTime = ?,UserGameTime = ? WHERE UserName = ?;";
+                PreparedStatement preparedStatement4 = connection2.prepareStatement(sql4);
+                if (GameFrame.controller.getWhiteScore() < GameFrame.controller.getBlackScore()) {
+                    preparedStatement4.setInt(1,blackWinTime+1);
+                    preparedStatement4.setInt(2,blackPlayTime+1);
+                    preparedStatement4.setString(3, GameFrame.controller.getBlackPlayer().getName());;
+                    preparedStatement4.executeUpdate();
+                }else{
+                    preparedStatement4.setInt(1,blackWinTime);
+                    preparedStatement4.setInt(2,blackPlayTime+1);
+                    preparedStatement4.setString(3, GameFrame.controller.getBlackPlayer().getName());
+                    preparedStatement4.executeUpdate();
+                }
+                connection2.close();
+
+
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            /*String sql = "DELETE FROM Usertable WHERE UserName = ?";
+            PreparedStatement preparedStatement=DataManage.getConnection().prepareStatement(sql);
+            preparedStatement.setString(1, player.getName()); */
+
+
         this.add(resultLabel);
         this.setVisible(true);
 
         gameFrame.clearAllBtn();
-
     }
 
     @Override

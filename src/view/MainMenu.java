@@ -97,6 +97,27 @@ public class MainMenu extends JFrame {
         JButton Btn2 = new JButton("Rule");
         JButton Btn3 = new JButton("Setting");
 
+
+        ImageIcon rankBtnIcon = new ImageIcon("Image/RankFrameIcon.png");
+        Image RankImage = rankBtnIcon.getImage();
+        RankImage = RankImage.getScaledInstance(30,30,Image.SCALE_AREA_AVERAGING);
+        rankBtnIcon = new ImageIcon(RankImage);
+
+
+        JButton rankFrameBtn = new JButton(rankBtnIcon);
+        rankFrameBtn.setVisible(true);
+        rankFrameBtn.setBounds(160,10,30,30);
+
+        rankFrameBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new RankFrame().init();
+            }
+        });
+
+        container.add(rankFrameBtn);
+
+
         //new两个单选框，用于调整游戏模式；
         JRadioButton pvp = new JRadioButton("PVP");
         JRadioButton pvc = new JRadioButton("PVC");
@@ -159,21 +180,16 @@ public class MainMenu extends JFrame {
                 MainMenu.HintChooseMode.setVisible(false);
                 if(mylistener.Gamemode==1){
                     if(GameFrame.stepNum==0){
-                        GameFrame mainFrame = null;
-                        try {
-                            mainFrame = new GameFrame(800);
-                        } catch (UnsupportedAudioFileException ex) {
-                            ex.printStackTrace();
-                        } catch (LineUnavailableException ex) {
-                            ex.printStackTrace();
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-                        mainFrame.setVisible(true);
+
+                        new EnterClientNameFrame().init();
+
                     }else{
                         MainMenu.HintGmaeStarted.setVisible(true);
                     }
                 } else if(mylistener.Gamemode==-1){
+
+
+
                 } else {
                     System.out.println("Please choose your gamemode.");
                     HintChooseMode.setVisible(true);
