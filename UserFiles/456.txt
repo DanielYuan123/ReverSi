@@ -6,12 +6,12 @@ Black:
 White: 
 1
 
-ChessBoardPanel: 
+ChessBoardPanel:
     NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL
     NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL
     NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL
     NULL    NULL    NULL  BLACK  WHITE    NULL    NULL    NULL
     NULL    NULL    NULL  BLACK  BLACK    NULL    NULL    NULL
-    NULL    NULL    NULL    BLACK    NULL    NULL    NULL    NULL
+    NULL    NULL    NULL  BLACK    NULL    NULL    NULL    NULL
     NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL
     NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL

@@ -1,6 +1,7 @@
 package view;
 
 import components.ChessGridComponent;
+import model.ChessPiece;
 
 import javax.swing.*;
 import javax.sound.sampled.*;
@@ -174,6 +175,44 @@ public class MainMenu extends JFrame {
                         MainMenu.HintGmaeStarted.setVisible(true);
                     }
                 } else if(mylistener.Gamemode==-1){
+                    GameFrame mainFrame = null;
+                    try {
+                        mainFrame = new GameFrame(800);
+                    } catch (UnsupportedAudioFileException ex) {
+                        ex.printStackTrace();
+                    } catch (LineUnavailableException ex) {
+                        ex.printStackTrace();
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                    mainFrame.setVisible(true);
+                    
+                    JFrame choosePlayer = new JFrame();
+                    choosePlayer.setBounds(780, 470 ,200, 200);
+                    choosePlayer.setLayout(new FlowLayout());
+                    
+                    JButton black = new JButton("Black");
+                    JButton white = new JButton("White");
+                    black.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            choosePlayer.setVisible(false);
+                            GameFrame.controller.setPvcPlayer(ChessPiece.BLACK);
+                        }
+                    });
+                    
+                    white.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            choosePlayer.setVisible(false);
+                            GameFrame.controller.setPvcPlayer(ChessPiece.WHITE);
+                        }
+                    });
+                    
+                    choosePlayer.add(black);
+                    choosePlayer.add(white);
+                    choosePlayer.setVisible(true);
+                    
                 } else {
                     System.out.println("Please choose your gamemode.");
                     HintChooseMode.setVisible(true);
@@ -249,6 +288,8 @@ public class MainMenu extends JFrame {
         new MainMenu().init();
     }
 
+    
+    
     //新建一个自制监听器的内部类；
     private class Mylistener implements ActionListener{
         private int Gamemode=0;
@@ -257,7 +298,11 @@ public class MainMenu extends JFrame {
         public Mylistener(MainMenu mainMenu) {
             this.mainMenu=mainMenu;
         }
-
+    
+        public int getGamemode() {
+            return Gamemode;
+        }
+    
         //重写事件监听方法；
         @Override
         public void actionPerformed(ActionEvent e) {

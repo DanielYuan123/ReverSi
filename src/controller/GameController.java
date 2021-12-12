@@ -6,8 +6,6 @@ import view.*;
 
 import javax.swing.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class GameController {
@@ -18,6 +16,7 @@ public class GameController {
     private ChessPiece currentPlayer;
     private int blackScore;
     private int whiteScore;
+    private ChessPiece pvcPlayer;
 
     public GameController(ChessBoardPanel gamePanel, StatusPanel statusPanel) {
         this.gamePanel = gamePanel;
@@ -26,7 +25,15 @@ public class GameController {
         blackScore = 2;
         whiteScore = 2;
     }
-
+    
+    public void setPvcPlayer(ChessPiece pvcPlayer) {
+        this.pvcPlayer = pvcPlayer;
+    }
+    
+    public ChessPiece getPvcPlayer() {
+        return pvcPlayer;
+    }
+    
     public int getBlackScore(){
         return this.blackScore;
     }
@@ -106,8 +113,12 @@ public class GameController {
             ChessGridComponent[][] chessGridComponents = gamePanel.getChessGrids();
             for (int i = 0; i < 8; i++) {
                 String[] read = bufferedReader.readLine().split(" +");
+                if ((read[0].equals("") && read.length == 9) || read.length != 8) {
+                    JOptionPane.showMessageDialog(null, "棋盘并非8*8", "Error(error code: 101)", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
                 for (int j = 0; j < 8; j++) {
-                    switch (read[j + 1]) {
+                    switch (read.length == 9 ? read[j + 1] : read[j]) {
                         case "NULL":
                             chessGridComponents[i][j].setChessPiece(null);
                             break;
@@ -171,7 +182,6 @@ public class GameController {
                         bufferedWriter.write(String.format("%8s", "NULL"));
                     } else {
                         bufferedWriter.write(String.format("%7s", chessGridComponents[i][j].getChessPiece().name()));
-                        //bufferedWriter.write("\n");
                     }
                 }
                 bufferedWriter.newLine();
