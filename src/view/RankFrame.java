@@ -1,6 +1,5 @@
 package view;
 
-import sun.security.util.Length;
 
 import javax.swing.*;
 import java.awt.*;
