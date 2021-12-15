@@ -21,6 +21,7 @@ public class GameController {
     private Player whitePlayer;
     private Player blackPlayer;
     private ChessPiece pvcPlayer;
+    private static boolean drawIsOvered = false;
 
     public GameController(ChessBoardPanel gamePanel, StatusPanel statusPanel,Player whitePlayer,Player blackPlayer) {
         this.gamePanel = gamePanel;
@@ -31,7 +32,15 @@ public class GameController {
         blackScore = 2;
         whiteScore = 2;
     }
-
+    
+    public static void setDrawIsOvered(boolean drawIsOvered) {
+        GameController.drawIsOvered = drawIsOvered;
+    }
+    
+    public static boolean isDrawIsOvered() {
+        return drawIsOvered;
+    }
+    
     public Player getWhitePlayer(){return this.whitePlayer;}
 
     public Player getBlackPlayer(){return this.blackPlayer;}

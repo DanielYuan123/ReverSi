@@ -1,5 +1,6 @@
 package components;
 
+import controller.GameController;
 import model.ChessPiece;
 import view.GameFrame;
 
@@ -19,11 +20,19 @@ public abstract class BasicComponent extends JComponent{
             public void mousePressed(MouseEvent e) {
                 try {
                     onMouseClicked();
-                    if (GameFrame.controller.getPvcPlayer() != GameFrame.controller.getCurrentPlayer() && GameFrame.controller.getPvcPlayer() != null) {
-                        computerStep();
-                    }
                 } catch (IOException | LineUnavailableException ex) {
                     ex.printStackTrace();
+                }
+            }
+    
+            @Override
+            public void mouseReleased(MouseEvent e) {
+                while (!GameController.isDrawIsOvered()) {
+                    System.out.println(1);
+                }
+                if (GameFrame.controller.getPvcPlayer() != GameFrame.controller.getCurrentPlayer() && GameFrame.controller.getPvcPlayer() != null) {
+                    computerStep();
+                    GameController.setDrawIsOvered(false);
                 }
             }
         });

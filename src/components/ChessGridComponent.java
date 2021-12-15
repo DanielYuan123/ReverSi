@@ -1,5 +1,6 @@
 package components;
 
+import controller.GameController;
 import model.*;
 import view.ChessBoardPanel;
 import view.GameFrame;
@@ -56,11 +57,19 @@ public class ChessGridComponent extends BasicComponent {
         int index = (int) (Math.random() * ChessBoardPanel.getColCanClicked().size());
         int row = ChessBoardPanel.getRowCanClicked().get(index);
         int col = ChessBoardPanel.getColCanClicked().get(index);
-    
 //        try {
-//            Thread.sleep(100);
+//            Robot robot = new Robot();
+//            robot.delay(2000);
+//        } catch (AWTException e) {
+//            e.printStackTrace();
+//        }
+//        try {
+//            Thread.sleep(1000);
 //        } catch (InterruptedException e) {
 //            e.printStackTrace();
+//        }
+//        for (int i = 0; i < Math.pow(2, 25); i++) {
+//
 //        }
         changeChessBoardPanel(row, col);
         
@@ -82,7 +91,7 @@ public class ChessGridComponent extends BasicComponent {
     
     public void changeChessBoardPanel(int row, int col) {
     
-    
+        this.chessPiece = GameFrame.controller.getCurrentPlayer();
         ChessPiece currentPlayer = GameFrame.controller.getCurrentPlayer();
         System.arraycopy(GameFrame.controller.getGamePanel().getChessGrids(), 0, formerGridComponent, 0, 8);
         ChessPiece otherPlayer = (GameFrame.controller.getCurrentPlayer() == ChessPiece.BLACK) ? (ChessPiece.WHITE) : (ChessPiece.BLACK);
@@ -225,6 +234,7 @@ public class ChessGridComponent extends BasicComponent {
                 }
             }
         }
+        
     
     
         GameFrame.stepNum++;
@@ -258,6 +268,7 @@ public class ChessGridComponent extends BasicComponent {
             }
         }
         GameFrame.controller.swapPlayer();
+        this.chessPiece = GameFrame.controller.getCurrentPlayer();
         //判断游戏是否结束
         if ((gameIsOver() && !GameFrame.cheatModeIsOpen) || !chessBoardPanelHasNull(chessGirds)) {
             GameFrame.controller.gameOver();
@@ -377,6 +388,7 @@ public class ChessGridComponent extends BasicComponent {
             }
             timer.stop();
             length = 56;
+            GameController.setDrawIsOvered(true);
         }
         
         if (this.chessPiece != null) {
@@ -386,6 +398,7 @@ public class ChessGridComponent extends BasicComponent {
                 g.fillOval((gridSize - chessSize) / 2, (gridSize - chessSize) / 2, chessSize, 56);
                 length = 56;
                 timer.stop();
+                GameController.setDrawIsOvered(true);
             }
             if (GameFrame.stepNum > 1) {
     
@@ -411,6 +424,7 @@ public class ChessGridComponent extends BasicComponent {
                         length = 56;
                         this.ChangeConstant = false;
                         timer.stop();
+                        GameController.setDrawIsOvered(true);
                     }
                 } else {
         
@@ -419,6 +433,7 @@ public class ChessGridComponent extends BasicComponent {
                     length = 56;
                     this.ChangeConstant = false;
                     timer.stop();
+                    GameController.setDrawIsOvered(true);
                 }
             } else {
                 g.setColor(chessPiece.getColor());
@@ -426,8 +441,10 @@ public class ChessGridComponent extends BasicComponent {
                 length = 56;
                 this.ChangeConstant = false;
                 timer.stop();
+                GameController.setDrawIsOvered(true);
             }
         }
+    
     }
     
     public void judgeChanged(int j, int k, int i) {
