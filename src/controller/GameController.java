@@ -124,7 +124,7 @@ public class GameController {
             ChessGridComponent[][] chessGridComponents = gamePanel.getChessGrids();
             for (int i = 0; i < 8; i++) {
                 String[] read = bufferedReader.readLine().split(" +");
-                if ((read[0].equals("") && read.length == 9) || read.length != 8) {
+                if (!((read[0].equals("") && read.length == 9) || read.length == 8)) {
                     JOptionPane.showMessageDialog(null, "棋盘并非8*8", "Error(error code: 101)", JOptionPane.ERROR_MESSAGE);
                     return;
                 }

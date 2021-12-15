@@ -7,7 +7,7 @@ White:
 1
 
 ChessBoardPanel:
-    NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL
+NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL
     NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL
     NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL
     NULL    NULL    NULL  BLACK  WHITE    NULL    NULL    NULL
