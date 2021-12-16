@@ -21,6 +21,7 @@ public class GameController {
     private Player whitePlayer;
     private Player blackPlayer;
     private ChessPiece pvcPlayer;
+    private static boolean drawIsOvered = false;
 
     public GameController(ChessBoardPanel gamePanel, StatusPanel statusPanel,Player whitePlayer,Player blackPlayer) {
         this.gamePanel = gamePanel;
@@ -31,7 +32,15 @@ public class GameController {
         blackScore = 2;
         whiteScore = 2;
     }
-
+    
+    public static void setDrawIsOvered(boolean drawIsOvered) {
+        GameController.drawIsOvered = drawIsOvered;
+    }
+    
+    public static boolean isDrawIsOvered() {
+        return drawIsOvered;
+    }
+    
     public Player getWhitePlayer(){return this.whitePlayer;}
 
     public Player getBlackPlayer(){return this.blackPlayer;}
@@ -39,6 +48,9 @@ public class GameController {
 
     public void setPvcPlayer(ChessPiece pvcPlayer) {
         this.pvcPlayer = pvcPlayer;
+        if (pvcPlayer == ChessPiece.WHITE) {
+            gamePanel.runComputerStep();
+        }
     }
 
     public ChessPiece getPvcPlayer() {
@@ -98,13 +110,24 @@ public class GameController {
         return gamePanel;
     }
     
-
+    
     public void readFileData(String fileName) {
         
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
             
-            currentPlayer = (bufferedReader.readLine().contains("BLACK")) ? (ChessPiece.BLACK) : (ChessPiece.WHITE);
+            switch (bufferedReader.readLine()) {
+                case "CurrentPlayer: BLACK":
+                    currentPlayer = ChessPiece.BLACK;
+                    break;
+                case "CurrentPlayer: WHITE":
+                    currentPlayer = ChessPiece.WHITE;
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "缺少行棋方", "Error(error code: 103)", JOptionPane.ERROR_MESSAGE);
+                    return;
+            }
+            //currentPlayer = (bufferedReader.readLine().contains("BLACK")) ? (ChessPiece.BLACK) : (ChessPiece.WHITE);
             statusPanel.setPlayerText(currentPlayer.name());
             bufferedReader.readLine();
             bufferedReader.readLine();
@@ -124,12 +147,12 @@ public class GameController {
             ChessGridComponent[][] chessGridComponents = gamePanel.getChessGrids();
             for (int i = 0; i < 8; i++) {
                 String[] read = bufferedReader.readLine().split(" +");
-                if ((read[0].equals("") && read.length == 9) || read.length != 8) {
-                    JOptionPane.showMessageDialog(null, "棋盘并非8*8", "Error(error code: 101)", JOptionPane.ERROR_MESSAGE);
+                if (!((read[0].equals("") && read.length == 9) || read.length == 8)) {
+                    JOptionPane.showMessageDialog(null, "棋盘错误", "Error(error code: 101)", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 for (int j = 0; j < 8; j++) {
-                    switch (read.length == 9 ? read[j + 1] : read[j]) {
+                    switch ((read.length == 9 ? read[j + 1] : read[j])) {
                         case "NULL":
                             chessGridComponents[i][j].setChessPiece(null);
                             break;
@@ -139,6 +162,9 @@ public class GameController {
                         case "WHITE":
                             chessGridComponents[i][j].setChessPiece(ChessPiece.WHITE);
                             break;
+                        default:
+                            JOptionPane.showMessageDialog(null, "棋子错误", "Error(error code: 102)", JOptionPane.ERROR_MESSAGE);
+                            return;
                     }
                 }
             }

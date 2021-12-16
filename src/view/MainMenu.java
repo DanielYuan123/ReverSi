@@ -1,5 +1,6 @@
 package view;
 
+import PlayerInfo.Player;
 import components.ChessGridComponent;
 import model.ChessPiece;
 
