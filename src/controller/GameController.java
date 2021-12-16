@@ -141,7 +141,7 @@ public class GameController {
                     return;
                 }
                 for (int j = 0; j < 8; j++) {
-                    switch (read.length == 9 ? read[j + 1] : read[j]) {
+                    switch ((read.length == 9 ? read[j + 1] : read[j])) {
                         case "NULL":
                             chessGridComponents[i][j].setChessPiece(null);
                             break;
@@ -150,6 +150,9 @@ public class GameController {
                             break;
                         case "WHITE":
                             chessGridComponents[i][j].setChessPiece(ChessPiece.WHITE);
+                            break;
+                        default:
+                            JOptionPane.showMessageDialog(null, "棋盘内棋子并非包含黑方、白方、空白 3种。 少于3种，多于3种都有问题", "Error(error code: 102)", JOptionPane.ERROR_MESSAGE);
                             break;
                     }
                 }
