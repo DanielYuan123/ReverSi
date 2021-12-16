@@ -78,7 +78,7 @@ public class ChessGridComponent extends BasicComponent {
             public void run() {
                 changeChessBoardPanel(row, col);
             }
-        }, 1500);
+        }, 1300);
         
         
         System.out.println(3);

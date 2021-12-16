@@ -110,13 +110,24 @@ public class GameController {
         return gamePanel;
     }
     
-
+    
     public void readFileData(String fileName) {
         
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
             
-            currentPlayer = (bufferedReader.readLine().contains("BLACK")) ? (ChessPiece.BLACK) : (ChessPiece.WHITE);
+            switch (bufferedReader.readLine()) {
+                case "CurrentPlayer: BLACK":
+                    currentPlayer = ChessPiece.BLACK;
+                    break;
+                case "CurrentPlayer: WHITE":
+                    currentPlayer = ChessPiece.WHITE;
+                    break;
+                default:
+                    JOptionPane.showMessageDialog(null, "缺少行棋方", "Error(error code: 103)", JOptionPane.ERROR_MESSAGE);
+                    return;
+            }
+            //currentPlayer = (bufferedReader.readLine().contains("BLACK")) ? (ChessPiece.BLACK) : (ChessPiece.WHITE);
             statusPanel.setPlayerText(currentPlayer.name());
             bufferedReader.readLine();
             bufferedReader.readLine();
@@ -137,7 +148,7 @@ public class GameController {
             for (int i = 0; i < 8; i++) {
                 String[] read = bufferedReader.readLine().split(" +");
                 if (!((read[0].equals("") && read.length == 9) || read.length == 8)) {
-                    JOptionPane.showMessageDialog(null, "棋盘并非8*8", "Error(error code: 101)", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "棋盘错误", "Error(error code: 101)", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 for (int j = 0; j < 8; j++) {
@@ -152,8 +163,8 @@ public class GameController {
                             chessGridComponents[i][j].setChessPiece(ChessPiece.WHITE);
                             break;
                         default:
-                            JOptionPane.showMessageDialog(null, "棋盘内棋子并非包含黑方、白方、空白 3种。 少于3种，多于3种都有问题", "Error(error code: 102)", JOptionPane.ERROR_MESSAGE);
-                            break;
+                            JOptionPane.showMessageDialog(null, "棋子错误", "Error(error code: 102)", JOptionPane.ERROR_MESSAGE);
+                            return;
                     }
                 }
             }
