@@ -17,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.TimerTask;
 import javax.swing.Timer;
 
 
@@ -55,8 +56,8 @@ public class ChessGridComponent extends BasicComponent {
         }
         
         int index = (int) (Math.random() * ChessBoardPanel.getColCanClicked().size());
-        int row = ChessBoardPanel.getRowCanClicked().get(index);
-        int col = ChessBoardPanel.getColCanClicked().get(index);
+        this.row = ChessBoardPanel.getRowCanClicked().get(index);
+        this.col = ChessBoardPanel.getColCanClicked().get(index);
 //        try {
 //            Robot robot = new Robot();
 //            robot.delay(2000);
@@ -71,9 +72,16 @@ public class ChessGridComponent extends BasicComponent {
 //        for (int i = 0; i < Math.pow(2, 25); i++) {
 //
 //        }
-        changeChessBoardPanel(row, col);
+        java.util.Timer timer = new java.util.Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                changeChessBoardPanel(row, col);
+            }
+        }, 1500);
         
-        System.out.println(1);
+        
+        System.out.println(3);
     }
     
     @Override
@@ -83,6 +91,11 @@ public class ChessGridComponent extends BasicComponent {
         if (GameFrame.controller.canClick(row, col) || GameFrame.cheatModeIsOpen) {
             if (this.chessPiece == null) {
                 this.chessPiece = GameFrame.controller.getCurrentPlayer();
+                ChessGridComponent[][] chessGirds = GameFrame.controller.getGamePanel().getChessGrids();
+                
+                chessGirds[row][col].setChessPiece(this.chessPiece);
+                repaint();
+                
                 changeChessBoardPanel(this.row, this.col);
             }
         }
@@ -91,149 +104,155 @@ public class ChessGridComponent extends BasicComponent {
     
     public void changeChessBoardPanel(int row, int col) {
     
-        this.chessPiece = GameFrame.controller.getCurrentPlayer();
-        ChessPiece currentPlayer = GameFrame.controller.getCurrentPlayer();
+        //this.chessPiece = GameFrame.controller.getCurrentPlayer();
         System.arraycopy(GameFrame.controller.getGamePanel().getChessGrids(), 0, formerGridComponent, 0, 8);
         ChessPiece otherPlayer = (GameFrame.controller.getCurrentPlayer() == ChessPiece.BLACK) ? (ChessPiece.WHITE) : (ChessPiece.BLACK);
         ChessGridComponent[][] chessGirds = GameFrame.controller.getGamePanel().getChessGrids();
-        chessGirds[row][col].setChessPiece(currentPlayer);
+        chessGirds[row][col].chessPiece = GameFrame.controller.getCurrentPlayer();
+    
+    
+        //repaint();
         this.PlaySound();
+        
         //向8个方向修改
-        //向上修改
-        if (row >= 2) {
-            for (int k = row - 1; k >= 0; k--) {
-                if (chessGirds[row - 1][col].getChessPiece() != otherPlayer) {
-                    break;
-                }
-                if (chessGirds[k][col].getChessPiece() != otherPlayer) {
-                    if (chessGirds[k][col].getChessPiece() == currentPlayer) {
-                        for (int x = row; x > k; x--) {
-                            chessGirds[x][col].setChessPiece(currentPlayer);
-                        }
+        for (int i = 0; i < 1; i++) {
+            //向上修改
+            if (row >= 2) {
+                for (int k = row - 1; k >= 0; k--) {
+                    if (chessGirds[row - 1][col].getChessPiece() != otherPlayer) {
+                        break;
                     }
-                    break;
+                    if (chessGirds[k][col].getChessPiece() != otherPlayer) {
+                        if (chessGirds[k][col].getChessPiece() == chessGirds[row][col].chessPiece) {
+                            for (int x = row; x > k; x--) {
+                                chessGirds[x][col].setChessPiece(chessGirds[row][col].chessPiece);
+                            }
+                        }
+                        break;
+                    }
                 }
             }
-        }
     
-        //向下修改
-        if (row <= 5) {
-            for (int k = row + 1; k <= 7; k++) {
-                if (chessGirds[row + 1][col].getChessPiece() != otherPlayer) {
-                    break;
-                }
-                if (chessGirds[k][col].getChessPiece() != otherPlayer) {
-                    if (chessGirds[k][col].getChessPiece() == chessPiece) {
-                        for (int x = row; x < k; x++) {
-                            chessGirds[x][col].setChessPiece(chessPiece);
-                        }
+            //向下修改
+            if (row <= 5) {
+                for (int k = row + 1; k <= 7; k++) {
+                    if (chessGirds[row + 1][col].getChessPiece() != otherPlayer) {
+                        break;
                     }
-                    break;
+                    if (chessGirds[k][col].getChessPiece() != otherPlayer) {
+                        if (chessGirds[k][col].getChessPiece() == chessGirds[row][col].chessPiece) {
+                            for (int x = row; x < k; x++) {
+                                chessGirds[x][col].setChessPiece(chessGirds[row][col].chessPiece);
+                            }
+                        }
+                        break;
+                    }
                 }
             }
-        }
     
-        //向左修改
-        if (col >= 2) {
-            for (int k = col - 1; k >= 0; k--) {
-                if (chessGirds[row][col - 1].getChessPiece() != otherPlayer) {
-                    break;
-                }
-                if (chessGirds[row][k].getChessPiece() != otherPlayer) {
-                    if (chessGirds[row][k].getChessPiece() == chessPiece) {
-                        for (int y = col; y > k; y--) {
-                            chessGirds[row][y].setChessPiece(chessPiece);
-                        }
+            //向左修改
+            if (col >= 2) {
+                for (int k = col - 1; k >= 0; k--) {
+                    if (chessGirds[row][col - 1].getChessPiece() != otherPlayer) {
+                        break;
                     }
-                    break;
+                    if (chessGirds[row][k].getChessPiece() != otherPlayer) {
+                        if (chessGirds[row][k].getChessPiece() == chessGirds[row][col].chessPiece) {
+                            for (int y = col; y > k; y--) {
+                                chessGirds[row][y].setChessPiece(chessGirds[row][col].chessPiece);
+                            }
+                        }
+                        break;
+                    }
                 }
             }
-        }
     
-        //向右修改
-        if (col <= 5) {
-            for (int k = col + 1; k <= 7; k++) {
-                if (chessGirds[row][col + 1].getChessPiece() != otherPlayer) {
-                    break;
-                }
-                if (chessGirds[row][k].getChessPiece() != otherPlayer) {
-                    if (chessGirds[row][k].getChessPiece() == chessPiece) {
-                        for (int y = col; y < k; y++) {
-                            chessGirds[row][y].setChessPiece(chessPiece);
-                        }
+            //向右修改
+            if (col <= 5) {
+                for (int k = col + 1; k <= 7; k++) {
+                    if (chessGirds[row][col + 1].getChessPiece() != otherPlayer) {
+                        break;
                     }
-                    break;
+                    if (chessGirds[row][k].getChessPiece() != otherPlayer) {
+                        if (chessGirds[row][k].getChessPiece() == chessGirds[row][col].chessPiece) {
+                            for (int y = col; y < k; y++) {
+                                chessGirds[row][y].setChessPiece(chessGirds[row][col].chessPiece);
+                            }
+                        }
+                        break;
+                    }
                 }
             }
-        }
     
-        //向左上修改
-        if (row >= 2 && col >= 2) {
-            for (int k = row - 1, l = col - 1; k >= 0 && l >= 0; k--, l--) {
-                if (chessGirds[row - 1][col - 1].getChessPiece() != otherPlayer) {
-                    break;
-                }
-                if (chessGirds[k][l].getChessPiece() != otherPlayer) {
-                    if (chessGirds[k][l].getChessPiece() == chessPiece) {
-                        for (int x = row, y = col; x > k && y > l; x--, y--) {
-                            chessGirds[x][y].setChessPiece(chessPiece);
-                        }
+            //向左上修改
+            if (row >= 2 && col >= 2) {
+                for (int k = row - 1, l = col - 1; k >= 0 && l >= 0; k--, l--) {
+                    if (chessGirds[row - 1][col - 1].getChessPiece() != otherPlayer) {
+                        break;
                     }
-                    break;
+                    if (chessGirds[k][l].getChessPiece() != otherPlayer) {
+                        if (chessGirds[k][l].getChessPiece() == chessGirds[row][col].chessPiece) {
+                            for (int x = row, y = col; x > k && y > l; x--, y--) {
+                                chessGirds[x][y].setChessPiece(chessGirds[row][col].chessPiece);
+                            }
+                        }
+                        break;
+                    }
                 }
             }
-        }
     
-        //向左下修改
-        if (row <= 5 && col >= 2) {
-            for (int k = row + 1, l = col - 1; k <= 7 && l >= 0; k++, l--) {
-                if (chessGirds[row + 1][col - 1].getChessPiece() != otherPlayer) {
-                    break;
-                }
-                if (chessGirds[k][l].getChessPiece() != otherPlayer) {
-                    if (chessGirds[k][l].getChessPiece() == chessPiece) {
-                        for (int x = row, y = col; x < k && y > l; x++, y--) {
-                            chessGirds[x][y].setChessPiece(chessPiece);
-                        }
+            //向左下修改
+            if (row <= 5 && col >= 2) {
+                for (int k = row + 1, l = col - 1; k <= 7 && l >= 0; k++, l--) {
+                    if (chessGirds[row + 1][col - 1].getChessPiece() != otherPlayer) {
+                        break;
                     }
-                    break;
+                    if (chessGirds[k][l].getChessPiece() != otherPlayer) {
+                        if (chessGirds[k][l].getChessPiece() == chessGirds[row][col].chessPiece) {
+                            for (int x = row, y = col; x < k && y > l; x++, y--) {
+                                chessGirds[x][y].setChessPiece(chessGirds[row][col].chessPiece);
+                            }
+                        }
+                        break;
+                    }
                 }
             }
-        }
     
-        //向右上修改
-        if (row >= 2 && col <= 5) {
-            for (int k = row - 1, l = col + 1; k >= 0 && l <= 7; k--, l++) {
-                if (chessGirds[row - 1][col + 1].getChessPiece() != otherPlayer) {
-                    break;
-                }
-                if (chessGirds[k][l].getChessPiece() != otherPlayer) {
-                    if (chessGirds[k][l].getChessPiece() == chessPiece) {
-                        for (int x = row, y = col; x > k && y < l; x--, y++) {
-                            chessGirds[x][y].setChessPiece(chessPiece);
-                        }
+            //向右上修改
+            if (row >= 2 && col <= 5) {
+                for (int k = row - 1, l = col + 1; k >= 0 && l <= 7; k--, l++) {
+                    if (chessGirds[row - 1][col + 1].getChessPiece() != otherPlayer) {
+                        break;
                     }
-                    break;
+                    if (chessGirds[k][l].getChessPiece() != otherPlayer) {
+                        if (chessGirds[k][l].getChessPiece() == chessGirds[row][col].chessPiece) {
+                            for (int x = row, y = col; x > k && y < l; x--, y++) {
+                                chessGirds[x][y].setChessPiece(chessGirds[row][col].chessPiece);
+                            }
+                        }
+                        break;
+                    }
                 }
             }
-        }
     
-        //向右下修改
-        if (row <= 5 && col <= 5) {
-            for (int k = row + 1, l = col + 1; k <= 7 && l <= 7; k++, l++) {
-                if (chessGirds[row + 1][col + 1].getChessPiece() != otherPlayer) {
-                    break;
-                }
-                if (chessGirds[k][l].getChessPiece() != otherPlayer) {
-                    if (chessGirds[k][l].getChessPiece() == chessPiece) {
-                        for (int x = row, y = col; x < k && y < l; x++, y++) {
-                            chessGirds[x][y].setChessPiece(chessPiece);
-                        }
+            //向右下修改
+            if (row <= 5 && col <= 5) {
+                for (int k = row + 1, l = col + 1; k <= 7 && l <= 7; k++, l++) {
+                    if (chessGirds[row + 1][col + 1].getChessPiece() != otherPlayer) {
+                        break;
                     }
-                    break;
+                    if (chessGirds[k][l].getChessPiece() != otherPlayer) {
+                        if (chessGirds[k][l].getChessPiece() == chessGirds[row][col].chessPiece) {
+                            for (int x = row, y = col; x < k && y < l; x++, y++) {
+                                chessGirds[x][y].setChessPiece(chessGirds[row][col].chessPiece);
+                            }
+                        }
+                        break;
+                    }
                 }
             }
         }
+        
         
     
     
@@ -256,7 +275,7 @@ public class ChessGridComponent extends BasicComponent {
     
         GameFrame.getBoardPanelsList().add(Panel);
     
-        System.out.println("BoardPanelsize: " + GameFrame.getBoardPanelsList().size());
+        //System.out.println("BoardPanelsize: " + GameFrame.getBoardPanelsList().size());
     
         for (int j = 0; j < 8; j++) {
             for (int k = 0; k < 8; k++) {
@@ -268,7 +287,7 @@ public class ChessGridComponent extends BasicComponent {
             }
         }
         GameFrame.controller.swapPlayer();
-        this.chessPiece = GameFrame.controller.getCurrentPlayer();
+        //this.chessPiece = GameFrame.controller.getCurrentPlayer();
         //判断游戏是否结束
         if ((gameIsOver() && !GameFrame.cheatModeIsOpen) || !chessBoardPanelHasNull(chessGirds)) {
             GameFrame.controller.gameOver();

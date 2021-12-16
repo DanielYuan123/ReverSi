@@ -6,6 +6,7 @@ import view.GameFrame;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -32,6 +33,7 @@ public abstract class BasicComponent extends JComponent{
                 }
                 if (GameFrame.controller.getPvcPlayer() != GameFrame.controller.getCurrentPlayer() && GameFrame.controller.getPvcPlayer() != null) {
                     computerStep();
+                    System.out.println(2);
                     GameController.setDrawIsOvered(false);
                 }
             }
