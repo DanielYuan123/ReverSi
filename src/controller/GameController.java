@@ -48,6 +48,9 @@ public class GameController {
 
     public void setPvcPlayer(ChessPiece pvcPlayer) {
         this.pvcPlayer = pvcPlayer;
+        if (pvcPlayer == ChessPiece.WHITE) {
+            gamePanel.runComputerStep();
+        }
     }
 
     public ChessPiece getPvcPlayer() {

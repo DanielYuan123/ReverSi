@@ -55,6 +55,10 @@ public class ChessBoardPanel extends JPanel {
         repaint();
     }
     
+    public void runComputerStep() {
+        chessGrids[0][0].computerStep();
+    }
+    
     public ChessGridComponent[][] getChessGrids() {
         return chessGrids;
     }
