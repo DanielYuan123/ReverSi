@@ -74,11 +74,13 @@ public class DataManage {
 
             //DROP TABLE USER;
 
+            //CREATE TABLE USER( UserName MESSAGE_TEXT,UserNumber INT,UserWinTime INT,UserGameTime INT);
+
 
 
             Statement statement = connection.createStatement();
             //String sql = "SELECT MAX(CAST(UserNumber as int)) FROM USER;";
-            String sql = "SELECT * FROM USER;";
+            String sql = "CREATE TABLE USER( UserName MESSAGE_TEXT,UserNumber INT,UserWinTime INT,UserGameTime INT);";
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()){
                 for (int i = 1; i < 5; i++) {

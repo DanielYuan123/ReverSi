@@ -24,6 +24,7 @@ public class GameFrame extends JFrame {
     public int cheatMode = 1;
     public static boolean cheatModeIsOpen = false;
     public static int NightModeChangeConstant=1;
+    public static boolean AIModeIsOn=false;
     private Player whiteplayer;
     private Player blackplayer;
 
