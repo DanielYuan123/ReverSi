@@ -98,17 +98,19 @@ public class MainMenu extends JFrame {
         JButton Btn2 = new JButton("Rule");
         JButton Btn3 = new JButton("Setting");
 
-
+        //导入用于排行榜图片按钮的图片，调整其大小；
         ImageIcon rankBtnIcon = new ImageIcon("Image/RankFrameIcon.png");
         Image RankImage = rankBtnIcon.getImage();
         RankImage = RankImage.getScaledInstance(30,30,Image.SCALE_AREA_AVERAGING);
         rankBtnIcon = new ImageIcon(RankImage);
 
-
+        //new 一个排行榜图标按钮，设置其范围；
         JButton rankFrameBtn = new JButton(rankBtnIcon);
         rankFrameBtn.setVisible(true);
         rankFrameBtn.setBounds(160,10,30,30);
+        rankFrameBtn.setToolTipText("Check your rank here.");
 
+        //为排行榜按钮写一个事件监听器，用户触发时代开RankFrame类并触发其初始化方法；
         rankFrameBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -116,6 +118,7 @@ public class MainMenu extends JFrame {
             }
         });
 
+        //将排行榜按钮添加至主菜单容器；
         container.add(rankFrameBtn);
 
 
@@ -136,7 +139,7 @@ public class MainMenu extends JFrame {
         HintChooseMode.setBounds(45,210,120,20);
         container.add(HintChooseMode);
 
-        //
+        //new 一个提示框，用于提醒用户游戏已经开始了；
         MainMenu.HintGmaeStarted = new JLabel("*游戏已经开始了！");
         HintGmaeStarted.setVisible(false);
         HintGmaeStarted.setBounds(45,210,120,20);
@@ -188,7 +191,7 @@ public class MainMenu extends JFrame {
                         MainMenu.HintGmaeStarted.setVisible(true);
                     }
                 } else if(mylistener.Gamemode==-1){
-                    GameFrame mainFrame = null;
+                    /*GameFrame mainFrame = null;
                     try {
                         mainFrame = new GameFrame(800);
                     } catch (UnsupportedAudioFileException ex) {
@@ -224,8 +227,8 @@ public class MainMenu extends JFrame {
 
                     choosePlayer.add(black);
                     choosePlayer.add(white);
-                    choosePlayer.setVisible(true);
-
+                    choosePlayer.setVisible(true);*/
+                    new EnterClientNameFrame().pvcInit();
                 } else {
                     System.out.println("Please choose your gamemode.");
                     HintChooseMode.setVisible(true);
@@ -321,7 +324,7 @@ public class MainMenu extends JFrame {
         public void actionPerformed(ActionEvent e) {
             if(e.getActionCommand().equals("PVP")){
                 this.Gamemode=1;
-            } else if(e.getActionCommand().equals("PVC")){
+            } else if (e.getActionCommand().equals("PVC")){
                 this.Gamemode=-1;
             } else if (e.getActionCommand().equals("Setting")){
                 this.mainMenu.settingFrame.setVisible(true);

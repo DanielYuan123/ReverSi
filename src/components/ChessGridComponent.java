@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
+import java.sql.SQLException;
 import javax.swing.Timer;
 
 
@@ -254,7 +255,11 @@ public class ChessGridComponent extends BasicComponent {
                 GameFrame.controller.gameOver();
                 GameFrame.controller.getGamePanel().setVisible(false);
                 GameFrame.controller.getStatusPanel().setVisible(false);
-                GameFrame.gameOverPanel.init();
+                try {
+                    GameFrame.gameOverPanel.init();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         
         }
@@ -436,7 +441,7 @@ public class ChessGridComponent extends BasicComponent {
     private class MyDynamicListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            int frame=7;
+            int frame=2;
             length-=frame;
             repaint();
         }
