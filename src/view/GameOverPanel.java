@@ -1,23 +1,15 @@
 package view;
 
-import Data.DataManage;
 import PlayerInfo.Player;
-
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.sql.*;
 import java.util.Collections;
-import javax.sql.*;
 
 public class GameOverPanel extends JPanel {
 
@@ -92,7 +84,6 @@ public class GameOverPanel extends JPanel {
             }
         });
 
-        //4.8177
 
         titleLabel.setBounds(160,0,482,100);
 

@@ -1,6 +1,5 @@
 package components;
 
-import controller.GameController;
 import model.*;
 import view.ChessBoardPanel;
 import view.GameFrame;
@@ -17,7 +16,6 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
 import java.sql.SQLException;
-import java.sql.SQLException;
 import java.util.TimerTask;
 import javax.swing.Timer;
 
@@ -26,7 +24,6 @@ public class ChessGridComponent extends BasicComponent {
     public static int chessSize;
     public static int gridSize;
     public int length = 56;
-    public static Color gridColor = new Color(255, 150, 50);
 
     private ChessPiece chessPiece;
     private int row;
@@ -58,20 +55,7 @@ public class ChessGridComponent extends BasicComponent {
         int index = (int) (Math.random() * ChessBoardPanel.getColCanClicked().size());
         this.row = ChessBoardPanel.getRowCanClicked().get(index);
         this.col = ChessBoardPanel.getColCanClicked().get(index);
-//        try {
-//            Robot robot = new Robot();
-//            robot.delay(2000);
-//        } catch (AWTException e) {
-//            e.printStackTrace();
-//        }
-//        try {
-//            Thread.sleep(1000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
-//        for (int i = 0; i < Math.pow(2, 25); i++) {
-//
-//        }
+
         java.util.Timer timer = new java.util.Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -81,7 +65,6 @@ public class ChessGridComponent extends BasicComponent {
         }, 1300);
 
 
-        System.out.println(3);
     }
     
     @Override
@@ -104,7 +87,6 @@ public class ChessGridComponent extends BasicComponent {
 
     public void changeChessBoardPanel(int row, int col) {
 
-        //this.chessPiece = GameFrame.controller.getCurrentPlayer();
         System.arraycopy(GameFrame.controller.getGamePanel().getChessGrids(), 0, formerGridComponent, 0, 8);
         ChessPiece otherPlayer = (GameFrame.controller.getCurrentPlayer() == ChessPiece.BLACK) ? (ChessPiece.WHITE) : (ChessPiece.BLACK);
         ChessGridComponent[][] chessGirds = GameFrame.controller.getGamePanel().getChessGrids();
@@ -275,7 +257,6 @@ public class ChessGridComponent extends BasicComponent {
 
         GameFrame.getBoardPanelsList().add(Panel);
 
-        //System.out.println("BoardPanelsize: " + GameFrame.getBoardPanelsList().size());
 
         for (int j = 0; j < 8; j++) {
             for (int k = 0; k < 8; k++) {
@@ -287,7 +268,6 @@ public class ChessGridComponent extends BasicComponent {
             }
         }
         GameFrame.controller.swapPlayer();
-        //this.chessPiece = GameFrame.controller.getCurrentPlayer();
         //判断游戏是否结束
         if ((gameIsOver() && !GameFrame.cheatModeIsOpen) || !chessBoardPanelHasNull(chessGirds)) {
             GameFrame.controller.gameOver();
@@ -363,10 +343,7 @@ public class ChessGridComponent extends BasicComponent {
     }
 
     public void drawPiece(Graphics g) {
-        //无论如何，重画棋格；
-        //g.setColor(gridColor);
-        //g.fillRect(1, 1, this.getWidth() - 2, this.getHeight() - 2);
-
+        
         if(this.chessPiece == null){
             if(!GameFrame.cheatModeIsOpen){
             if(GameFrame.controller.canClick(this.row,this.col)){
