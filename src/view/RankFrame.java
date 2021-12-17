@@ -50,7 +50,6 @@ public class RankFrame extends JFrame {
             }
             //关闭连接；
             connection1.close();
-            statement1.close();
             resultSet1.close();
 
         } catch (ClassNotFoundException e) {

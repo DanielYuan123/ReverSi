@@ -28,9 +28,9 @@ public abstract class BasicComponent extends JComponent{
     
             @Override
             public void mouseReleased(MouseEvent e) {
-                while (!GameController.isDrawIsOvered()) {
-                    System.out.println(1);
-                }
+//                while (!GameController.isDrawIsOvered()) {
+//                    System.out.println(1);
+//                }
                 if (GameFrame.controller.getPvcPlayer() != GameFrame.controller.getCurrentPlayer() && GameFrame.controller.getPvcPlayer() != null) {
                     computerStep();
                     System.out.println(2);

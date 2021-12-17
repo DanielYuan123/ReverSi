@@ -85,7 +85,7 @@ public class EnterClientNameFrame extends JDialog {
         this.setVisible(true);
 
     }
-    
+
 
     private class MyBackBtnListener implements ActionListener {
         private EnterClientNameFrame enterClientNameFrame;
@@ -311,13 +311,13 @@ public class EnterClientNameFrame extends JDialog {
                 ResultSet nameResultSet = preparedStatement1.executeQuery();
 
                 if(!nameResultSet.next()){
-                    if(enterNameTextField.getText().equals("White")){
+                    if(myChoosePlayerListener.Player.equals("White")){
                         String sql2 = "INSERT INTO USER VALUES ( ?, ?, 0, 0);";
                         PreparedStatement preparedStatement3 = connection.prepareStatement(sql2);
                         preparedStatement3.setString(1,WhitePlayer.getName());
                         preparedStatement3.setString(2,String.valueOf(Index+1));
                         preparedStatement3.executeUpdate();
-                    }else if(enterNameTextField.getText().equals("Black")){
+                    }else if(myChoosePlayerListener.Player.equals("Black")){
                         String sql2 = "INSERT INTO USER VALUES ( ?, ?, 0, 0);";
                         PreparedStatement preparedStatement3 = connection.prepareStatement(sql2);
                         preparedStatement3.setString(1,BlackPlayer.getName());

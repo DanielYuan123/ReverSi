@@ -45,6 +45,14 @@ public class GameController {
 
     public Player getBlackPlayer(){return this.blackPlayer;}
 
+    public Player getAIModePlayer(){
+        if(whitePlayer==null){
+            return blackPlayer;
+        }else {
+            return whitePlayer;
+        }
+    }
+
 
     public void setPvcPlayer(ChessPiece pvcPlayer) {
         this.pvcPlayer = pvcPlayer;

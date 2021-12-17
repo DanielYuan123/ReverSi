@@ -133,6 +133,10 @@ public class GameOverPanel extends JPanel {
             resultLabel.setForeground(Color.blue);
         }
 
+
+
+
+        if(GameFrame.AIModeIsOn==false){
         Collections.sort(Player.getPlayerList());
             Connection connection;
             try {
@@ -226,7 +230,7 @@ public class GameOverPanel extends JPanel {
 
                         Connection connection2 = DriverManager.getConnection("jdbc:sqlite:lib/player.db","Daniel","123qweasd");
 
-                        String sql2 = "UPDATE User SET UserWinTime = ?, UserGameTime = ? WHERE UserName = ?";
+                        String sql2 = "UPDATE USER SET UserWinTime = ?, UserGameTime = ? WHERE UserName = ?";
                         PreparedStatement preparedStatement1 = connection2.prepareStatement(sql2);
                         preparedStatement1.setInt(1,playerWinTime+1);
                         preparedStatement1.setInt(2,playerPlayTime+1);
@@ -247,7 +251,7 @@ public class GameOverPanel extends JPanel {
 
                         Connection connection2 = DriverManager.getConnection("jdbc:sqlite:lib/player.db","Daniel","123qweasd");
 
-                        String sql2 = "UPDATE User SET UserWinTime = ?, UserGameTime = ? WHERE UserName = ?";
+                        String sql2 = "UPDATE USER SET UserWinTime = ?, UserGameTime = ? WHERE UserName = ?";
                         PreparedStatement preparedStatement1 = connection2.prepareStatement(sql2);
                         preparedStatement1.setInt(1,playerWinTime+1);
                         preparedStatement1.setInt(2,playerPlayTime+1);
@@ -261,7 +265,62 @@ public class GameOverPanel extends JPanel {
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
+        }else if(GameFrame.AIModeIsOn==true){
 
+            Player humanPlayer = GameFrame.controller.getAIModePlayer();
+
+            try {
+                Class.forName("org.sqlite.JDBC");
+                Connection connection = DriverManager.getConnection("jdbc:sqlite:lib/player.db","Daniel","123qweasd");
+
+                String sql = "SELECT UserWinTime, UserGameTime FROM USER WHERE UserName = ?;";
+                PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+                preparedStatement.setString(1,humanPlayer.getName());
+                ResultSet getNameResultSet = preparedStatement.executeQuery();
+
+                int playerGameTime=0;
+                int playerWinTime=0;
+
+                while(getNameResultSet.next()){
+                playerWinTime = getNameResultSet.getInt(1);
+                playerGameTime = getNameResultSet.getInt(2);
+                }
+
+                connection.close();
+
+                Connection connection1 = DriverManager.getConnection("jdbc:sqlite:lib/player.db","Daniel","123qweasd");
+
+                String sql2 = "UPDATE USER SET UserGameTime = ? WHERE UserName = ?;";
+                PreparedStatement preparedStatement1 = connection1.prepareStatement(sql2);
+                preparedStatement1.setInt(1,playerGameTime+1);
+                preparedStatement1.setString(2,humanPlayer.getName());
+
+                preparedStatement1.executeUpdate();
+
+                connection1.close();
+
+                if((GameFrame.controller.getWhitePlayer()==null&&GameFrame.controller.getBlackScore()>GameFrame.controller.getWhiteScore())||(GameFrame.controller.getBlackPlayer()==null&&GameFrame.controller.getBlackScore()<GameFrame.controller.getWhiteScore())){
+                    Connection connection2 = DriverManager.getConnection("jdbc:sqlite:lib/player.db","Daniel","123qweasd");
+
+                    String sql3 = "UPDATE USER SET UserWinTime = ? WHERE UserName = ?;";
+                    PreparedStatement preparedStatement2 = connection2.prepareStatement(sql3);
+
+                    preparedStatement2.setInt(1,playerWinTime+1);
+                    preparedStatement2.setString(2,humanPlayer.getName());
+                    preparedStatement2.executeUpdate();
+                    connection2.close();
+                }
+
+
+
+
+
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
         this.add(resultLabel);
         this.setVisible(true);
 
@@ -276,6 +335,9 @@ public class GameOverPanel extends JPanel {
             g.fillOval(365,150,50,50);
 
     }
+
+
+
 
     public static void main(String[] args) {
 

@@ -150,7 +150,8 @@ public class GameFrame extends JFrame {
         add(restartBtn);
         restartBtn.addActionListener(myBtnActionListener);
 
-        
+        this.whiteplayer=whiteplayer;
+        this.blackplayer=blackplayer;
         loadGameBtn = new JButton("Load");
         loadGameBtn.setSize(100, 50);
         loadGameBtn.setLocation(restartBtn.getX()+restartBtn.getWidth()+30, restartBtn.getY());
@@ -328,9 +329,6 @@ public class GameFrame extends JFrame {
         this.addWindowListener(myFrameWindowListener);
 
         this.setVisible(true);
-        //this.setDefaultCloseOperation(WindowConstants.HIDE_ON_CLOSE);
-
-        
     }
 
     //构建一个事件监听的内部类；
