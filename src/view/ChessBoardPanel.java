@@ -56,7 +56,7 @@ public class ChessBoardPanel extends JPanel {
     }
     
     public void runComputerStep() {
-        chessGrids[0][0].computerStep();
+        chessGrids[5][3].computerStep();
     }
     
     public ChessGridComponent[][] getChessGrids() {
