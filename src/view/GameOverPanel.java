@@ -326,10 +326,6 @@ public class GameOverPanel extends JPanel {
             g.fillOval(365,150,50,50);
 
     }
-
-
-
-
     public static void main(String[] args) {
 
     }
