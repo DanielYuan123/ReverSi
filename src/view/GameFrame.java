@@ -254,6 +254,9 @@ public class GameFrame extends JFrame {
                 try {
                     System.out.println("Regret is clicked.");
                     ChessGridComponent[][] chessGridComponents = GameFrame.controller.getGamePanel().getChessGrids();
+                    if (AIModeIsOn) {
+                    
+                    }
                     int[][] tempBoardPanel = getBoardPanelsList().get(stepNum - 2);
                     for (int i = 0; i < 8; i++) {
                         for (int j = 0; j < 8; j++) {

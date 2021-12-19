@@ -192,43 +192,6 @@ public class MainMenu extends JFrame {
                         MainMenu.HintGmaeStarted.setVisible(true);
                     }
                 } else if(mylistener.Gamemode==-1){
-                    /*GameFrame mainFrame = null;
-                    try {
-                        mainFrame = new GameFrame(800);
-                    } catch (UnsupportedAudioFileException ex) {
-                        ex.printStackTrace();
-                    } catch (LineUnavailableException ex) {
-                        ex.printStackTrace();
-                    } catch (IOException ex) {
-                        ex.printStackTrace();
-                    }
-                    mainFrame.setVisible(true);
-
-                    JFrame choosePlayer = new JFrame();
-                    choosePlayer.setBounds(780, 470 ,200, 200);
-                    choosePlayer.setLayout(new FlowLayout());
-
-                    JButton black = new JButton("Black");
-                    JButton white = new JButton("White");
-                    black.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            choosePlayer.setVisible(false);
-                            GameFrame.controller.setPvcPlayer(ChessPiece.BLACK);
-                        }
-                    });
-
-                    white.addActionListener(new ActionListener() {
-                        @Override
-                        public void actionPerformed(ActionEvent e) {
-                            choosePlayer.setVisible(false);
-                            GameFrame.controller.setPvcPlayer(ChessPiece.WHITE);
-                        }
-                    });
-
-                    choosePlayer.add(black);
-                    choosePlayer.add(white);
-                    choosePlayer.setVisible(true);*/
                     new EnterClientNameFrame().pvcInit();
                 } else {
                     System.out.println("Please choose your gamemode.");

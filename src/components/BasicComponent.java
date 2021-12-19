@@ -12,17 +12,15 @@ public abstract class BasicComponent extends JComponent{
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                try {
-                    onMouseClicked();
-                } catch (IOException | LineUnavailableException ex) {
-                    ex.printStackTrace();
-                }
-            }
-    
-            @Override
-            public void mouseReleased(MouseEvent e) {
-                if (GameFrame.controller.getPvcPlayer() != GameFrame.controller.getCurrentPlayer() && GameFrame.controller.getPvcPlayer() != null) {
-                    computerStep();
+                if (GameFrame.controller.getPvcPlayer() == GameFrame.controller.getCurrentPlayer()) {
+                    try {
+                        onMouseClicked();
+                        if (GameFrame.controller.getPvcPlayer() != GameFrame.controller.getCurrentPlayer() && GameFrame.controller.getPvcPlayer() != null) {
+                            computerStep();
+                        }
+                    } catch (IOException | LineUnavailableException ex) {
+                        ex.printStackTrace();
+                    }
                 }
             }
         });
