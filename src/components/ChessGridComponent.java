@@ -40,20 +40,26 @@ public class ChessGridComponent extends BasicComponent {
         
     }
     
+    //电脑的下棋步骤
     @Override
     public void computerStep() {
+        //清除上一步棋中可以被点击的棋格
         ChessBoardPanel.getRowCanClicked().clear();
         ChessBoardPanel.getColCanClicked().clear();
+        
+        //遍历整个棋盘，找到所有可以被点击的棋格
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 GameFrame.controller.canClick(i, j);
             }
         }
     
+        //在所有可以下棋的棋格中随机选取一个棋格下棋
         int index = (int) (Math.random() * ChessBoardPanel.getColCanClicked().size());
         int row = ChessBoardPanel.getRowCanClicked().get(index);
         int col = ChessBoardPanel.getColCanClicked().get(index);
     
+        //通过延时执行1300ms，模拟电脑的思考时间
         java.util.Timer timer = new java.util.Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -65,24 +71,28 @@ public class ChessGridComponent extends BasicComponent {
     
     }
     
+    //当鼠标点击对应棋格后的步骤（即人的下棋步骤）
     @Override
-    public void onMouseClicked() throws IOException, LineUnavailableException {
-        System.out.printf("%s clicked (%d, %d)\n", GameFrame.controller.getCurrentPlayer(), row, col);
-        
+    public void onMouseClicked() {
+        //对是否处在作弊模式下进行分别的处理
         if (GameFrame.controller.canClick(row, col) || GameFrame.cheatModeIsOpen) {
             if (this.chessPiece == null) {
                 this.chessPiece = GameFrame.controller.getCurrentPlayer();
+                
+                //获取当前棋盘上的棋子分布状态
                 ChessGridComponent[][] chessGirds = GameFrame.controller.getGamePanel().getChessGrids();
-    
+                
+                //将当前棋格设置成当前玩家的棋子
                 chessGirds[row][col].setChessPiece(this.chessPiece);
                 repaint();
-    
+                
                 changeChessBoardPanel(this.row, this.col);
             }
         }
     
     }
     
+    //执行翻棋操作
     public void changeChessBoardPanel(int row, int col) {
         
         System.arraycopy(GameFrame.controller.getGamePanel().getChessGrids(), 0, formerGridComponent, 0, 8);
@@ -90,8 +100,7 @@ public class ChessGridComponent extends BasicComponent {
         ChessGridComponent[][] chessGirds = GameFrame.controller.getGamePanel().getChessGrids();
         chessGirds[row][col].chessPiece = GameFrame.controller.getCurrentPlayer();
         
-        
-        //repaint();
+        //播放下棋音效
         this.PlaySound();
         
         //向8个方向修改
@@ -235,7 +244,6 @@ public class ChessGridComponent extends BasicComponent {
         
         
         GameFrame.stepNum++;
-        System.out.println("Step number: " + GameFrame.stepNum);
         
         int[][] Panel = new int[8][8];
         
@@ -264,11 +272,11 @@ public class ChessGridComponent extends BasicComponent {
             }
         }
         
+        //交换玩家
         GameFrame.controller.swapPlayer();
         
         //判断游戏是否结束
         if ((gameIsOver() && !GameFrame.cheatModeIsOpen) || !chessBoardPanelHasNull(chessGirds)) {
-            GameFrame.controller.gameOver();
             GameFrame.controller.getGamePanel().setVisible(false);
             GameFrame.controller.getStatusPanel().setVisible(false);
             try {
@@ -279,6 +287,7 @@ public class ChessGridComponent extends BasicComponent {
         }
     }
     
+    //该方法用于判断整个棋盘是否为空
     public boolean chessBoardPanelHasNull(ChessGridComponent[][] chessGirds) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
@@ -323,7 +332,7 @@ public class ChessGridComponent extends BasicComponent {
         return chessPiece;
     }
     
-    
+    //播放下棋时的音效
     public void PlaySound() {
         try {
             URL url;

@@ -5,6 +5,7 @@ import components.ChessGridComponent;
 import model.ChessPiece;
 import view.*;
 import javax.swing.*;
+import javax.swing.event.AncestorListener;
 import java.io.*;
 
 
@@ -70,6 +71,7 @@ public class GameController {
         return this.statusPanel;
     }
     
+    //交换玩家
     public void swapPlayer() {
         countScore();
         currentPlayer = (currentPlayer == ChessPiece.BLACK) ? ChessPiece.WHITE : ChessPiece.BLACK;
@@ -77,7 +79,7 @@ public class GameController {
         statusPanel.setScoreText(blackScore, whiteScore);
     }
     
-    
+    //计分板
     public void countScore() {
         blackScore = 0;
         whiteScore = 0;
@@ -93,15 +95,6 @@ public class GameController {
         }
     }
     
-    public void gameOver() {
-        if (blackScore > whiteScore) {
-            System.out.println("Black player is win!");
-        } else if (blackScore < whiteScore) {
-            System.out.println("White player is win!");
-        } else {
-            System.out.println("Both of you have the same lever!");
-        }
-    }
     
     public ChessPiece getCurrentPlayer() {
         return currentPlayer;
@@ -111,27 +104,29 @@ public class GameController {
         return gamePanel;
     }
     
-    
+    //读档操作
     public void readFileData(String fileName) {
         
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-            switch (bufferedReader.readLine()) {
-                case "CurrentPlayer: BLACK":
-                    currentPlayer = ChessPiece.BLACK;
-                    break;
-                case "CurrentPlayer: WHITE":
-                    currentPlayer = ChessPiece.WHITE;
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null, "缺少行棋方", "Error(error code: 103)", JOptionPane.ERROR_MESSAGE);
-                    return;
+            
+            //检测是否有行棋方，并执行设置或警告
+            String firstLine = bufferedReader.readLine();
+            if (firstLine.contains("BLACK")) {
+                currentPlayer = ChessPiece.BLACK;
+            } else if (firstLine.contains("WHITE")) {
+                currentPlayer = ChessPiece.WHITE;
+            } else {
+                JOptionPane.showMessageDialog(null, "缺少行棋方", "Error(error code: 103)", JOptionPane.ERROR_MESSAGE);
             }
+            
+            //设置状态栏为当前行棋方
             statusPanel.setPlayerText(currentPlayer.name());
             bufferedReader.readLine();
             bufferedReader.readLine();
             bufferedReader.readLine();
     
+            //读取并设置黑白两方的分数
             String black = bufferedReader.readLine();
             blackScore = Integer.parseInt(black);
             bufferedReader.readLine();
@@ -193,7 +188,6 @@ public class GameController {
             GameFrame.stepNum = 1;
     
         } catch (IOException e) {
-            //e.printStackTrace();
             JOptionPane.showMessageDialog(null, "File not be found!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "其他错误", "Error(error code: 106)", JOptionPane.ERROR_MESSAGE);
@@ -224,7 +218,10 @@ public class GameController {
                 }
                 bufferedWriter.newLine();
             }
-            JOptionPane.showMessageDialog(null, "Save successfully.");
+            
+            if (new File(String.format("./%s", fileName)).exists() && !fileName.equals("./UserFiles/null.txt")) {
+                JOptionPane.showMessageDialog(null, "Save successfully.");
+            }
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
