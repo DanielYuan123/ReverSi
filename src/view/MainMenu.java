@@ -184,15 +184,17 @@ public class MainMenu extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 MainMenu.HintChooseMode.setVisible(false);
                 if(mylistener.Gamemode==1){
-                    if(GameFrame.stepNum==0){
-
+                    if(GameFrame.stepNum==0&&!EnterClientNameFrame.EnterFrameIsOn){
                         new EnterClientNameFrame().init();
-
                     }else{
                         MainMenu.HintGmaeStarted.setVisible(true);
                     }
                 } else if(mylistener.Gamemode==-1){
-                    new EnterClientNameFrame().pvcInit();
+                    if(!EnterClientNameFrame.EnterFrameIsOn)
+                        new EnterClientNameFrame().pvcInit();
+                    else {
+                        MainMenu.HintGmaeStarted.setVisible(true);
+                    }
                 } else {
                     System.out.println("Please choose your gamemode.");
                     HintChooseMode.setVisible(true);
@@ -244,25 +246,6 @@ public class MainMenu extends JFrame {
         this.clip.loop(5000);
     }
 
-    //完成playmusic的静态方法；可在其他类中更改；
-    static void PlayMusic(int num){
-        try {
-            URL url;
-            URI uri;
-            File music = new File("Music/1-05 Un Jour De Juillet.wav");
-            uri=music.toURI();
-            url=uri.toURL();
-            AudioClip audioClip= Applet.newAudioClip(url);
-            if(num==1){
-            audioClip.play();
-            audioClip.loop();}
-            if(num==-1){
-                audioClip.stop();
-            }
-        }catch (MalformedURLException e){
-            e.printStackTrace();
-        }
-    }
     //维修函数；
     public static void main(String[] args) {
         new MainMenu().init();

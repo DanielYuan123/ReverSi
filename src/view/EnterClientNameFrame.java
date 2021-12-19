@@ -9,6 +9,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.*;
 
@@ -19,6 +21,8 @@ public class EnterClientNameFrame extends JDialog {
     private JTextField BlackTextField;
     private JTextField WhiteTextField;
     private JLabel kiddingLabel;
+    private MyWindowCloseListener myWindowCloseListener = new MyWindowCloseListener(this);
+    public static boolean EnterFrameIsOn = false;
 
 
     //构造器，用于设置窗口大小，布局为绝对布局；
@@ -26,6 +30,7 @@ public class EnterClientNameFrame extends JDialog {
         this.setTitle("Enter player information");
         this.setBounds(300,180,300,250);
         this.setLayout(null);
+        this.addWindowListener(myWindowCloseListener);
     }
 
     //初始化方法；在new后调用；
@@ -84,6 +89,8 @@ public class EnterClientNameFrame extends JDialog {
 
         this.setVisible(true);
 
+        EnterClientNameFrame.EnterFrameIsOn=true;
+
     }
 
 
@@ -97,6 +104,7 @@ public class EnterClientNameFrame extends JDialog {
         @Override
         public void actionPerformed(ActionEvent e) {
             enterClientNameFrame.setVisible(false);
+            EnterClientNameFrame.EnterFrameIsOn=false;
         }
     }
 
@@ -193,6 +201,7 @@ public class EnterClientNameFrame extends JDialog {
             }
 
             enterClientNameFrame.setVisible(false);
+            EnterClientNameFrame.EnterFrameIsOn=false;
         }
     }
 
@@ -258,6 +267,7 @@ public class EnterClientNameFrame extends JDialog {
 
         this.setVisible(true);
 
+        EnterClientNameFrame.EnterFrameIsOn=true;
     }
 
     private class MyStartPvcBtnListener implements ActionListener{
@@ -371,6 +381,7 @@ public class EnterClientNameFrame extends JDialog {
                 }
 
             }
+            EnterClientNameFrame.EnterFrameIsOn=false;
         }
     }
 
@@ -389,8 +400,22 @@ public class EnterClientNameFrame extends JDialog {
         }
     }
 
+    private class MyWindowCloseListener extends WindowAdapter{
+        EnterClientNameFrame enterClientNameFrame;
+        public MyWindowCloseListener(EnterClientNameFrame enterClientNameFrame){
+            this.enterClientNameFrame=enterClientNameFrame;
+        }
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            enterClientNameFrame.setVisible(false);
+            EnterClientNameFrame.EnterFrameIsOn=false;
+        }
+    }
+
     public static void main(String[] args) {
         new EnterClientNameFrame().pvcInit();
     }
+
 
 }
