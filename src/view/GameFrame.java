@@ -8,8 +8,12 @@ import model.ChessPiece;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -232,8 +236,23 @@ public class GameFrame extends JFrame {
 
             }else if(e.getActionCommand().equals("Load")){
                 System.out.println("clicked Load Btn");
-                String filePath = "./UserFiles/" + JOptionPane.showInputDialog("Load the game:", "input the path here") + ".txt";
-                controller.readFileData(filePath);
+                JFileChooser jFileChooser = new JFileChooser(new File("./UserFiles"));
+                jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                jFileChooser.showDialog(new JLabel(), "选择存档");
+                File file = jFileChooser.getSelectedFile();
+                
+                try {
+                    System.out.println("文件: " + file.getAbsolutePath());
+                    System.out.println(jFileChooser.getSelectedFile().getName());
+                    if (file.getName().endsWith(".txt")) {
+                        controller.readFileData(file.getAbsolutePath());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "文件格式错误", "Error(error code: 104)", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (NullPointerException E) {
+                    System.out.print("");
+                }
+                
             }else if(e.getActionCommand().equals("Save")){
                 System.out.println("clicked Save Btn");
                 String filePath = "./UserFiles/" + JOptionPane.showInputDialog("Save the game:", "input the path here") + ".txt";
@@ -253,29 +272,39 @@ public class GameFrame extends JFrame {
             } else if (e.getActionCommand().equals("Regret")) {
                 try {
                     System.out.println("Regret is clicked.");
-                    ChessGridComponent[][] chessGridComponents = GameFrame.controller.getGamePanel().getChessGrids();
-                    int[][] tempBoardPanel = getBoardPanelsList().get(stepNum - 2);
-                    for (int i = 0; i < 8; i++) {
-                        for (int j = 0; j < 8; j++) {
-                            if (tempBoardPanel[i][j] == 0) {
-                                chessGridComponents[i][j].setChessPiece(null);
-                            } else if (tempBoardPanel[i][j] == 1) {
-                                chessGridComponents[i][j].setChessPiece(ChessPiece.BLACK);
-                            } else if (tempBoardPanel[i][j] == -1) {
-                                chessGridComponents[i][j].setChessPiece(ChessPiece.WHITE);
+                    int loopTime;
+                    if (AIModeIsOn) {
+                        loopTime = 2;
+                    } else {
+                        loopTime = 1;
+                    }
+                    for (int l = 0; l < loopTime; l++) {
+                        ChessGridComponent[][] chessGridComponents = GameFrame.controller.getGamePanel().getChessGrids();
+                        int[][] tempBoardPanel = getBoardPanelsList().get(stepNum - 2);
+                        for (int i = 0; i < 8; i++) {
+                            for (int j = 0; j < 8; j++) {
+                                if (tempBoardPanel[i][j] == 0) {
+                                    chessGridComponents[i][j].setChessPiece(null);
+                                } else if (tempBoardPanel[i][j] == 1) {
+                                    chessGridComponents[i][j].setChessPiece(ChessPiece.BLACK);
+                                } else if (tempBoardPanel[i][j] == -1) {
+                                    chessGridComponents[i][j].setChessPiece(ChessPiece.WHITE);
+                                }
                             }
                         }
+                        controller.swapPlayer();
+                        getBoardPanelsList().remove(stepNum - 1);
+                        chessBoardPanel.setChessGrids(chessGridComponents);
+                        stepNum--;
                     }
-                    controller.swapPlayer();
-                    getBoardPanelsList().remove(stepNum - 1);
-                    chessBoardPanel.setChessGrids(chessGridComponents);
-                    stepNum--;
                 } catch (ArrayIndexOutOfBoundsException E) {
                     JOptionPane.showMessageDialog(null, "This is the initial chess panel!");
                 }
             }
         }
     }
+    
+    
 
     //创建夜间模式事件监听类；
     private class NightModeSetter implements ActionListener{

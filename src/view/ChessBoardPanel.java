@@ -9,7 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChessBoardPanel extends JPanel {
     private final int CHESS_COUNT = 8;

@@ -1,8 +1,0 @@
-D: Swing; JavaFX (两者兼容性不太好， 用Swing写)
-D: JFrame; JPanel; JComponent(JLabel; JButton; ...)
-图形翻转bug：
-1.nightMode (got it!)
-2.load
-3.restart (got it!)
-4.currentPiece(got it!)
-5.CheatMode(got it!)

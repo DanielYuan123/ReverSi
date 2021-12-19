@@ -53,8 +53,8 @@ public class ChessGridComponent extends BasicComponent {
         }
 
         int index = (int) (Math.random() * ChessBoardPanel.getColCanClicked().size());
-        this.row = ChessBoardPanel.getRowCanClicked().get(index);
-        this.col = ChessBoardPanel.getColCanClicked().get(index);
+        int row = ChessBoardPanel.getRowCanClicked().get(index);
+        int col = ChessBoardPanel.getColCanClicked().get(index);
 
         java.util.Timer timer = new java.util.Timer();
         timer.schedule(new TimerTask() {

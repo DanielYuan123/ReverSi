@@ -1,10 +1,10 @@
-CurrentPlayer: WHITE
+CurrentPlayer: BLACK
 
 GameScore: 
 Black: 
-4
+2
 White: 
-1
+2
 
 ChessBoardPanel: 
     NULL    NULL    NULL    NULL    NULL    NULL    NULL    NULL
