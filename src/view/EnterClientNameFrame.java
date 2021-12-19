@@ -206,6 +206,10 @@ public class EnterClientNameFrame extends JDialog {
         JRadioButton radioBlackButton = new JRadioButton("Black");
         JRadioButton radioWhiteButton = new JRadioButton("White");
 
+        ButtonGroup buttonGroup = new ButtonGroup();
+        buttonGroup.add(radioBlackButton);
+        buttonGroup.add(radioWhiteButton);
+
         radioBlackButton.setBounds(40,60,90,20);
         radioWhiteButton.setBounds(170,60,90,20);
 
