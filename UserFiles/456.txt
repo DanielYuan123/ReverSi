@@ -1,4 +1,4 @@
-CurrentPlayer: WHIT
+CurrentPlayer: WHITE
 
 GameScore: 
 Black: 

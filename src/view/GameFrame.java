@@ -8,8 +8,12 @@ import model.ChessPiece;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -232,8 +236,23 @@ public class GameFrame extends JFrame {
 
             }else if(e.getActionCommand().equals("Load")){
                 System.out.println("clicked Load Btn");
-                String filePath = "./UserFiles/" + JOptionPane.showInputDialog("Load the game:", "input the path here") + ".txt";
-                controller.readFileData(filePath);
+                JFileChooser jFileChooser = new JFileChooser(new File("./UserFiles"));
+                jFileChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+                jFileChooser.showDialog(new JLabel(), "选择存档");
+                File file = jFileChooser.getSelectedFile();
+                
+                try {
+                    System.out.println("文件: " + file.getAbsolutePath());
+                    System.out.println(jFileChooser.getSelectedFile().getName());
+                    if (file.getName().endsWith(".txt")) {
+                        controller.readFileData(file.getAbsolutePath());
+                    } else {
+                        JOptionPane.showMessageDialog(null, "文件格式错误", "Error(error code: 104)", JOptionPane.ERROR_MESSAGE);
+                    }
+                } catch (NullPointerException E) {
+                    System.out.print("");
+                }
+                
             }else if(e.getActionCommand().equals("Save")){
                 System.out.println("clicked Save Btn");
                 String filePath = "./UserFiles/" + JOptionPane.showInputDialog("Save the game:", "input the path here") + ".txt";
@@ -284,6 +303,8 @@ public class GameFrame extends JFrame {
             }
         }
     }
+    
+    
 
     //创建夜间模式事件监听类；
     private class NightModeSetter implements ActionListener{

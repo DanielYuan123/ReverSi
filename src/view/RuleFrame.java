@@ -49,7 +49,6 @@ public class RuleFrame extends Frame {
         titleLabel.setIcon(TitleIcon);
     
         //添加标签;
-        this.add(titleLabel);
         this.add(label);
     
         //编写窗口监听：若关闭，并非结束进程，而是隐藏；

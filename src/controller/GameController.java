@@ -2,10 +2,12 @@ package controller;
 
 import PlayerInfo.Player;
 import components.ChessGridComponent;
+import javafx.stage.FileChooser;
 import model.ChessPiece;
 import view.*;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.io.*;
 
@@ -114,7 +116,13 @@ public class GameController {
         
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-            
+//            JFileChooser fileChooser = new JFileChooser();
+//            FileNameExtensionFilter fileNameExtensionFilter = new FileNameExtensionFilter("txt");
+//            fileChooser.setFileFilter(fileNameExtensionFilter);
+//            int returnValue = fileChooser.showOpenDialog(fileChooser);
+//            if(returnValue == JFileChooser.APPROVE_OPTION) {
+//                System.out.println("You chose to open this file: " + fileChooser.getSelectedFile().getName());
+//            }
             switch (bufferedReader.readLine()) {
                 case "CurrentPlayer: BLACK":
                     currentPlayer = ChessPiece.BLACK;
