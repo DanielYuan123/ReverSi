@@ -253,26 +253,31 @@ public class GameFrame extends JFrame {
             } else if (e.getActionCommand().equals("Regret")) {
                 try {
                     System.out.println("Regret is clicked.");
-                    ChessGridComponent[][] chessGridComponents = GameFrame.controller.getGamePanel().getChessGrids();
+                    int loopTime;
                     if (AIModeIsOn) {
-                    
+                        loopTime = 2;
+                    } else {
+                        loopTime = 1;
                     }
-                    int[][] tempBoardPanel = getBoardPanelsList().get(stepNum - 2);
-                    for (int i = 0; i < 8; i++) {
-                        for (int j = 0; j < 8; j++) {
-                            if (tempBoardPanel[i][j] == 0) {
-                                chessGridComponents[i][j].setChessPiece(null);
-                            } else if (tempBoardPanel[i][j] == 1) {
-                                chessGridComponents[i][j].setChessPiece(ChessPiece.BLACK);
-                            } else if (tempBoardPanel[i][j] == -1) {
-                                chessGridComponents[i][j].setChessPiece(ChessPiece.WHITE);
+                    for (int l = 0; l < loopTime; l++) {
+                        ChessGridComponent[][] chessGridComponents = GameFrame.controller.getGamePanel().getChessGrids();
+                        int[][] tempBoardPanel = getBoardPanelsList().get(stepNum - 2);
+                        for (int i = 0; i < 8; i++) {
+                            for (int j = 0; j < 8; j++) {
+                                if (tempBoardPanel[i][j] == 0) {
+                                    chessGridComponents[i][j].setChessPiece(null);
+                                } else if (tempBoardPanel[i][j] == 1) {
+                                    chessGridComponents[i][j].setChessPiece(ChessPiece.BLACK);
+                                } else if (tempBoardPanel[i][j] == -1) {
+                                    chessGridComponents[i][j].setChessPiece(ChessPiece.WHITE);
+                                }
                             }
                         }
+                        controller.swapPlayer();
+                        getBoardPanelsList().remove(stepNum - 1);
+                        chessBoardPanel.setChessGrids(chessGridComponents);
+                        stepNum--;
                     }
-                    controller.swapPlayer();
-                    getBoardPanelsList().remove(stepNum - 1);
-                    chessBoardPanel.setChessGrids(chessGridComponents);
-                    stepNum--;
                 } catch (ArrayIndexOutOfBoundsException E) {
                     JOptionPane.showMessageDialog(null, "This is the initial chess panel!");
                 }

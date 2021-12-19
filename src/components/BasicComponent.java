@@ -12,7 +12,7 @@ public abstract class BasicComponent extends JComponent{
         this.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                if (GameFrame.controller.getPvcPlayer() == GameFrame.controller.getCurrentPlayer()) {
+                if (GameFrame.controller.getPvcPlayer() == GameFrame.controller.getCurrentPlayer() || !GameFrame.AIModeIsOn) {
                     try {
                         onMouseClicked();
                         if (GameFrame.controller.getPvcPlayer() != GameFrame.controller.getCurrentPlayer() && GameFrame.controller.getPvcPlayer() != null) {
