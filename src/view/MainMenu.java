@@ -190,7 +190,7 @@ public class MainMenu extends JFrame {
                         MainMenu.HintGmaeStarted.setVisible(true);
                     }
                 } else if(mylistener.Gamemode==-1){
-                    if(!EnterClientNameFrame.EnterFrameIsOn)
+                    if(GameFrame.stepNum==0&&!EnterClientNameFrame.EnterFrameIsOn)
                         new EnterClientNameFrame().pvcInit();
                     else {
                         MainMenu.HintGmaeStarted.setVisible(true);
