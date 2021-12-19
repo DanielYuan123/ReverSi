@@ -1,13 +1,12 @@
 package components;
 
 import view.GameFrame;
-
 import javax.sound.sampled.LineUnavailableException;
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.IOException;
 
-public abstract class BasicComponent extends JComponent{
+public abstract class BasicComponent extends JComponent {
     public BasicComponent() {
         this.addMouseListener(new MouseAdapter() {
             @Override
@@ -24,11 +23,12 @@ public abstract class BasicComponent extends JComponent{
                 }
             }
         });
-
-        
+    
+    
     }
-
+    
     public abstract void onMouseClicked() throws IOException, LineUnavailableException;
     
     public abstract void computerStep();
+    
 }

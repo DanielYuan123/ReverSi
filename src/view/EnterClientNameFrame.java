@@ -1,8 +1,8 @@
 package view;
+
 import Data.DataManage;
 import PlayerInfo.Player;
 import model.ChessPiece;
-
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -13,7 +13,6 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.*;
-
 
 public class EnterClientNameFrame extends JDialog {
     private Player BlackPlayer;

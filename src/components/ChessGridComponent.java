@@ -3,7 +3,6 @@ package components;
 import model.*;
 import view.ChessBoardPanel;
 import view.GameFrame;
-
 import javax.sound.sampled.*;
 import java.applet.Applet;
 import java.applet.AudioClip;
@@ -19,27 +18,26 @@ import java.sql.SQLException;
 import java.util.TimerTask;
 import javax.swing.Timer;
 
-
 public class ChessGridComponent extends BasicComponent {
     public static int chessSize;
     public static int gridSize;
     public int length = 56;
-
+    
     private ChessPiece chessPiece;
     private int row;
     private int col;
-
-    private MyDynamicListener myDynamicListener = new MyDynamicListener();
-    private ChessGridComponent[][] formerGridComponent=new ChessGridComponent[8][8];
-    private Timer timer = new Timer(1, myDynamicListener);
     private boolean ChangeConstant;
-
-
+    
+    private MyDynamicListener myDynamicListener = new MyDynamicListener();
+    private ChessGridComponent[][] formerGridComponent = new ChessGridComponent[8][8];
+    private Timer timer = new Timer(1, myDynamicListener);
+    
+    
     public ChessGridComponent(int row, int col) {
         this.setSize(gridSize, gridSize);
         this.row = row;
         this.col = col;
-
+        
     }
     
     @Override
@@ -51,11 +49,11 @@ public class ChessGridComponent extends BasicComponent {
                 GameFrame.controller.canClick(i, j);
             }
         }
-
+    
         int index = (int) (Math.random() * ChessBoardPanel.getColCanClicked().size());
         int row = ChessBoardPanel.getRowCanClicked().get(index);
         int col = ChessBoardPanel.getColCanClicked().get(index);
-
+    
         java.util.Timer timer = new java.util.Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -63,8 +61,8 @@ public class ChessGridComponent extends BasicComponent {
                 changeChessBoardPanel(row, col);
             }
         }, 1300);
-
-
+    
+    
     }
     
     @Override
@@ -75,27 +73,27 @@ public class ChessGridComponent extends BasicComponent {
             if (this.chessPiece == null) {
                 this.chessPiece = GameFrame.controller.getCurrentPlayer();
                 ChessGridComponent[][] chessGirds = GameFrame.controller.getGamePanel().getChessGrids();
-
+    
                 chessGirds[row][col].setChessPiece(this.chessPiece);
                 repaint();
-
+    
                 changeChessBoardPanel(this.row, this.col);
             }
         }
-
+    
     }
-
+    
     public void changeChessBoardPanel(int row, int col) {
-
+        
         System.arraycopy(GameFrame.controller.getGamePanel().getChessGrids(), 0, formerGridComponent, 0, 8);
         ChessPiece otherPlayer = (GameFrame.controller.getCurrentPlayer() == ChessPiece.BLACK) ? (ChessPiece.WHITE) : (ChessPiece.BLACK);
         ChessGridComponent[][] chessGirds = GameFrame.controller.getGamePanel().getChessGrids();
         chessGirds[row][col].chessPiece = GameFrame.controller.getCurrentPlayer();
-
-
+        
+        
         //repaint();
         this.PlaySound();
-
+        
         //向8个方向修改
         for (int i = 0; i < 1; i++) {
             //向上修改
@@ -114,7 +112,7 @@ public class ChessGridComponent extends BasicComponent {
                     }
                 }
             }
-
+    
             //向下修改
             if (row <= 5) {
                 for (int k = row + 1; k <= 7; k++) {
@@ -131,7 +129,7 @@ public class ChessGridComponent extends BasicComponent {
                     }
                 }
             }
-
+    
             //向左修改
             if (col >= 2) {
                 for (int k = col - 1; k >= 0; k--) {
@@ -148,7 +146,7 @@ public class ChessGridComponent extends BasicComponent {
                     }
                 }
             }
-
+    
             //向右修改
             if (col <= 5) {
                 for (int k = col + 1; k <= 7; k++) {
@@ -165,7 +163,7 @@ public class ChessGridComponent extends BasicComponent {
                     }
                 }
             }
-
+    
             //向左上修改
             if (row >= 2 && col >= 2) {
                 for (int k = row - 1, l = col - 1; k >= 0 && l >= 0; k--, l--) {
@@ -182,7 +180,7 @@ public class ChessGridComponent extends BasicComponent {
                     }
                 }
             }
-
+    
             //向左下修改
             if (row <= 5 && col >= 2) {
                 for (int k = row + 1, l = col - 1; k <= 7 && l >= 0; k++, l--) {
@@ -199,7 +197,7 @@ public class ChessGridComponent extends BasicComponent {
                     }
                 }
             }
-
+    
             //向右上修改
             if (row >= 2 && col <= 5) {
                 for (int k = row - 1, l = col + 1; k >= 0 && l <= 7; k--, l++) {
@@ -216,7 +214,7 @@ public class ChessGridComponent extends BasicComponent {
                     }
                 }
             }
-
+    
             //向右下修改
             if (row <= 5 && col <= 5) {
                 for (int k = row + 1, l = col + 1; k <= 7 && l <= 7; k++, l++) {
@@ -234,15 +232,13 @@ public class ChessGridComponent extends BasicComponent {
                 }
             }
         }
-
         
-
-
+        
         GameFrame.stepNum++;
         System.out.println("Step number: " + GameFrame.stepNum);
-
+        
         int[][] Panel = new int[8][8];
-
+        
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (chessGirds[i][j].getChessPiece() == null) {
@@ -254,20 +250,22 @@ public class ChessGridComponent extends BasicComponent {
                 }
             }
         }
-
+        
         GameFrame.getBoardPanelsList().add(Panel);
-
-
+        
+        
         for (int j = 0; j < 8; j++) {
             for (int k = 0; k < 8; k++) {
-
+    
                 chessGirds[j][k].judgeChanged(j, k, GameFrame.stepNum);
                 chessGirds[row][col].ChangeConstant = false;
                 chessGirds[j][k].timer.start();
-
+    
             }
         }
+        
         GameFrame.controller.swapPlayer();
+        
         //判断游戏是否结束
         if ((gameIsOver() && !GameFrame.cheatModeIsOpen) || !chessBoardPanelHasNull(chessGirds)) {
             GameFrame.controller.gameOver();
@@ -279,8 +277,6 @@ public class ChessGridComponent extends BasicComponent {
                 e.printStackTrace();
             }
         }
-
-
     }
     
     public boolean chessBoardPanelHasNull(ChessGridComponent[][] chessGirds) {
@@ -326,138 +322,137 @@ public class ChessGridComponent extends BasicComponent {
     public ChessPiece getChessPiece() {
         return chessPiece;
     }
-
     
-    public void PlaySound(){
+    
+    public void PlaySound() {
         try {
             URL url;
             URI uri;
             File music = new File("Music/chessDownSound.wav");
-            uri=music.toURI();
-            url=uri.toURL();
-            AudioClip audioClip= Applet.newAudioClip(url);
-                audioClip.play();
-            } catch (MalformedURLException e){
+            uri = music.toURI();
+            url = uri.toURL();
+            AudioClip audioClip = Applet.newAudioClip(url);
+            audioClip.play();
+        } catch (MalformedURLException e) {
             e.printStackTrace();
         }
     }
-
+    
     public void drawPiece(Graphics g) {
         
-        if(this.chessPiece == null){
-            if(!GameFrame.cheatModeIsOpen){
-            if(GameFrame.controller.canClick(this.row,this.col)){
-                Graphics2D g2=(Graphics2D)g;
-                g2.setStroke(new BasicStroke(4));
-                if(GameFrame.controller.getCurrentPlayer()==ChessPiece.BLACK)
-                    g2.setColor(new Color(12, 82, 255));
-                else{
-                    g2.setColor(new Color(255, 252, 0));
+        if (this.chessPiece == null) {
+            if (!GameFrame.cheatModeIsOpen) {
+                if (GameFrame.controller.canClick(this.row, this.col)) {
+                    Graphics2D g2 = (Graphics2D) g;
+                    g2.setStroke(new BasicStroke(4));
+                    if (GameFrame.controller.getCurrentPlayer() == ChessPiece.BLACK)
+                        g2.setColor(new Color(12, 82, 255));
+                    else {
+                        g2.setColor(new Color(255, 252, 0));
+                    }
+                    g2.drawLine(8, 8, 16, 8);
+                    g2.drawLine(8, 8, 8, 16);
+                    g2.drawLine(62, 8, 54, 8);
+                    g2.drawLine(62, 8, 62, 16);
+                    g2.drawLine(62, 62, 62, 54);
+                    g2.drawLine(62, 62, 54, 62);
+                    g2.drawLine(8, 62, 8, 54);
+                    g2.drawLine(8, 62, 16, 62);
+        
+        
                 }
-                g2.drawLine(8,8,16,8);
-                g2.drawLine(8,8,8,16);
-                g2.drawLine(62,8,54,8);
-                g2.drawLine(62,8,62,16);
-                g2.drawLine(62,62,62,54);
-                g2.drawLine(62,62,54,62);
-                g2.drawLine(8,62,8,54);
-                g2.drawLine(8,62,16,62);
-
-
-                }
-            }else{
-                Graphics2D g2=(Graphics2D)g;
+            } else {
+                Graphics2D g2 = (Graphics2D) g;
                 g2.setStroke(new BasicStroke(4));
-                if(GameFrame.controller.getCurrentPlayer()==ChessPiece.BLACK)
+                if (GameFrame.controller.getCurrentPlayer() == ChessPiece.BLACK)
                     g2.setColor(new Color(12, 82, 255));
                 else {
                     g2.setColor(new Color(255, 252, 0));
                 }
-                g2.drawLine(8,8,16,8);
-                g2.drawLine(8,8,8,16);
-                g2.drawLine(62,8,54,8);
-                g2.drawLine(62,8,62,16);
-                g2.drawLine(62,62,62,54);
-                g2.drawLine(62,62,54,62);
-                g2.drawLine(8,62,8,54);
-                g2.drawLine(8,62,16,62);
+                g2.drawLine(8, 8, 16, 8);
+                g2.drawLine(8, 8, 8, 16);
+                g2.drawLine(62, 8, 54, 8);
+                g2.drawLine(62, 8, 62, 16);
+                g2.drawLine(62, 62, 62, 54);
+                g2.drawLine(62, 62, 54, 62);
+                g2.drawLine(8, 62, 8, 54);
+                g2.drawLine(8, 62, 16, 62);
             }
             timer.stop();
-            length=56;
+            length = 56;
         }
-
+        
         if (this.chessPiece != null) {
-
-            if(GameFrame.stepNum==1){
+            
+            if (GameFrame.stepNum == 1) {
                 g.setColor(chessPiece.getColor());
                 g.fillOval((gridSize - chessSize) / 2, (gridSize - chessSize) / 2, chessSize, 56);
-                length=56;
+                length = 56;
                 timer.stop();
             }
-            if(GameFrame.stepNum > 1){
-
-                if(this.ChangeConstant){
-
-            Color oppo = chessPiece.getColor()==Color.BLACK ? Color.WHITE:Color.BLACK;
-
-            if(length>0){
-
-                    g.setColor(oppo);
-                    g.fillOval((gridSize - Math.abs(length)) / 2, (gridSize - chessSize) / 2, Math.abs(length), 56);
-
-
-            }
+            if (GameFrame.stepNum > 1) {
+    
+                if (this.ChangeConstant) {
+        
+                    Color oppo = chessPiece.getColor() == Color.BLACK ? Color.WHITE : Color.BLACK;
+        
+                    if (length > 0) {
             
-            if(length<0){
-                g.setColor(this.chessPiece.getColor());
-                g.fillOval((gridSize - Math.abs(length)) / 2, (gridSize - chessSize) / 2, Math.abs(length), 56);
-            }
-            if(length==-chessSize){
-                g.setColor(this.chessPiece.getColor());
-                g.fillOval((gridSize - Math.abs(length)) / 2, (gridSize - chessSize) / 2, Math.abs(length), 56);
-                length=56;
-                this.ChangeConstant=false;
-                timer.stop();
-            }
-        }   else {
-
+                        g.setColor(oppo);
+                        g.fillOval((gridSize - Math.abs(length)) / 2, (gridSize - chessSize) / 2, Math.abs(length), 56);
+            
+            
+                    }
+        
+                    if (length < 0) {
+                        g.setColor(this.chessPiece.getColor());
+                        g.fillOval((gridSize - Math.abs(length)) / 2, (gridSize - chessSize) / 2, Math.abs(length), 56);
+                    }
+                    if (length == -chessSize) {
+                        g.setColor(this.chessPiece.getColor());
+                        g.fillOval((gridSize - Math.abs(length)) / 2, (gridSize - chessSize) / 2, Math.abs(length), 56);
+                        length = 56;
+                        this.ChangeConstant = false;
+                        timer.stop();
+                    }
+                } else {
+        
                     g.setColor(chessPiece.getColor());
                     g.fillOval((gridSize - chessSize) / 2, (gridSize - chessSize) / 2, 56, 56);
-                    length=56;
-                    this.ChangeConstant=false;
+                    length = 56;
+                    this.ChangeConstant = false;
                     timer.stop();
                 }
-            } else  {
+            } else {
                 g.setColor(chessPiece.getColor());
                 g.fillOval((gridSize - chessSize) / 2, (gridSize - chessSize) / 2, 56, 56);
-                length=56;
-                this.ChangeConstant=false;
+                length = 56;
+                this.ChangeConstant = false;
                 timer.stop();
             }
-            }
-        }
-
-    public void judgeChanged(int j ,int k ,int i){
-        if(GameFrame.getBoardPanelsList().get(i-1)[j][k]==GameFrame.getBoardPanelsList().get(i-2)[j][k]){
-            this.ChangeConstant=false;
-        }else{
-            this.ChangeConstant=true;
         }
     }
-
-
-
+    
+    public void judgeChanged(int j, int k, int i) {
+        if (GameFrame.getBoardPanelsList().get(i - 1)[j][k] == GameFrame.getBoardPanelsList().get(i - 2)[j][k]) {
+            this.ChangeConstant = false;
+        } else {
+            this.ChangeConstant = true;
+        }
+    }
+    
+    
     @Override
     public void paintComponent(Graphics g) {
         drawPiece(g);
     }
-
-
-    private class MyDynamicListener implements ActionListener{
+    
+    
+    private class MyDynamicListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            int frame=7;
-            length-=frame;
+            int frame = 7;
+            length -= frame;
             repaint();
         }
     }
