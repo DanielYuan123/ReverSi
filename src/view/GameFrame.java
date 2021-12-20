@@ -270,6 +270,10 @@ public class GameFrame extends JFrame {
                     System.out.println("Regret is clicked.");
                     int loopTime;
                     if (AIModeIsOn) {
+                        if (stepNum == 2 && controller.getPvcPlayer() == ChessPiece.WHITE) {
+                            JOptionPane.showMessageDialog(null, "This is the initial chess panel!");
+                            return;
+                        }
                         loopTime = 2;
                     } else {
                         loopTime = 1;
