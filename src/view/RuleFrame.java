@@ -5,11 +5,12 @@ import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-public class RuleFrame extends Frame {
+public class RuleFrame extends JFrame {
     //重写构造器，自动初始化；
     public RuleFrame(String title) {
         super(title);
         this.init();
+        this.setResizable(false);
     }
     
     ;

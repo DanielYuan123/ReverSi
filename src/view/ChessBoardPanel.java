@@ -19,11 +19,9 @@ public class ChessBoardPanel extends JPanel {
     
     
     public ChessBoardPanel(int width, int height) throws UnsupportedAudioFileException, LineUnavailableException, IOException {
-        //this.setVisible(true);
         this.setFocusable(true);
         this.setLayout(null);
         this.setOpaque(false);
-        //this.setBackground(Color.BLACK);
         int length = Math.min(width, height);
         this.setSize(length, length);
         ChessGridComponent.gridSize = length / CHESS_COUNT;
@@ -102,13 +100,7 @@ public class ChessBoardPanel extends JPanel {
         chessGrids[4][4].setChessPiece(ChessPiece.BLACK);
         
     }
-    
-    
-    @Override
-    protected void paintComponent(Graphics g) {
-        //g.setColor(Color.BLACK);
-        //g.fillRect(0, 0, this.getWidth(), this.getHeight());
-    }
+
     
     public boolean canClickGrid(int row, int col, ChessPiece currentPlayer) {
         ChessPiece otherPlayer = (currentPlayer == ChessPiece.BLACK) ? (ChessPiece.WHITE) : (ChessPiece.BLACK);
@@ -253,8 +245,5 @@ public class ChessBoardPanel extends JPanel {
             }
         }
         return false;
-        
     }
-    
-    
 }

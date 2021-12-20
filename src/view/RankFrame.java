@@ -17,6 +17,7 @@ public class RankFrame extends JFrame {
         this.setBounds(500, 300, 580, 460);
         this.container = this.getContentPane();
         this.setLayout(null);
+        this.setResizable(false);
     }
     
     
@@ -143,7 +144,5 @@ public class RankFrame extends JFrame {
     //维修方法；
     public static void main(String[] args) {
         new RankFrame().init();
-    
     }
-    
 }

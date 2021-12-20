@@ -21,26 +21,30 @@ public class GameOverPanel extends JPanel {
     
     private ImageIcon whiteImageIcon = new ImageIcon("Image/whitePiece.png");
     
-    
+    //有参构造，获得当前游戏GameFrame；
     public GameOverPanel(GameFrame gameFrame) {
-        
+        //设置布局与背景；
         this.setLayout(null);
         this.setBackground(Color.white);
-        
+
+        //设置大小与GameFrame属性；
         this.setSize(800, 800);
         this.gameFrame = gameFrame;
-        
+
+        //添加两个按钮，用于重开游戏和返回主菜单；
         JButton restartButton = new JButton("Restart");
         JButton mainMenuButton = new JButton("Main menu");
-        
+
+        //新建提示Label，告知玩家胜利方；
         JLabel titleLabel = new JLabel();
-        
+
+        //设置按钮的范围和字号；
         restartButton.setBounds(100, 600, 250, 100);
         mainMenuButton.setBounds(450, 600, 250, 100);
         restartButton.setFont(new Font("nano", Font.ROMAN_BASELINE, 20));
         mainMenuButton.setFont(new Font("yuku", Font.ROMAN_BASELINE, 20));
         
-        
+        //设置restartBtn的事件监听，用于关闭当前GameFrame，还原GameFrame中的静态参数；
         restartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -58,19 +62,16 @@ public class GameOverPanel extends JPanel {
                 }
             }
         });
-        
+
+        //得到当前ImageIcon的Image类，调节其大小，使之适应大小；
         Image blackImage = blackImageIcon.getImage();
-        
         blackImage = blackImage.getScaledInstance(158, 150, Image.SCALE_AREA_AVERAGING);
-        
         blackImageIcon = new ImageIcon(blackImage);
-        
         Image whiteImage = whiteImageIcon.getImage();
-        
         whiteImage = whiteImage.getScaledInstance(165, 150, Image.SCALE_AREA_AVERAGING);
-        
         whiteImageIcon = new ImageIcon(whiteImage);
-        
+
+        //添加主菜单的事件监听；
         mainMenuButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -104,7 +105,8 @@ public class GameOverPanel extends JPanel {
         
         this.setVisible(false);
     }
-    
+
+    //结束菜单初始化方法，用于显示胜利方与改变sqlite数据库中的数据；
     public void init() throws SQLException {
         JLabel resultLabel = new JLabel();
         
