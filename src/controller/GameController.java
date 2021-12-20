@@ -18,7 +18,7 @@ public class GameController {
     private int whiteScore;
     private Player whitePlayer;
     private Player blackPlayer;
-    private ChessPiece pvcPlayer;
+    private ChessPiece pvcPlayer = null;
     
     public GameController(ChessBoardPanel gamePanel, StatusPanel statusPanel, Player whitePlayer, Player blackPlayer) {
         this.gamePanel = gamePanel;

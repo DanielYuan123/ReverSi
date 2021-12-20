@@ -288,7 +288,6 @@ public class ChessGridComponent extends BasicComponent {
             timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    GameFrame.controller.getGamePanel().setVisible(false);
                     GameFrame.controller.getStatusPanel().setVisible(false);
                     try {
                         GameFrame.gameOverPanel.init();

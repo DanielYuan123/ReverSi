@@ -1,6 +1,8 @@
 package view;
 
 import PlayerInfo.Player;
+import model.ChessPiece;
+
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
@@ -51,6 +53,7 @@ public class GameOverPanel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 gameFrame.setVisible(false);
+                ChessPiece people = GameFrame.controller.getPvcPlayer();
                 GameFrame.getBoardPanelsList().clear();
                 GameFrame.stepNum = 0;
                 try {
@@ -61,6 +64,9 @@ public class GameOverPanel extends JPanel {
                     ex.printStackTrace();
                 } catch (IOException ex) {
                     ex.printStackTrace();
+                }
+                if(GameFrame.AIModeIsOn){
+                    GameFrame.controller.setPvcPlayer(people);
                 }
             }
         });
@@ -114,6 +120,8 @@ public class GameOverPanel extends JPanel {
 
     //结束菜单初始化方法，用于显示胜利方与改变sqlite数据库中的数据；
     public void init() throws SQLException {
+        
+        
         JLabel resultLabel = new JLabel();
         
         if (GameFrame.controller.getBlackScore() > GameFrame.controller.getWhiteScore()) {
@@ -134,7 +142,7 @@ public class GameOverPanel extends JPanel {
             Connection connection;
             try {
     
-                if (GameFrame.AIModeIsOn = false) {
+                if (GameFrame.AIModeIsOn == false) {
                     Class.forName("org.sqlite.JDBC");
         
                     connection = DriverManager.getConnection("jdbc:sqlite:lib/player.db", "Daniel", "123qweasd");
@@ -310,6 +318,8 @@ public class GameOverPanel extends JPanel {
             
         }
         this.add(resultLabel);
+        
+        GameFrame.controller.getGamePanel().setVisible(false);
         this.setVisible(true);
         
         gameFrame.clearAllBtn();

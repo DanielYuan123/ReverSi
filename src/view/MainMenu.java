@@ -175,13 +175,16 @@ public class MainMenu extends JFrame {
                 MainMenu.HintChooseMode.setVisible(false);
                 if (mylistener.Gamemode == 1) {
                     if (GameFrame.stepNum == 0 && !EnterClientNameFrame.EnterFrameIsOn) {
+                        GameFrame.AIModeIsOn=false;
                         new EnterClientNameFrame().init();
                     } else {
                         MainMenu.HintGmaeStarted.setVisible(true);
                     }
                 } else if (mylistener.Gamemode == -1) {
-                    if (GameFrame.stepNum == 0 && !EnterClientNameFrame.EnterFrameIsOn)
+                    if (GameFrame.stepNum == 0 && !EnterClientNameFrame.EnterFrameIsOn){
+                        GameFrame.AIModeIsOn=true;
                         new EnterClientNameFrame().pvcInit();
+                    }
                     else {
                         MainMenu.HintGmaeStarted.setVisible(true);
                     }

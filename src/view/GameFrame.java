@@ -23,7 +23,7 @@ public class GameFrame extends JFrame {
     public static int stepNum = 0;
     public static boolean cheatModeIsOpen = false;
     public static int NightModeChangeConstant = 1;
-    public static boolean AIModeIsOn = false;
+    public static boolean AIModeIsOn;
     public static boolean AIRunning = false;
     private Player whiteplayer;
     private Player blackplayer;
