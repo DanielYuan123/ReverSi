@@ -30,7 +30,7 @@ public class DataManage {
             String name;
             String code;
             Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter Administer' name:");
+            System.out.print("Enter Administer's name:");
             name = scanner.next();
             System.out.print("Enter code:");
             code = scanner.next();
