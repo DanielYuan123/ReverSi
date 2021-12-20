@@ -284,13 +284,19 @@ public class ChessGridComponent extends BasicComponent {
         
         //判断游戏是否结束
         if ((gameIsOver() && !GameFrame.cheatModeIsOpen) || !chessBoardPanelHasNull(chessGirds)) {
-            GameFrame.controller.getGamePanel().setVisible(false);
-            GameFrame.controller.getStatusPanel().setVisible(false);
-            try {
-                GameFrame.gameOverPanel.init();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            java.util.Timer timer = new java.util.Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    GameFrame.controller.getGamePanel().setVisible(false);
+                    GameFrame.controller.getStatusPanel().setVisible(false);
+                    try {
+                        GameFrame.gameOverPanel.init();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, 800);
         }
     }
     
