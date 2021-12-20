@@ -43,6 +43,7 @@ public class ChessGridComponent extends BasicComponent {
     //电脑的下棋步骤
     @Override
     public void computerStep() {
+        GameFrame.AIRunning = true;
         //清除上一步棋中可以被点击的棋格
         ChessBoardPanel.getRowCanClicked().clear();
         ChessBoardPanel.getColCanClicked().clear();
@@ -65,6 +66,7 @@ public class ChessGridComponent extends BasicComponent {
             @Override
             public void run() {
                 changeChessBoardPanel(row, col);
+                GameFrame.AIRunning = false;
             }
         }, 1300);
     

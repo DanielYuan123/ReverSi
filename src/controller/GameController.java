@@ -5,7 +5,6 @@ import components.ChessGridComponent;
 import model.ChessPiece;
 import view.*;
 import javax.swing.*;
-import javax.swing.event.AncestorListener;
 import java.io.*;
 
 
