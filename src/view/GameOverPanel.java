@@ -203,7 +203,7 @@ public class GameOverPanel extends JPanel {
                     }
                     connection2.close();
         
-                } else if (GameFrame.AIModeIsOn = true) {
+                } else if (GameFrame.AIModeIsOn == true) {
         
                     Class.forName("org.sqlite.JDBC");
                     Connection connection1 = DriverManager.getConnection("jdbc:sqlite:lib/player.db", "Daniel", "123qweasd");
