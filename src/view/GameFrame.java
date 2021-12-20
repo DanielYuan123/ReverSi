@@ -24,6 +24,7 @@ public class GameFrame extends JFrame {
     public static boolean cheatModeIsOpen = false;
     public static int NightModeChangeConstant = 1;
     public static boolean AIModeIsOn = false;
+    public static boolean AIRunning = false;
     private Player whiteplayer;
     private Player blackplayer;
     public int cheatMode = 1;
@@ -59,6 +60,7 @@ public class GameFrame extends JFrame {
         cheatModeIsOpen = false;
         System.out.println("CheatMode is close!");
         
+        this.setResizable(false);
         this.setTitle("2021F CS102A Project Reversi");
         this.setLayout(null);
         this.setSize(frameSize, frameSize);
@@ -136,7 +138,6 @@ public class GameFrame extends JFrame {
                 ImageIcon lastDefaultIcon = new ImageIcon(defaultImage);
                 JLabel jLabel4 = new JLabel(lastDefaultIcon);
                 jLabel4.setBounds((this.getWidth() - chessBoardPanel.getWidth()) / 2 - 10, (this.getHeight() - chessBoardPanel.getHeight()) / 3, 560, 560);
-                System.out.println("HI");
                 this.add(jLabel4);
                 break;
         }
@@ -264,7 +265,7 @@ public class GameFrame extends JFrame {
                     System.out.println("CheatMode is closed!");
                     repaint();
                 }
-            } else if (e.getActionCommand().equals("Regret")) {
+            } else if (e.getActionCommand().equals("Regret") && !AIRunning) {
                 try {
                     System.out.println("Regret is clicked.");
                     int loopTime;
