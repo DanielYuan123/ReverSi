@@ -197,6 +197,9 @@ public class GameController {
     public void writeDataToFile(String fileName) {
         
         try {
+            if (!new File(String.format("./%s", fileName)).exists() && fileName.equals("./UserFiles/null.txt")) {
+                return;
+            }
             BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(fileName));
             ChessGridComponent[][] chessGridComponents = getGamePanel().getChessGrids();
             
@@ -218,9 +221,8 @@ public class GameController {
                 bufferedWriter.newLine();
             }
             
-            if (new File(String.format("./%s", fileName)).exists() && !fileName.equals("./UserFiles/null.txt")) {
-                JOptionPane.showMessageDialog(null, "Save successfully.");
-            }
+            
+            JOptionPane.showMessageDialog(null, "Save successfully.");
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
