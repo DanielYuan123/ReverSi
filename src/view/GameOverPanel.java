@@ -20,6 +20,8 @@ public class GameOverPanel extends JPanel {
     private ImageIcon blackImageIcon = new ImageIcon("Image/blackPiece.png");
     
     private ImageIcon whiteImageIcon = new ImageIcon("Image/whitePiece.png");
+
+    private ImageIcon drawImageIcon = new ImageIcon("Image/Draw.png");
     
     //有参构造，获得当前游戏GameFrame；
     public GameOverPanel(GameFrame gameFrame) {
@@ -70,6 +72,10 @@ public class GameOverPanel extends JPanel {
         Image whiteImage = whiteImageIcon.getImage();
         whiteImage = whiteImage.getScaledInstance(165, 150, Image.SCALE_AREA_AVERAGING);
         whiteImageIcon = new ImageIcon(whiteImage);
+        Image drawImage = drawImageIcon.getImage();
+        drawImage = drawImage.getScaledInstance(150,150,Image.SCALE_AREA_AVERAGING);
+        drawImageIcon = new ImageIcon(drawImage);
+
 
         //添加主菜单的事件监听；
         mainMenuButton.addActionListener(new ActionListener() {
@@ -118,9 +124,8 @@ public class GameOverPanel extends JPanel {
             resultLabel.setBounds(318, 150, 165, 150);
             resultLabel.setIcon(whiteImageIcon);
         } else {
-            resultLabel.setFont(new Font("Black", Font.ITALIC, 35));
-            resultLabel.setText("Nobody");
-            resultLabel.setForeground(Color.blue);
+            resultLabel.setBounds(318,150,150,150);
+            resultLabel.setIcon(drawImageIcon);
         }
         
         
@@ -200,7 +205,7 @@ public class GameOverPanel extends JPanel {
         
                 } else if (GameFrame.AIModeIsOn = true) {
         
-                    Class.forName("org.sqlit.JDBC");
+                    Class.forName("org.sqlite.JDBC");
                     Connection connection1 = DriverManager.getConnection("jdbc:sqlite:lib/player.db", "Daniel", "123qweasd");
                     String sql1 = "SELECT UserWinTime,UserGameTime FROM USER WHERE UserName = ?";
                     PreparedStatement preparedStatement = connection1.prepareStatement(sql1);
