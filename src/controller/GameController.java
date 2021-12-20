@@ -2,19 +2,16 @@ package controller;
 
 import PlayerInfo.Player;
 import components.ChessGridComponent;
-import javafx.stage.FileChooser;
 import model.ChessPiece;
 import view.*;
-
 import javax.swing.*;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import java.awt.*;
+import javax.swing.event.AncestorListener;
 import java.io.*;
 
 
 public class GameController {
-
-
+    
+    
     private ChessBoardPanel gamePanel;
     private StatusPanel statusPanel;
     private ChessPiece currentPlayer;
@@ -23,61 +20,66 @@ public class GameController {
     private Player whitePlayer;
     private Player blackPlayer;
     private ChessPiece pvcPlayer;
-
-    public GameController(ChessBoardPanel gamePanel, StatusPanel statusPanel,Player whitePlayer,Player blackPlayer) {
+    
+    public GameController(ChessBoardPanel gamePanel, StatusPanel statusPanel, Player whitePlayer, Player blackPlayer) {
         this.gamePanel = gamePanel;
         this.statusPanel = statusPanel;
         this.currentPlayer = ChessPiece.BLACK;
-        this.whitePlayer=whitePlayer;
-        this.blackPlayer=blackPlayer;
+        this.whitePlayer = whitePlayer;
+        this.blackPlayer = blackPlayer;
         blackScore = 2;
         whiteScore = 2;
     }
     
-    public Player getWhitePlayer(){return this.whitePlayer;}
-
-    public Player getBlackPlayer(){return this.blackPlayer;}
-
-    public Player getAIModePlayer(){
-        if(whitePlayer==null){
+    public Player getWhitePlayer() {
+        return this.whitePlayer;
+    }
+    
+    public Player getBlackPlayer() {
+        return this.blackPlayer;
+    }
+    
+    public Player getAIModePlayer() {
+        if (whitePlayer == null) {
             return blackPlayer;
-        }else {
+        } else {
             return whitePlayer;
         }
     }
-
-
+    
+    
     public void setPvcPlayer(ChessPiece pvcPlayer) {
         this.pvcPlayer = pvcPlayer;
         if (pvcPlayer == ChessPiece.WHITE) {
             gamePanel.runComputerStep();
         }
     }
-
+    
     public ChessPiece getPvcPlayer() {
         return pvcPlayer;
     }
-
-    public int getBlackScore(){
+    
+    public int getBlackScore() {
         return this.blackScore;
     }
-
-    public int getWhiteScore(){
+    
+    public int getWhiteScore() {
         return this.whiteScore;
     }
-
-    public StatusPanel getStatusPanel(){
+    
+    public StatusPanel getStatusPanel() {
         return this.statusPanel;
     }
-
+    
+    //交换玩家
     public void swapPlayer() {
         countScore();
         currentPlayer = (currentPlayer == ChessPiece.BLACK) ? ChessPiece.WHITE : ChessPiece.BLACK;
         statusPanel.setPlayerText(currentPlayer.name());
         statusPanel.setScoreText(blackScore, whiteScore);
     }
-
-
+    
+    //计分板
     public void countScore() {
         blackScore = 0;
         whiteScore = 0;
@@ -92,54 +94,39 @@ public class GameController {
             }
         }
     }
-
-    public void gameOver() {
-        if (blackScore > whiteScore) {
-            System.out.println("Black player is win!");
-        } else if (blackScore < whiteScore) {
-            System.out.println("White player is win!");
-        } else {
-            System.out.println("Both of you have the same lever!");
-        }
-    }
-
+    
+    
     public ChessPiece getCurrentPlayer() {
         return currentPlayer;
     }
-
+    
     public ChessBoardPanel getGamePanel() {
         return gamePanel;
     }
     
-    
+    //读档操作
     public void readFileData(String fileName) {
         
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
-//            JFileChooser fileChooser = new JFileChooser();
-//            FileNameExtensionFilter fileNameExtensionFilter = new FileNameExtensionFilter("txt");
-//            fileChooser.setFileFilter(fileNameExtensionFilter);
-//            int returnValue = fileChooser.showOpenDialog(fileChooser);
-//            if(returnValue == JFileChooser.APPROVE_OPTION) {
-//                System.out.println("You chose to open this file: " + fileChooser.getSelectedFile().getName());
-//            }
-            switch (bufferedReader.readLine()) {
-                case "CurrentPlayer: BLACK":
-                    currentPlayer = ChessPiece.BLACK;
-                    break;
-                case "CurrentPlayer: WHITE":
-                    currentPlayer = ChessPiece.WHITE;
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(null, "缺少行棋方", "Error(error code: 103)", JOptionPane.ERROR_MESSAGE);
-                    return;
+            
+            //检测是否有行棋方，并执行设置或警告
+            String firstLine = bufferedReader.readLine();
+            if (firstLine.contains("BLACK")) {
+                currentPlayer = ChessPiece.BLACK;
+            } else if (firstLine.contains("WHITE")) {
+                currentPlayer = ChessPiece.WHITE;
+            } else {
+                JOptionPane.showMessageDialog(null, "缺少行棋方", "Error(error code: 103)", JOptionPane.ERROR_MESSAGE);
             }
-            //currentPlayer = (bufferedReader.readLine().contains("BLACK")) ? (ChessPiece.BLACK) : (ChessPiece.WHITE);
+            
+            //设置状态栏为当前行棋方
             statusPanel.setPlayerText(currentPlayer.name());
             bufferedReader.readLine();
             bufferedReader.readLine();
             bufferedReader.readLine();
     
+            //读取并设置黑白两方的分数
             String black = bufferedReader.readLine();
             blackScore = Integer.parseInt(black);
             bufferedReader.readLine();
@@ -149,8 +136,8 @@ public class GameController {
     
             bufferedReader.readLine();
             bufferedReader.readLine();
-
-
+    
+    
             ChessGridComponent[][] chessGridComponents = gamePanel.getChessGrids();
             for (int i = 0; i < 8; i++) {
                 String[] read = bufferedReader.readLine().split(" +");
@@ -182,33 +169,32 @@ public class GameController {
             }
             bufferedReader.close();
             JOptionPane.showMessageDialog(null, "Load successfully.");
-
+    
             int[][] chessGridsNum = new int[8][8];
-
-            for(int i = 0; i < 8; i++)
-                for(int j = 0; j < 8; j++){
-                    if(chessGridComponents[i][j] == null){
+    
+            for (int i = 0; i < 8; i++)
+                for (int j = 0; j < 8; j++) {
+                    if (chessGridComponents[i][j] == null) {
                         chessGridsNum[i][j] = 0;
-                    }else if (chessGridComponents[i][j].getChessPiece() == ChessPiece.BLACK){
+                    } else if (chessGridComponents[i][j].getChessPiece() == ChessPiece.BLACK) {
                         chessGridsNum[i][j] = 1;
-                    }else {
+                    } else {
                         chessGridsNum[i][j] = -1;
                     }
                 }
-
+    
             GameFrame.getBoardPanelsList().clear();
             GameFrame.getBoardPanelsList().add(chessGridsNum);
-            GameFrame.stepNum=1;
-
+            GameFrame.stepNum = 1;
+    
         } catch (IOException e) {
-            //e.printStackTrace();
             JOptionPane.showMessageDialog(null, "File not be found!");
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "其他错误", "Error(error code: 106)", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-
+    
+    
     public void writeDataToFile(String fileName) {
         
         try {
@@ -232,13 +218,16 @@ public class GameController {
                 }
                 bufferedWriter.newLine();
             }
-            JOptionPane.showMessageDialog(null, "Save successfully.");
+            
+            if (new File(String.format("./%s", fileName)).exists() && !fileName.equals("./UserFiles/null.txt")) {
+                JOptionPane.showMessageDialog(null, "Save successfully.");
+            }
             bufferedWriter.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
+    
     public boolean canClick(int row, int col) {
         return gamePanel.canClickGrid(row, col, currentPlayer);
     }

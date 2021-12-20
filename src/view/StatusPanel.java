@@ -1,7 +1,6 @@
 package view;
 
 import model.ChessPiece;
-
 import javax.swing.*;
 import java.awt.*;
 
