@@ -55,6 +55,11 @@ public class ChessGridComponent extends BasicComponent {
             }
         }
     
+        if (ChessBoardPanel.getRowCanClicked().size() == 0) {
+            GameFrame.controller.swapPlayer();
+            return;
+        }
+        
         //在所有可以下棋的棋格中随机选取一个棋格下棋
         int index = (int) (Math.random() * ChessBoardPanel.getColCanClicked().size());
         int row = ChessBoardPanel.getRowCanClicked().get(index);
@@ -289,7 +294,7 @@ public class ChessGridComponent extends BasicComponent {
         }
     }
     
-    //该方法用于判断整个棋盘是否为空
+    //该方法用于判断整个棋盘是否有空白格
     public boolean chessBoardPanelHasNull(ChessGridComponent[][] chessGirds) {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
