@@ -91,7 +91,7 @@ public class GameOverPanel extends JPanel {
     
                 GameFrame.getBoardPanelsList().clear();
                 GameFrame.stepNum = 0;
-    
+
                 gameFrame.setVisible(false);
             }
         });
@@ -141,30 +141,30 @@ public class GameOverPanel extends JPanel {
             Collections.sort(Player.getPlayerList());
             Connection connection;
             try {
-    
+                //区别讨论AI模式是否打开，选择不同方式改变数据库；
                 if (GameFrame.AIModeIsOn == false) {
                     Class.forName("org.sqlite.JDBC");
-        
+
                     connection = DriverManager.getConnection("jdbc:sqlite:lib/player.db", "Daniel", "123qweasd");
-        
+
                     String sql = "SELECT UserWinTime,UserGameTime FROM USER WHERE UserName = ?;";
                     PreparedStatement preparedStatement = connection.prepareStatement(sql);
                     preparedStatement.setString(1, GameFrame.controller.getWhitePlayer().getName());
                     ResultSet resultSet1 = preparedStatement.executeQuery();
                     int whiteWinTime = 0;
                     int whitePlayTime = 0;
-        
+
                     while (resultSet1.next()) {
                         whiteWinTime = resultSet1.getInt(1);
                         whitePlayTime = resultSet1.getInt(2);
                     }
-        
+
                     preparedStatement.close();
                     connection.close();
-        
-        
+
+
                     Connection connection1 = DriverManager.getConnection("jdbc:sqlite:lib/player.db", "Daniel", "123qweasd");
-        
+
                     String sql3 = "UPDATE USER SET UserWinTime = ?,UserGameTime = ? WHERE UserName = ?;";
                     PreparedStatement preparedStatement3 = connection1.prepareStatement(sql3);
                     if (GameFrame.controller.getWhiteScore() > GameFrame.controller.getBlackScore()) {
@@ -172,7 +172,6 @@ public class GameOverPanel extends JPanel {
                         preparedStatement3.setInt(2, whitePlayTime + 1);
                         preparedStatement3.setString(3, GameFrame.controller.getWhitePlayer().getName());
                         preparedStatement3.executeUpdate();
-                        System.out.println("HOo");
                     } else {
                         preparedStatement3.setInt(1, whiteWinTime);
                         preparedStatement3.setInt(2, whitePlayTime);
@@ -180,21 +179,21 @@ public class GameOverPanel extends JPanel {
                         preparedStatement3.executeUpdate();
                     }
                     connection1.close();
-        
+
                     Connection connection2 = DriverManager.getConnection("jdbc:sqlite:lib/player.db", "Daniel", "123qweasd");
-        
+
                     String sql2 = "SELECT UserWinTime,UserGameTime FROM USER WHERE UserName = ?;";
                     PreparedStatement preparedStatement5 = connection2.prepareStatement(sql2);
                     preparedStatement5.setString(1, GameFrame.controller.getBlackPlayer().getName());
                     ResultSet resultSet2 = preparedStatement5.executeQuery();
                     int blackWinTime = 0;
                     int blackPlayTime = 0;
-        
+
                     while (resultSet2.next()) {
                         blackWinTime = resultSet2.getInt(1);
                         blackPlayTime = resultSet2.getInt(2);
                     }
-        
+
                     String sql4 = "UPDATE USER SET UserWinTime = ?,UserGameTime = ? WHERE UserName = ?;";
                     PreparedStatement preparedStatement4 = connection2.prepareStatement(sql4);
                     if (GameFrame.controller.getWhiteScore() < GameFrame.controller.getBlackScore()) {
@@ -209,58 +208,11 @@ public class GameOverPanel extends JPanel {
                         preparedStatement4.setString(3, GameFrame.controller.getBlackPlayer().getName());
                         preparedStatement4.executeUpdate();
                     }
+                    //及时断连，防止占线；
                     connection2.close();
-        
-                } else if (GameFrame.AIModeIsOn == true) {
-        
-                    Class.forName("org.sqlite.JDBC");
-                    Connection connection1 = DriverManager.getConnection("jdbc:sqlite:lib/player.db", "Daniel", "123qweasd");
-                    String sql1 = "SELECT UserWinTime,UserGameTime FROM USER WHERE UserName = ?";
-                    PreparedStatement preparedStatement = connection1.prepareStatement(sql1);
-        
-        
-                    if (GameFrame.controller.getBlackPlayer() == null) {
-                        preparedStatement.setString(1, GameFrame.controller.getWhitePlayer().getName());
-                        ResultSet resultSet = preparedStatement.executeQuery();
-            
-                        int playerWinTime = resultSet.getInt(1);
-                        int playerPlayTime = resultSet.getInt(2);
-            
-                        connection1.close();
-            
-                        Connection connection2 = DriverManager.getConnection("jdbc:sqlite:lib/player.db", "Daniel", "123qweasd");
-            
-                        String sql2 = "UPDATE USER SET UserWinTime = ?, UserGameTime = ? WHERE UserName = ?";
-                        PreparedStatement preparedStatement1 = connection2.prepareStatement(sql2);
-                        preparedStatement1.setInt(1, playerWinTime + 1);
-                        preparedStatement1.setInt(2, playerPlayTime + 1);
-                        preparedStatement1.setString(3, GameFrame.controller.getWhitePlayer().getName());
-            
-                        connection2.close();
-            
-            
-                    } else if (GameFrame.controller.getWhitePlayer() == null) {
-                        preparedStatement.setString(1, GameFrame.controller.getBlackPlayer().getName());
-                        ResultSet resultSet = preparedStatement.executeQuery();
-            
-                        int playerWinTime = resultSet.getInt(1);
-                        int playerPlayTime = resultSet.getInt(2);
-            
-                        connection1.close();
-            
-                        Connection connection2 = DriverManager.getConnection("jdbc:sqlite:lib/player.db", "Daniel", "123qweasd");
-            
-                        String sql2 = "UPDATE USER SET UserWinTime = ?, UserGameTime = ? WHERE UserName = ?";
-                        PreparedStatement preparedStatement1 = connection2.prepareStatement(sql2);
-                        preparedStatement1.setInt(1, playerWinTime + 1);
-                        preparedStatement1.setInt(2, playerPlayTime + 1);
-                        preparedStatement1.setString(3, GameFrame.controller.getBlackPlayer().getName());
-                        connection2.close();
-            
-                    }
-        
+
                 }
-    
+
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
