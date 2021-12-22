@@ -168,7 +168,10 @@ public class GameController {
             }
             bufferedReader.close();
             JOptionPane.showMessageDialog(null, "Load successfully.");
-    
+            if (currentPlayer != GameFrame.controller.getPvcPlayer()) {
+                chessGridComponents[5][3].computerStep();
+            }
+            
             int[][] chessGridsNum = new int[8][8];
     
             for (int i = 0; i < 8; i++)
