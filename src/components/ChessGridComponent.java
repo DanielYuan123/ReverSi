@@ -3,14 +3,12 @@ package components;
 import model.*;
 import view.ChessBoardPanel;
 import view.GameFrame;
-import javax.sound.sampled.*;
 import java.applet.Applet;
 import java.applet.AudioClip;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URL;
@@ -29,7 +27,6 @@ public class ChessGridComponent extends BasicComponent {
     private boolean ChangeConstant;
     
     private MyDynamicListener myDynamicListener = new MyDynamicListener();
-    private ChessGridComponent[][] formerGridComponent = new ChessGridComponent[8][8];
     private Timer timer = new Timer(1, myDynamicListener);
     
     
@@ -102,7 +99,6 @@ public class ChessGridComponent extends BasicComponent {
     //执行翻棋操作
     public void changeChessBoardPanel(int row, int col) {
         
-        System.arraycopy(GameFrame.controller.getGamePanel().getChessGrids(), 0, formerGridComponent, 0, 8);
         ChessPiece otherPlayer = (GameFrame.controller.getCurrentPlayer() == ChessPiece.BLACK) ? (ChessPiece.WHITE) : (ChessPiece.BLACK);
         ChessGridComponent[][] chessGirds = GameFrame.controller.getGamePanel().getChessGrids();
         chessGirds[row][col].chessPiece = GameFrame.controller.getCurrentPlayer();
@@ -379,8 +375,8 @@ public class ChessGridComponent extends BasicComponent {
                     g2.drawLine(62, 62, 54, 62);
                     g2.drawLine(8, 62, 8, 54);
                     g2.drawLine(8, 62, 16, 62);
-        
-        
+    
+    
                 }
             } else {
                 Graphics2D g2 = (Graphics2D) g;
@@ -455,11 +451,7 @@ public class ChessGridComponent extends BasicComponent {
     }
     
     public void judgeChanged(int j, int k, int i) {
-        if (GameFrame.getBoardPanelsList().get(i - 1)[j][k] == GameFrame.getBoardPanelsList().get(i - 2)[j][k]) {
-            this.ChangeConstant = false;
-        } else {
-            this.ChangeConstant = true;
-        }
+        this.ChangeConstant = GameFrame.getBoardPanelsList().get(i - 1)[j][k] != GameFrame.getBoardPanelsList().get(i - 2)[j][k];
     }
     
     

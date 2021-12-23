@@ -117,6 +117,7 @@ public class GameController {
                 currentPlayer = ChessPiece.WHITE;
             } else {
                 JOptionPane.showMessageDialog(null, "缺少行棋方", "Error(error code: 103)", JOptionPane.ERROR_MESSAGE);
+                return;
             }
             
             //设置状态栏为当前行棋方
